@@ -8,15 +8,18 @@ final class AppState: ObservableObject {
     @Published private(set) var keepAwakeEnabled = false
     @Published private(set) var keyboardLockEnabled = false
     @Published private(set) var keyboardLockMessage: String?
-    @Published private(set) var keyboardLightEnabled = true
+    @Published private(set) var keyboardLightEnabled: Bool?
+    @Published private(set) var keyboardLightChanging = false
     @Published private(set) var keyboardLightMessage: String?
 
     private let sleepPreventer = SleepPreventer()
     private let keyboardBlocker = KeyboardBlocker()
     private let keyboardBacklightController: KeyboardBacklightController
+    private static let keyboardLightReadError = "Could not read the built-in keyboard backlight. Try again."
 
     init(keyboardBacklightController: KeyboardBacklightController = KeyboardBacklightController()) {
         self.keyboardBacklightController = keyboardBacklightController
+        refreshKeyboardLight()
     }
 
     var menuBarSymbolName: String {
@@ -59,19 +62,38 @@ final class AppState: ObservableObject {
         }
     }
 
-    func toggleKeyboardLight() {
-        let result = keyboardLightEnabled
-            ? keyboardBacklightController.turnOff()
-            : keyboardBacklightController.turnOn()
+    func refreshKeyboardLight() {
+        guard !keyboardLightChanging else { return }
+        keyboardLightEnabled = keyboardBacklightController.brightness().map { $0 > 0 }
+        if keyboardLightEnabled == nil {
+            keyboardLightMessage = Self.keyboardLightReadError
+        } else if keyboardLightMessage == Self.keyboardLightReadError {
+            keyboardLightMessage = nil
+        }
+    }
+
+    func retryKeyboardLight() {
+        keyboardLightMessage = nil
+        refreshKeyboardLight()
+    }
+
+    func setKeyboardLightEnabled(_ enabled: Bool) async {
+        guard !keyboardLightChanging else { return }
+        keyboardLightChanging = true
+        let result = await keyboardBacklightController.setEnabled(enabled)
+        keyboardLightChanging = false
+        keyboardLightMessage = nil
+        // Also reread on failure: a rejected or unconfirmed write may still have
+        // changed the hardware. Unknown is distinct from off.
+        refreshKeyboardLight()
 
         switch result {
         case .succeeded:
-            keyboardLightEnabled.toggle()
-            keyboardLightMessage = nil
+            break
         case .unavailable:
-            keyboardLightMessage = "Keyboard backlight control is unavailable on this Mac."
+            keyboardLightMessage = Self.keyboardLightReadError
         case .failed:
-            keyboardLightMessage = "Could not change the keyboard backlight. Please try again."
+            keyboardLightMessage = "Could not confirm the keyboard brightness change. Try again."
         }
     }
 }

@@ -38,7 +38,9 @@ The lock affects keyboard events only. Mouse input remains available so you can 
 
 ### Keyboard Light
 
-Use **Keyboard Light** to turn the built-in keyboard backlight off temporarily. Turning it back on restores the brightness that was active before it was disabled. This control is available on Macs whose keyboard exposes the standard Apple HID backlight service.
+Use **Keyboard Light** to turn the built-in keyboard backlight off. Turning it back on restores the brightness captured before turning it off during this app session. If the keyboard starts dark, turning it on uses 50% brightness. The switch reads the current brightness when opened and follows changes while the panel is visible.
+
+MacGiver uses the private macOS CoreBrightness framework, loaded at runtime with method-signature checks. It targets the built-in keyboard and confirms writes by reading the brightness back. Automatic-brightness and idle-dimming preferences are not changed, but this manual override can take precedence over automatic adjustment while the app is running. A future macOS update can change this private interface, and it is not suitable for Mac App Store distribution. If a reading fails, the control shows an error with a retry button.
 
 ## Build from source
 
@@ -80,6 +82,8 @@ xcodebuild \
 
 `CODE_SIGNING_ALLOWED=NO` is used for tests because XCTest injects temporary bundles and frameworks into the host app. Normal app builds remain locally signed by Xcode.
 
+Unit tests use a simulated backlight and do not change hardware. To check hardware support, run the signed app on a MacBook with the light on, switch **Keyboard Light** off, verify the keys go dark, and switch it on again to verify the previous brightness returns. Also check starting with the light off and changing brightness in System Settings while the panel is open. Hardware readback was verified on a MacBook Air running macOS 27.0; older releases require separate validation.
+
 ## Tech stack
 
 | Technology | Purpose |
@@ -97,6 +101,7 @@ xcodebuild \
 ```text
 Sources/MacGiver/
 ├── AppState.swift       # application state and system integrations
+├── KeyboardBacklight.swift # CoreBrightness control and verified on/off transitions
 ├── MacGiverApp.swift    # app entry point and menu bar scene
 └── MenuBarView.swift    # menu bar interface
 Tests/MacGiverTests/     # unit tests

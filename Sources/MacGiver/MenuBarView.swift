@@ -34,16 +34,19 @@ struct MenuBarView: View {
             .toggleStyle(.switch)
 
             Toggle(isOn: Binding(
-                get: { appState.keyboardLightEnabled },
-                set: { _ in appState.toggleKeyboardLight() }
+                get: { appState.keyboardLightEnabled ?? false },
+                set: { enabled in Task { await appState.setKeyboardLightEnabled(enabled) } }
             )) {
                 FeatureRow(
                     symbol: "light.min",
                     title: "Keyboard Light",
-                    subtitle: "Turn the keyboard backlight on or off"
+                    subtitle: appState.keyboardLightEnabled == nil
+                        ? "Keyboard brightness unavailable"
+                        : "Turn the keyboard backlight on or off"
                 )
             }
             .toggleStyle(.switch)
+            .disabled(appState.keyboardLightEnabled == nil || appState.keyboardLightChanging)
 
             if let message = appState.keyboardLockMessage {
                 Label(message, systemImage: "exclamationmark.triangle.fill")
@@ -57,6 +60,8 @@ struct MenuBarView: View {
                     .font(.caption)
                     .foregroundStyle(.orange)
                     .fixedSize(horizontal: false, vertical: true)
+                Button("Retry Keyboard Light") { appState.retryKeyboardLight() }
+                    .font(.caption)
             }
 
             Divider()
@@ -77,6 +82,14 @@ struct MenuBarView: View {
         }
         .padding(16)
         .frame(width: 320)
+        .task {
+            // This task is cancelled when the panel closes. Refresh external
+            // brightness changes only while the controls are visible.
+            while !Task.isCancelled {
+                appState.refreshKeyboardLight()
+                do { try await Task.sleep(for: .seconds(1)) } catch { break }
+            }
+        }
     }
 
     private var header: some View {
