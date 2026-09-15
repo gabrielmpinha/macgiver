@@ -8,9 +8,16 @@ final class AppState: ObservableObject {
     @Published private(set) var keepAwakeEnabled = false
     @Published private(set) var keyboardLockEnabled = false
     @Published private(set) var keyboardLockMessage: String?
+    @Published private(set) var keyboardLightEnabled = true
+    @Published private(set) var keyboardLightMessage: String?
 
     private let sleepPreventer = SleepPreventer()
     private let keyboardBlocker = KeyboardBlocker()
+    private let keyboardBacklightController: KeyboardBacklightController
+
+    init(keyboardBacklightController: KeyboardBacklightController = KeyboardBacklightController()) {
+        self.keyboardBacklightController = keyboardBacklightController
+    }
 
     var menuBarSymbolName: String {
         if keyboardLockEnabled {
@@ -49,6 +56,22 @@ final class AppState: ObservableObject {
             keyboardLockMessage = "Allow access in System Settings > Privacy & Security > Accessibility, then try again."
         case .failed:
             keyboardLockMessage = "Could not lock the keyboard. Please try again."
+        }
+    }
+
+    func toggleKeyboardLight() {
+        let result = keyboardLightEnabled
+            ? keyboardBacklightController.turnOff()
+            : keyboardBacklightController.turnOn()
+
+        switch result {
+        case .succeeded:
+            keyboardLightEnabled.toggle()
+            keyboardLightMessage = nil
+        case .unavailable:
+            keyboardLightMessage = "Keyboard backlight control is unavailable on this Mac."
+        case .failed:
+            keyboardLightMessage = "Could not change the keyboard backlight. Please try again."
         }
     }
 }

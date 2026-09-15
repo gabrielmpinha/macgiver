@@ -33,7 +33,26 @@ struct MenuBarView: View {
             }
             .toggleStyle(.switch)
 
+            Toggle(isOn: Binding(
+                get: { appState.keyboardLightEnabled },
+                set: { _ in appState.toggleKeyboardLight() }
+            )) {
+                FeatureRow(
+                    symbol: "light.min",
+                    title: "Keyboard Light",
+                    subtitle: "Turn the keyboard backlight on or off"
+                )
+            }
+            .toggleStyle(.switch)
+
             if let message = appState.keyboardLockMessage {
+                Label(message, systemImage: "exclamationmark.triangle.fill")
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if let message = appState.keyboardLightMessage {
                 Label(message, systemImage: "exclamationmark.triangle.fill")
                     .font(.caption)
                     .foregroundStyle(.orange)

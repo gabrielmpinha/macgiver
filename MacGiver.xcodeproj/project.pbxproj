@@ -10,9 +10,9 @@
 		074AD03AD311D039C41C5822 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C519A42C6F993DEB350AC65C /* AppState.swift */; };
 		0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C307B8233A211C44204F09 /* MacGiverApp.swift */; };
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
-		C191A8BD86722E71FB396A2B /* MacGiver 2.icon in Resources */ = {isa = PBXBuildFile; fileRef = C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
 		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
+		FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,10 +30,10 @@
 		11A0A69581F69D1934275E67 /* MacGiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacGiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20C307B8233A211C44204F09 /* MacGiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacGiverApp.swift; sourceTree = "<group>"; };
 		36C933D04077EDCE5A275C41 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBacklight.swift; sourceTree = "<group>"; };
 		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
 		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "MacGiver 2.icon"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -59,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				C519A42C6F993DEB350AC65C /* AppState.swift */,
+				3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */,
 				20C307B8233A211C44204F09 /* MacGiverApp.swift */,
 				36C933D04077EDCE5A275C41 /* MenuBarView.swift */,
 			);
@@ -79,7 +80,6 @@
 		E727032D08CD7ACD1C9242A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */,
 				76524CDF64B5DC8F4689E4DE /* MacGiver.icon */,
 			);
 			path = Resources;
@@ -167,7 +167,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C191A8BD86722E71FB396A2B /* MacGiver 2.icon in Resources */,
 				E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				074AD03AD311D039C41C5822 /* AppState.swift in Sources */,
+				FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */,
 				0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */,
 				43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */,
 			);

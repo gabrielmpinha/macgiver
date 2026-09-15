@@ -8,6 +8,7 @@ MacGiver gives you quick access to focused tools for everyday Mac workflows, wit
 
 - **Keep Awake** — prevents the Mac from going to sleep while enabled.
 - **Lock Keyboard** — blocks keyboard input while you clean the keys.
+- **Keyboard Light** — turns the built-in keyboard backlight on or off and restores its previous brightness.
 - **Menu bar controls** — enable or disable each utility from a single menu bar panel.
 - **Safe recovery** — mouse input remains available so keyboard locking can always be turned off.
 
@@ -34,6 +35,10 @@ Turn on **Lock Keyboard** before cleaning your keyboard. On first use, macOS wil
 3. Return to the menu bar and enable **Lock Keyboard** again.
 
 The lock affects keyboard events only. Mouse input remains available so you can disable the feature.
+
+### Keyboard Light
+
+Use **Keyboard Light** to turn the built-in keyboard backlight off temporarily. Turning it back on restores the brightness that was active before it was disabled. This control is available on Macs whose keyboard exposes the standard Apple HID backlight service.
 
 ## Build from source
 
