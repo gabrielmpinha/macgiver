@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		074AD03AD311D039C41C5822 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C519A42C6F993DEB350AC65C /* AppState.swift */; };
+		0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C307B8233A211C44204F09 /* MacGiverApp.swift */; };
+		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
+		C191A8BD86722E71FB396A2B /* MacGiver 2.icon in Resources */ = {isa = PBXBuildFile; fileRef = C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */; };
+		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
+		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6F01025AE0F8B525B386B791 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 826EFBE839C5915651BAD047 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CBD7B23B43C6D6EA79EB3494;
+			remoteInfo = MacGiver;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0523A16DCE61A32BD82B824B /* MacGiverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacGiverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11A0A69581F69D1934275E67 /* MacGiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacGiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		20C307B8233A211C44204F09 /* MacGiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacGiverApp.swift; sourceTree = "<group>"; };
+		36C933D04077EDCE5A275C41 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
+		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
+		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "MacGiver 2.icon"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D306B6B1EC4D45CA0D952AA /* MacGiverTests */ = {
+			isa = PBXGroup;
+			children = (
+				77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */,
+			);
+			name = MacGiverTests;
+			path = Tests/MacGiverTests;
+			sourceTree = "<group>";
+		};
+		1E1006EE003C03EFBFD6FD2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				11A0A69581F69D1934275E67 /* MacGiver.app */,
+				0523A16DCE61A32BD82B824B /* MacGiverTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		758EF2D2F448B681AC24F8FC /* MacGiver */ = {
+			isa = PBXGroup;
+			children = (
+				C519A42C6F993DEB350AC65C /* AppState.swift */,
+				20C307B8233A211C44204F09 /* MacGiverApp.swift */,
+				36C933D04077EDCE5A275C41 /* MenuBarView.swift */,
+			);
+			name = MacGiver;
+			path = Sources/MacGiver;
+			sourceTree = "<group>";
+		};
+		CAE0F2A0E5346B7B7446AB95 = {
+			isa = PBXGroup;
+			children = (
+				758EF2D2F448B681AC24F8FC /* MacGiver */,
+				0D306B6B1EC4D45CA0D952AA /* MacGiverTests */,
+				E727032D08CD7ACD1C9242A7 /* Resources */,
+				1E1006EE003C03EFBFD6FD2E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E727032D08CD7ACD1C9242A7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C8CAACC589BD72E47C3AFD44 /* MacGiver 2.icon */,
+				76524CDF64B5DC8F4689E4DE /* MacGiver.icon */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		13AB66105E36A55A21F31977 /* MacGiverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57876F07C33C2DA15051FC76 /* Build configuration list for PBXNativeTarget "MacGiverTests" */;
+			buildPhases = (
+				586C8CFB00E328F23B687E58 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D761B0A199436A61594F956 /* PBXTargetDependency */,
+			);
+			name = MacGiverTests;
+			packageProductDependencies = (
+			);
+			productName = MacGiverTests;
+			productReference = 0523A16DCE61A32BD82B824B /* MacGiverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CBD7B23B43C6D6EA79EB3494 /* MacGiver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E67BC3DBC5AC5EB259711257 /* Build configuration list for PBXNativeTarget "MacGiver" */;
+			buildPhases = (
+				655A057E32F46485764F044B /* Sources */,
+				69F967A7E137BC0D081A24D7 /* Resources */,
+				105A9CB61A7ADC7DF766F47B /* Normalize app bundle metadata */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacGiver;
+			packageProductDependencies = (
+			);
+			productName = MacGiver;
+			productReference = 11A0A69581F69D1934275E67 /* MacGiver.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		826EFBE839C5915651BAD047 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					13AB66105E36A55A21F31977 = {
+						ProvisioningStyle = Automatic;
+					};
+					CBD7B23B43C6D6EA79EB3494 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A8AEB7AEDC9AF4455A63004C /* Build configuration list for PBXProject "MacGiver" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CAE0F2A0E5346B7B7446AB95;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 1E1006EE003C03EFBFD6FD2E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CBD7B23B43C6D6EA79EB3494 /* MacGiver */,
+				13AB66105E36A55A21F31977 /* MacGiverTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		69F967A7E137BC0D081A24D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C191A8BD86722E71FB396A2B /* MacGiver 2.icon in Resources */,
+				E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		105A9CB61A7ADC7DF766F47B /* Normalize app bundle metadata */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Normalize app bundle metadata";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -eu\napp_bundle=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\nclean_bundle=\"${TARGET_TEMP_DIR}/${WRAPPER_NAME}.clean\"\nif [ -d \"$app_bundle\" ]; then\n  if [ -e \"$clean_bundle\" ]; then\n    rm -R \"$clean_bundle\"\n  fi\n  ditto --norsrc \"$app_bundle\" \"$clean_bundle\"\n  rm -R \"$app_bundle\"\n  ditto --norsrc \"$clean_bundle\" \"$app_bundle\"\n  find \"$app_bundle\" -print0 | while IFS= read -r -d '' path; do\n    xattr -d com.apple.FinderInfo \"$path\" 2>/dev/null || true\n    xattr -d 'com.apple.fileprovider.fpfs#P' \"$path\" 2>/dev/null || true\n  done\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		586C8CFB00E328F23B687E58 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		655A057E32F46485764F044B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074AD03AD311D039C41C5822 /* AppState.swift in Sources */,
+				0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */,
+				43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D761B0A199436A61594F956 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CBD7B23B43C6D6EA79EB3494 /* MacGiver */;
+			targetProxy = 6F01025AE0F8B525B386B791 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01D74E9718884AEA69FF23D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = MacGiver;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_NAME = MacGiver;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0597FCF777B5209145DE1D41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacGiver.app/Contents/MacOS/MacGiver";
+			};
+			name = Debug;
+		};
+		445B78B3221C3DE21EDB7900 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MacGiver;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MacGiver;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Gabriel Pinheiro";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macgiver.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		6326F319E666911D14FAA40A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MacGiver.app/Contents/MacOS/MacGiver";
+			};
+			name = Release;
+		};
+		9883E972BF4EDEEE411B6BE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = MacGiver;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_NAME = MacGiver;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E469CC1C14B696C4524365C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = MacGiver;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MacGiver;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Gabriel Pinheiro";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macgiver.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		57876F07C33C2DA15051FC76 /* Build configuration list for PBXNativeTarget "MacGiverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0597FCF777B5209145DE1D41 /* Debug */,
+				6326F319E666911D14FAA40A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A8AEB7AEDC9AF4455A63004C /* Build configuration list for PBXProject "MacGiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E469CC1C14B696C4524365C0 /* Debug */,
+				445B78B3221C3DE21EDB7900 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E67BC3DBC5AC5EB259711257 /* Build configuration list for PBXNativeTarget "MacGiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D74E9718884AEA69FF23D3 /* Debug */,
+				9883E972BF4EDEEE411B6BE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 826EFBE839C5915651BAD047 /* Project object */;
+}

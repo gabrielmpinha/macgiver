@@ -1,0 +1,64 @@
+name: MacGiver
+options:
+  bundleIdPrefix: com.macgiver
+  deploymentTarget:
+    macOS: "13.0"
+  developmentLanguage: en
+settings:
+  base:
+    PRODUCT_BUNDLE_IDENTIFIER: com.macgiver.app
+    SWIFT_VERSION: 6.0
+    MACOSX_DEPLOYMENT_TARGET: 13.0
+    INFOPLIST_KEY_LSUIElement: YES
+    INFOPLIST_KEY_CFBundleDisplayName: MacGiver
+    INFOPLIST_KEY_NSHumanReadableCopyright: "Copyright © 2026 Gabriel Pinheiro"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 0.1.0
+    CODE_SIGN_STYLE: Automatic
+    ASSETCATALOG_COMPILER_APPICON_NAME: MacGiver
+    SWIFT_EMIT_LOC_STRINGS: YES
+targets:
+  MacGiver:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/MacGiver
+      - path: Resources
+    settings:
+      base:
+        PRODUCT_NAME: MacGiver
+        ASSETCATALOG_COMPILER_APPICON_NAME: MacGiver
+        INFOPLIST_KEY_NSHighResolutionCapable: YES
+        GENERATE_INFOPLIST_FILE: YES
+    postBuildScripts:
+      - name: Normalize app bundle metadata
+        script: |
+          set -eu
+          app_bundle="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+          clean_bundle="${TARGET_TEMP_DIR}/${WRAPPER_NAME}.clean"
+          if [ -d "$app_bundle" ]; then
+            if [ -e "$clean_bundle" ]; then
+              rm -R "$clean_bundle"
+            fi
+            ditto --norsrc "$app_bundle" "$clean_bundle"
+            rm -R "$app_bundle"
+            ditto --norsrc "$clean_bundle" "$app_bundle"
+            find "$app_bundle" -print0 | while IFS= read -r -d '' path; do
+              xattr -d com.apple.FinderInfo "$path" 2>/dev/null || true
+              xattr -d 'com.apple.fileprovider.fpfs#P' "$path" 2>/dev/null || true
+            done
+          fi
+    scheme:
+      testTargets:
+        - MacGiverTests
+  MacGiverTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/MacGiverTests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGNING_ALLOWED: NO
+    dependencies:
+      - target: MacGiver
