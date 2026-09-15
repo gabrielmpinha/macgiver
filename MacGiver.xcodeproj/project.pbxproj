@@ -190,7 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -eu\napp_bundle=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\nclean_bundle=\"${TARGET_TEMP_DIR}/${WRAPPER_NAME}.clean\"\nif [ -d \"$app_bundle\" ]; then\n  if [ -e \"$clean_bundle\" ]; then\n    rm -R \"$clean_bundle\"\n  fi\n  ditto --norsrc \"$app_bundle\" \"$clean_bundle\"\n  rm -R \"$app_bundle\"\n  ditto --norsrc \"$clean_bundle\" \"$app_bundle\"\n  find \"$app_bundle\" -print0 | while IFS= read -r -d '' path; do\n    xattr -d com.apple.FinderInfo \"$path\" 2>/dev/null || true\n    xattr -d 'com.apple.fileprovider.fpfs#P' \"$path\" 2>/dev/null || true\n  done\nfi\n";
+			shellScript = "set -eu\napp_bundle=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\nclean_bundle=\"${TARGET_TEMP_DIR}/${WRAPPER_NAME}.clean\"\nif [ -d \"$app_bundle\" ]; then\n  if [ -e \"$clean_bundle\" ]; then\n    rm -R \"$clean_bundle\"\n  fi\n  ditto --norsrc \"$app_bundle\" \"$clean_bundle\"\n  rm -R \"$app_bundle\"\n  ditto --norsrc \"$clean_bundle\" \"$app_bundle\"\n  # Build products may inherit Finder/provenance metadata from synced folders.\n  # Clear all extended attributes before CodeSign validates the bundle.\n  xattr -cr \"$app_bundle\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

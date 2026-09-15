@@ -43,10 +43,9 @@ targets:
             ditto --norsrc "$app_bundle" "$clean_bundle"
             rm -R "$app_bundle"
             ditto --norsrc "$clean_bundle" "$app_bundle"
-            find "$app_bundle" -print0 | while IFS= read -r -d '' path; do
-              xattr -d com.apple.FinderInfo "$path" 2>/dev/null || true
-              xattr -d 'com.apple.fileprovider.fpfs#P' "$path" 2>/dev/null || true
-            done
+            # Build products may inherit Finder/provenance metadata from synced folders.
+            # Clear all extended attributes before CodeSign validates the bundle.
+            xattr -cr "$app_bundle"
           fi
     scheme:
       testTargets:
