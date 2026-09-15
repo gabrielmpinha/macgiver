@@ -9,6 +9,8 @@ MacGiver gives you quick access to focused tools for everyday Mac workflows, wit
 - **Keep Awake** — prevents the Mac from going to sleep while enabled.
 - **Lock Keyboard** — blocks keyboard input while you clean the keys.
 - **Keyboard Light** — turns the built-in keyboard backlight on or off and restores its previous brightness.
+- **Battery dashboard** — live battery power, estimated time remaining, health, and cycle count, with interactive charge and power graphs.
+- **Connected batteries** — available Bluetooth accessory and USB device levels, including separate AirPods components and optional iPhone/iPad support.
 - **Menu bar controls** — enable or disable each utility from a single menu bar panel.
 - **Safe recovery** — mouse input remains available so keyboard locking can always be turned off.
 
@@ -41,6 +43,31 @@ The lock affects keyboard events only. Mouse input remains available so you can 
 Use **Keyboard Light** to turn the built-in keyboard backlight off. Turning it back on restores the brightness captured before turning it off during this app session. If the keyboard starts dark, turning it on uses 50% brightness. The switch reads the current brightness when opened and follows changes while the panel is visible.
 
 MacGiver uses the private macOS CoreBrightness framework, loaded at runtime with method-signature checks. It targets the built-in keyboard and confirms writes by reading the brightness back. Automatic-brightness and idle-dimming preferences are not changed, but this manual override can take precedence over automatic adjustment while the app is running. A future macOS update can change this private interface, and it is not suitable for Mac App Store distribution. If a reading fails, the control shows an error with a retry button.
+
+### Battery dashboard
+
+Click the **Battery** card in the menu bar panel to open the dashboard. It shows:
+
+- Charge level and macOS estimates for time until empty or until full. When macOS has no estimate, the dashboard shows “Estimating…”. A paused charge and a full battery are displayed separately.
+- Live **battery power** in watts, sampled every five seconds. This is power entering or leaving the battery, not total Mac or wall-outlet consumption. The power graph uses positive values for discharge and negative values for charge, independently of whether a charger is connected.
+- Estimated health relative to design capacity and the reported total cycle count. Health uses nominal/raw capacities, not the normalized charge percentage, and may differ from the value in System Settings.
+- Charge and power graphs with 15-minute, one-hour, and six-hour ranges. Hover over a graph to inspect a reading. History begins at launch, continues when the panel and dashboard close, and is kept in memory for up to six hours. Quitting clears it. Gaps and unavailable measurements are not interpolated.
+
+The app reads macOS power-source descriptions and AppleSmartBattery registry properties. These hardware properties vary by Mac and OS release. Missing fields are shown as unavailable; desktop Macs can still view connected devices.
+
+### Connected devices
+
+The dashboard refreshes device readings once a minute while open, with a manual refresh button. Bluetooth devices appear only when macOS reports them as connected; disconnected cached levels are excluded. AirPods can report separate left, right, and case levels. USB HID accessories appear when they publish a battery percentage.
+
+USB iPhones and iPads are detected without extra software. To enable battery-level and charging-status queries, optionally install [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice):
+
+```bash
+brew install libimobiledevice
+```
+
+MacGiver looks for `ideviceinfo` in `/opt/homebrew/bin` and `/usr/local/bin`. Plug in the device, unlock it, and trust this Mac in Finder. Queries use a simple connection that avoids automatic pairing, and are bounded by a timeout. Some iOS versions may not expose a reading over this connection.
+
+Apple Watch battery details, accessory health/cycle counts, and accessory time remaining are not available through these sources. A device that does not publish its battery level displays “Battery level not reported.” The information button in the dashboard explains device support and setup. No extra software is installed automatically.
 
 ## Build from source
 
@@ -82,6 +109,8 @@ xcodebuild \
 
 `CODE_SIGNING_ALLOWED=NO` is used for tests because XCTest injects temporary bundles and frameworks into the host app. Normal app builds remain locally signed by Xcode.
 
+Battery tests cover Apple Silicon and Intel capacity/current formats, charging and paused-charge states, unknown readings, short wake events, history retention, device parsing, and command timeout/cancellation/output limits. Mac telemetry was checked live against `pmset`; connected-device parsing uses fixtures and still requires hardware verification with each accessory or iOS version. The dashboard and menu views were visually checked in a temporary native host, including opening, closing, and reopening the dashboard. The actual menu-bar-only activation path and older macOS releases require separate runtime validation.
+
 Unit tests use a simulated backlight and do not change hardware. To check hardware support, run the signed app on a MacBook with the light on, switch **Keyboard Light** off, verify the keys go dark, and switch it on again to verify the previous brightness returns. Also check starting with the light off and changing brightness in System Settings while the panel is open. Hardware readback was verified on a MacBook Air running macOS 27.0; older releases require separate validation.
 
 ## Tech stack
@@ -92,6 +121,8 @@ Unit tests use a simulated backlight and do not change hardware. To check hardwa
 | SwiftUI | Menu bar interface and controls |
 | AppKit | macOS application lifecycle and menu bar integration |
 | IOKit Power Management | Preventing idle system sleep |
+| IOKit Power Sources & IORegistry | Live Mac and USB accessory battery readings |
+| Swift Charts | Interactive charge and battery power history |
 | Core Graphics Event Tap | Intercepting keyboard events |
 | XcodeGen | Reproducible Xcode project generation |
 | XCTest | Unit testing |
@@ -101,6 +132,10 @@ Unit tests use a simulated backlight and do not change hardware. To check hardwa
 ```text
 Sources/MacGiver/
 ├── AppState.swift       # application state and system integrations
+├── BatteryReading.swift # hardware decoding and bounded history
+├── BatteryMonitor.swift # app-lifetime battery sampling
+├── BatteryDashboardView.swift # battery dashboard, charts, and menu summary
+├── DeviceBatteryReader.swift # connected batteries and optional iOS helper
 ├── KeyboardBacklight.swift # CoreBrightness control and verified on/off transitions
 ├── MacGiverApp.swift    # app entry point and menu bar scene
 └── MenuBarView.swift    # menu bar interface

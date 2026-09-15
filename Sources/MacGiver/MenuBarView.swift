@@ -7,6 +7,8 @@ struct MenuBarView: View {
         VStack(alignment: .leading, spacing: 12) {
             header
 
+            BatteryMenuSummary()
+
             Divider()
 
             Toggle(isOn: Binding(
