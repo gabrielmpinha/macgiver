@@ -1,0 +1,52 @@
+name: Release DMG
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build unsigned app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project MacGiver.xcodeproj \
+            -scheme MacGiver \
+            -configuration Release \
+            -destination 'platform=macOS' \
+            -derivedDataPath "$RUNNER_TEMP/MacGiverReleaseDerivedData" \
+            build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+      - name: Create DMG
+        run: |
+          set -euo pipefail
+          bash scripts/create-dmg.sh \
+            "$RUNNER_TEMP/MacGiverReleaseDerivedData/Build/Products/Release/MacGiver.app" \
+            "$RUNNER_TEMP/MacGiver-${GITHUB_REF_NAME}.dmg"
+          echo "DMG_PATH=$RUNNER_TEMP/MacGiver-${GITHUB_REF_NAME}.dmg" >> "$GITHUB_ENV"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$DMG_PATH" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$DMG_PATH" \
+              --title "MacGiver ${GITHUB_REF_NAME#v}" \
+              --generate-notes
+          fi

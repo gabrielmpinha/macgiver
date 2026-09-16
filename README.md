@@ -50,6 +50,31 @@ Build products go outside the repository to avoid signing problems caused by met
 
 See the [development guide](docs/development.md) for Xcode setup, testing, and signing checks.
 
+## Build a simple DMG
+
+To create an unsigned DMG for local testing or private sharing:
+
+```bash
+xcodebuild \
+  -project MacGiver.xcodeproj \
+  -scheme MacGiver \
+  -configuration Release \
+  -destination 'platform=macOS' \
+  -derivedDataPath /tmp/MacGiverReleaseDerivedData \
+  build \
+  CODE_SIGNING_ALLOWED=NO \
+  CODE_SIGNING_REQUIRED=NO \
+  CODE_SIGN_IDENTITY=""
+
+bash scripts/create-dmg.sh \
+  /tmp/MacGiverReleaseDerivedData/Build/Products/Release/MacGiver.app \
+  /tmp/MacGiver.dmg
+```
+
+The DMG contains `MacGiver.app` and an **Applications** shortcut. Because it is unsigned, macOS may show a Gatekeeper warning when another person opens it. No paid Apple Developer account is needed for this simple package.
+
+Pushing a tag such as `v0.1.0` starts the [DMG release workflow](.github/workflows/release-dmg.yml), which builds the app, creates the DMG, and attaches it to a GitHub Release using GitHub's built-in token. This workflow does not sign or notarize the app.
+
 ## Usage
 
 1. Launch MacGiver and click its menu bar icon. It does not open a regular app window or show a Dock icon.

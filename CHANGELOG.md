@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — DMG release automation
+
+- Replaced the Swift Package CI template with Xcode project build and test commands.
+- Added a simple unsigned DMG packaging script and a tag-triggered GitHub Release workflow.
+- Documented local DMG creation and the expected Gatekeeper warning for unsigned distribution.
+- Verification: local Release build and DMG creation completed successfully; existing tests remain covered by the Xcode CI workflow.
+
 ## 2026-09-16 — Battery history cleanup
 
 - Removed connected-device battery discovery and its optional iPhone/iPad helper from the battery panel.

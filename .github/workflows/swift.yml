@@ -1,5 +1,4 @@
-# This workflow will build a Swift project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+# Build and test the native macOS Xcode project.
 
 name: Swift
 
@@ -17,6 +16,26 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: swift build -v
+      run: |
+        xcodebuild \
+          -project MacGiver.xcodeproj \
+          -scheme MacGiver \
+          -configuration Debug \
+          -destination 'platform=macOS' \
+          -derivedDataPath "$RUNNER_TEMP/MacGiverBuildDerivedData" \
+          build \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY=""
     - name: Run tests
-      run: swift test -v
+      run: |
+        xcodebuild \
+          -project MacGiver.xcodeproj \
+          -scheme MacGiver \
+          -configuration Debug \
+          -destination 'platform=macOS' \
+          -derivedDataPath "$RUNNER_TEMP/MacGiverTestsDerivedData" \
+          test \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY=""

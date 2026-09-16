@@ -47,6 +47,19 @@ An external DerivedData directory keeps artifacts out of the checkout and avoids
 
 A locally built app is not a notarized distribution artifact. Keyboard Light depends on a private framework and is not appropriate for Mac App Store submission.
 
+## DMG release
+
+The repository includes `scripts/create-dmg.sh` for creating a simple unsigned DMG. It packages the Release `.app` with an **Applications** shortcut and does not require an Apple Developer account. An unsigned download may trigger a Gatekeeper warning on another Mac.
+
+GitHub Actions creates a DMG release when a `v*` tag is pushed. For example, after committing a release-ready change:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The workflow publishes the DMG to a GitHub Release with the repository's automatic `GITHUB_TOKEN`. Developer ID signing and notarization are intentionally outside this simple release path.
+
 ## Automated tests
 
 ```bash
