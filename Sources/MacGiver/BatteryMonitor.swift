@@ -8,8 +8,10 @@ final class BatteryMonitor: ObservableObject {
     @Published private(set) var history = BatteryHistory()
     private var samplingTask: Task<Void, Never>?
     private var wakeObserver: AnyCancellable?
+    private let readBattery: () -> BatteryReading
 
-    init(startAutomatically: Bool = true) {
+    init(startAutomatically: Bool = true, readBattery: @escaping () -> BatteryReading = BatteryHardware.read) {
+        self.readBattery = readBattery
         guard startAutomatically else { return }
         refreshBattery()
         samplingTask = Task { [weak self] in
@@ -28,7 +30,7 @@ final class BatteryMonitor: ObservableObject {
     }
 
     func refreshBattery() {
-        reading = BatteryHardware.read()
+        reading = readBattery()
         history.append(reading)
     }
 

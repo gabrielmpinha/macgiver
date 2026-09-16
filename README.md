@@ -16,6 +16,8 @@ MacGiver is a native macOS app for keeping your Mac awake, locking keyboard inpu
 
 Hardware-dependent readings appear only when macOS exposes them. See the [usage guide](docs/usage.md) for support details.
 
+The complete interface is available in **English, Portuguese, and Spanish**, including tooltips, errors, and accessibility descriptions. MacGiver follows the macOS language preference (or the language selected for the app in System Settings), with English as the fallback. Relaunch after changing the language.
+
 ## Requirements
 
 - **To run:** macOS 13 Ventura or later. Backlight control requires a supported built-in backlit keyboard.
@@ -100,7 +102,7 @@ xcodebuild \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-Tests cover backlight state transitions and battery decoding/history. Backlight tests use simulated hardware. Hardware integrations and menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
+Tests cover backlight state transitions, battery decoding/history, compiled translations, language selection, plurals, regional formatting, and rendered localization fixtures. Backlight tests use simulated hardware. Hardware integrations and menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
 
 ## Tech stack
 
@@ -109,6 +111,7 @@ Tests cover backlight state transitions and battery decoding/history. Backlight 
 | Swift 6 | Application code and concurrency |
 | SwiftUI and AppKit | Menu bar UI, application lifecycle, and wake notifications |
 | Swift Charts | Interactive battery history |
+| Xcode String Catalogs | English, Portuguese, and Spanish localization with native language selection |
 | IOKit | Sleep prevention and Mac power-source data |
 | Core Graphics and Accessibility | Keyboard event interception and permission checks |
 | CoreBrightness (private, loaded at runtime) | Built-in keyboard backlight control |

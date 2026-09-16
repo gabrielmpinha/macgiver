@@ -2,6 +2,19 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — English, Portuguese, and Spanish localization
+
+- Added a native String Catalog covering the complete interface, battery states, utility errors, tooltips, chart labels, and accessibility descriptions in English, Portuguese, and Spanish.
+- Follow macOS language preferences and per-app language selection, including regional variants, with English fallback after relaunch. Preserve regional number formatting and plural forms.
+- Allow longer utility descriptions to wrap and move the history range picker below its title so translated labels fit inside the menu panel.
+- Added compiled-resource completeness checks, runtime localization tests, and deterministic AppKit-hosted view fixtures using an injectable battery reader.
+- Verification: signed Debug build and strict code-signature validation; 33 XCTest cases passed for each of English/US, Portuguese/Brazil, and Spanish/Spain; 8 localization cases passed with French/France preferences and English fallback. Audited all 74 extracted catalog keys and inspected hosted-view renders for all three languages. Live menu interaction remains unverified because UI automation timed out.
+
+## 2026-09-16 — Branch and pull request policy
+
+- Documented the protected-`main` branch workflow, branch naming conventions, pull request requirements, CI gate, merge preference, and release boundary in `docs/development.md`.
+- Verification: confirmed the policy matches the current `Swift` pull request workflow and tag-based DMG release workflow.
+
 ## 2026-09-16 — DMG release automation
 
 - Replaced the Swift Package CI template with Xcode project build and test commands.

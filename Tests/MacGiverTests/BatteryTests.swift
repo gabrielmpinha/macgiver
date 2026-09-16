@@ -21,7 +21,7 @@ final class BatteryReadingTests: XCTestCase {
         XCTAssertEqual(reading.healthPercent ?? 0, 98.487794, accuracy: 0.00001)
         XCTAssertEqual(reading.cycles, 43)
         XCTAssertEqual(reading.minutesRemaining, 131)
-        XCTAssertEqual(reading.timeText, "2h 11m")
+        XCTAssertEqual(reading.timeText, String(localized: "\(2)h \(11)m"))
         XCTAssertEqual(reading.condition, "Normal")
     }
 
@@ -42,10 +42,10 @@ final class BatteryReadingTests: XCTestCase {
         XCTAssertEqual(reading.externalPower, true)
         XCTAssertEqual(reading.watts, 6)
         XCTAssertNil(reading.minutesRemaining)
-        XCTAssertEqual(reading.flowText, "Leaving the battery")
+        XCTAssertEqual(reading.flowText, String(localized: "Leaving the battery"))
         let unknown = BatteryReading.decode(source: source, registry: [:])
         XCTAssertNil(unknown.watts)
-        XCTAssertEqual(unknown.flowText, "Reading unavailable")
+        XCTAssertEqual(unknown.flowText, String(localized: "Reading unavailable"))
     }
 
     func testChargingAndFullyChargedUseDifferentTimeSemantics() {
@@ -57,13 +57,13 @@ final class BatteryReadingTests: XCTestCase {
         XCTAssertEqual(charging.watts, -12)
         XCTAssertEqual(charging.state, .charging)
         XCTAssertEqual(charging.minutesRemaining, 42)
-        XCTAssertEqual(charging.timeTitle, "Until full")
+        XCTAssertEqual(charging.timeTitle, String(localized: "Until full"))
         source[kIOPSIsChargingKey] = false
         source[kIOPSIsChargedKey] = true
         let full = BatteryReading.decode(source: source, registry: [:])
         XCTAssertEqual(full.state, .charged)
         XCTAssertNil(full.minutesRemaining)
-        XCTAssertEqual(full.timeText, "Fully charged")
+        XCTAssertEqual(full.timeText, String(localized: "Fully charged"))
     }
 
     func testUnknownValuesDoNotBecomeZeroOrFalseHealth() {

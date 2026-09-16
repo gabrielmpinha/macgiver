@@ -10,6 +10,14 @@ The panel opens with a compact battery summary and three utility switches. Click
 
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
+## Language
+
+MacGiver includes complete English, Portuguese, and Spanish translations. It uses the first supported language in your macOS preferred-language list, falling back to English when none is supported. Regional language preferences such as Portuguese (Brazil), Portuguese (Portugal), and Spanish (Mexico) use the corresponding Portuguese or Spanish translation.
+
+To choose a different language just for MacGiver, open **System Settings > General > Language & Region > Applications** and add MacGiver with your preferred language. Quit and reopen the app after changing it. Numbers and chart times follow your regional formatting preferences, which can differ from the interface language.
+
+The instructions in this guide use the English control names. The app name **MacGiver** remains the same in every language.
+
 ## Keep Awake
 
 Enable **Keep Awake** to prevent idle system sleep. Disable it to release the sleep-prevention request. Quitting the app also ends that request.

@@ -10,6 +10,16 @@ struct BatteryReading: Sendable {
         case charged = "Fully charged"
         case pluggedIn = "Plugged in · not charging"
         case unknown = "Status unavailable"
+
+        var localizedTitle: String {
+            switch self {
+            case .discharging: return String(localized: "On battery")
+            case .charging: return String(localized: "Charging")
+            case .charged: return String(localized: "Fully charged")
+            case .pluggedIn: return String(localized: "Plugged in · not charging")
+            case .unknown: return String(localized: "Status unavailable")
+            }
+        }
     }
 
     var date = Date()
@@ -26,22 +36,38 @@ struct BatteryReading: Sendable {
     var designCapacity: Double?
     var fullChargeCapacity: Double?
 
-    var percentText: String { percent.map { "\(Int($0.rounded()))%" } ?? "—" }
-    var powerText: String { watts.map { String(format: "%.1f W", abs($0)) } ?? "—" }
-    var flowText: String {
-        guard let watts else { return "Reading unavailable" }
-        if watts > 0.05 { return "Leaving the battery" }
-        if watts < -0.05 { return "Entering the battery" }
-        return "No battery power flow"
+    var percentText: String { percent.map { Self.formatPercent($0) } ?? "—" }
+    var powerText: String { watts.map { Self.formatPower(abs($0), signed: false) } ?? "—" }
+    var signedPowerText: String { watts.map { Self.formatPower($0) } ?? "—" }
+
+    static func formatPercent(_ value: Double, locale: Locale = .current) -> String {
+        value.rounded().formatted(.percent.scale(1).precision(.fractionLength(0)).locale(locale))
     }
-    var timeTitle: String { state == .charging ? "Until full" : "Time remaining" }
+
+    static func formatPower(_ value: Double, signed: Bool = true, locale: Locale = .current) -> String {
+        // W is the language-independent SI symbol for watts. Keep the sign:
+        // positive means discharge, negative means charge.
+        String(format: signed ? "%+.1f W" : "%.1f W", locale: locale, value)
+    }
+    var flowText: String {
+        guard let watts else { return String(localized: "Reading unavailable") }
+        if watts > 0.05 { return String(localized: "Leaving the battery") }
+        if watts < -0.05 { return String(localized: "Entering the battery") }
+        return String(localized: "No battery power flow")
+    }
+    var timeTitle: String {
+        state == .charging ? String(localized: "Until full") : String(localized: "Time remaining")
+    }
     var timeText: String {
-        if state == .charged { return "Fully charged" }
-        if state == .pluggedIn { return "On external power" }
-        guard let minutesRemaining else { return "Estimating…" }
+        if state == .charged { return String(localized: "Fully charged") }
+        if state == .pluggedIn { return String(localized: "On external power") }
+        guard let minutesRemaining else { return String(localized: "Estimating…") }
         let hours = minutesRemaining / 60
         let minutes = minutesRemaining % 60
-        return hours > 0 ? "\(hours)h \(minutes)m" : "\(minutes)m"
+        if hours > 0 {
+            return String(localized: "\(hours)h \(minutes)m", comment: "Compact battery estimate: hours and minutes.")
+        }
+        return String(localized: "\(minutes)m", comment: "Compact battery estimate in minutes.")
     }
 
     static func decode(source: [String: Any]?, registry: [String: Any], date: Date = Date(),

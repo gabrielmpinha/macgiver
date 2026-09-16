@@ -79,7 +79,7 @@ struct BatteryMenuPanel: View {
                     .background(BatteryStyle.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                 VStack(alignment: .leading, spacing: 1) {
                     Text("Mac battery").font(.headline)
-                    Text(reading.state.rawValue).font(.caption).foregroundStyle(.secondary)
+                    Text(reading.state.localizedTitle).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 1) {
@@ -97,13 +97,13 @@ struct BatteryMenuPanel: View {
             }
             HStack(spacing: 10) {
                 MenuMetric(title: reading.timeTitle, value: reading.timeText, symbol: "clock")
-                MenuMetric(title: "Battery power", value: reading.watts.map { String(format: "%+.1f W", $0) } ?? "—",
+                MenuMetric(title: String(localized: "Battery power"), value: reading.signedPowerText,
                            symbol: (reading.watts ?? 0) < 0 ? "arrow.down.left" : "arrow.up.right")
             }
             .padding(.top, 12)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Battery \(reading.percentText), \(reading.state.rawValue), \(reading.timeText), \(reading.powerText)")
+        .accessibilityLabel("Battery \(reading.percentText), \(reading.state.localizedTitle), \(reading.timeText), \(reading.powerText)")
     }
 
     private var batterySymbol: String {
@@ -120,7 +120,7 @@ struct BatteryMenuPanel: View {
                 Label("Health", systemImage: "leaf")
                     .font(.caption.weight(.semibold)).foregroundStyle(BatteryStyle.mint)
                 if let health = reading.healthPercent {
-                    Text("\(Int(health.rounded()))%")
+                    Text(BatteryReading.formatPercent(health))
                         .font(.system(size: 24, weight: .semibold, design: .rounded)).monospacedDigit()
                     ProgressView(value: health, total: 100).tint(BatteryStyle.mint)
                 } else {
@@ -134,7 +134,7 @@ struct BatteryMenuPanel: View {
             BatteryMenuCard {
                 Label("Cycles", systemImage: "arrow.triangle.2.circlepath")
                     .font(.caption.weight(.semibold)).foregroundStyle(BatteryStyle.violet)
-                Text(reading.cycles.map(String.init) ?? "—")
+                Text(reading.cycles.map { $0.formatted() } ?? "—")
                     .font(.system(size: 24, weight: .semibold, design: .rounded)).monospacedDigit()
                 Text("Total battery cycles").font(.caption2).foregroundStyle(.secondary)
             }
@@ -144,15 +144,14 @@ struct BatteryMenuPanel: View {
 
     private var history: some View {
         BatteryMenuCard {
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("Energy history").font(.subheadline.weight(.semibold))
-                Spacer()
                 Picker("History range", selection: $range) {
                     Text("15m").tag(15)
                     Text("1h").tag(60)
                     Text("6h").tag(360)
                 }
-                .pickerStyle(.segmented).labelsHidden().frame(width: 142)
+                .pickerStyle(.segmented).labelsHidden()
             }
             CompactBatteryChart(history: monitor.history, reading: reading, minutes: range, power: false)
             CompactBatteryChart(history: monitor.history, reading: reading, minutes: range, power: true)
@@ -163,8 +162,16 @@ struct BatteryMenuPanel: View {
 
     private var unavailable: some View {
         BatteryMenuCard {
-            Label(reading.availability == .noBattery ? "No built-in battery" : "Battery unavailable",
-                  systemImage: "battery.0percent").font(.subheadline.weight(.medium))
+            Label {
+                if reading.availability == .noBattery {
+                    Text("No built-in battery")
+                } else {
+                    Text("Battery unavailable")
+                }
+            } icon: {
+                Image(systemName: "battery.0percent")
+            }
+            .font(.subheadline.weight(.medium))
             Text("Mac battery history will appear when readings become available.")
                 .font(.caption).foregroundStyle(.secondary).padding(.top, 3)
         }
@@ -186,7 +193,7 @@ struct BatteryCollapsedSummary: View {
                         .background(BatteryStyle.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                     VStack(alignment: .leading, spacing: 1) {
                         Text("Mac battery").font(.headline)
-                        Text(monitor.reading.state.rawValue).font(.caption).foregroundStyle(.secondary)
+                        Text(monitor.reading.state.localizedTitle).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     VStack(alignment: .trailing, spacing: 2) {
@@ -208,7 +215,7 @@ struct BatteryCollapsedSummary: View {
                 HStack {
                     Label(monitor.reading.timeText, systemImage: "clock")
                     Spacer()
-                    Text(monitor.reading.watts.map { String(format: "%+.1f W", $0) } ?? "—")
+                    Text(monitor.reading.signedPowerText)
                         .monospacedDigit()
                 }
                 .font(.caption).foregroundStyle(.secondary).padding(.top, 10)
@@ -217,7 +224,7 @@ struct BatteryCollapsedSummary: View {
         .buttonStyle(.plain)
         .help("Show battery details")
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Battery \(monitor.reading.percentText), \(monitor.reading.state.rawValue), \(monitor.reading.timeText). Show battery details")
+        .accessibilityLabel("Battery \(monitor.reading.percentText), \(monitor.reading.state.localizedTitle), \(monitor.reading.timeText). Show battery details")
         .accessibilityAddTraits(.isButton)
     }
 
@@ -239,7 +246,7 @@ private struct MenuMetric: View {
         HStack(spacing: 7) {
             Image(systemName: symbol).font(.caption).foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 1) {
-                Text(title.uppercased()).font(.system(size: 8, weight: .semibold)).tracking(0.7)
+                Text(title).textCase(.uppercase).font(.system(size: 8, weight: .semibold)).tracking(0.7)
                     .foregroundStyle(.secondary)
                 Text(value).font(.caption.weight(.medium)).monospacedDigit()
             }
@@ -276,33 +283,36 @@ private struct CompactBatteryChart: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(power ? "Battery power" : "Charge level").font(.caption.weight(.medium))
+                Group {
+                    if power { Text("Battery power") } else { Text("Charge level") }
+                }
+                .font(.caption.weight(.medium))
                 Spacer()
                 Text(valueText).font(.caption.weight(.semibold)).monospacedDigit().foregroundStyle(tint)
             }
             Chart {
-                if power { RuleMark(y: .value("Zero", 0)).foregroundStyle(.secondary.opacity(0.25)) }
+                if power { RuleMark(y: .value(String(localized: "Zero"), 0)).foregroundStyle(.secondary.opacity(0.25)) }
                 ForEach(points) { point in
-                    AreaMark(x: .value("Time", point.date), y: .value("Value", point.value),
-                             series: .value("Segment", point.segment))
+                    AreaMark(x: .value(String(localized: "Time"), point.date), y: .value(String(localized: "Value"), point.value),
+                             series: .value(String(localized: "Segment"), point.segment))
                         .foregroundStyle(LinearGradient(colors: [tint.opacity(0.22), tint.opacity(0.01)],
                                                         startPoint: .top, endPoint: .bottom))
                         .interpolationMethod(.linear)
-                    LineMark(x: .value("Time", point.date), y: .value("Value", point.value),
-                             series: .value("Segment", point.segment))
+                    LineMark(x: .value(String(localized: "Time"), point.date), y: .value(String(localized: "Value"), point.value),
+                             series: .value(String(localized: "Segment"), point.segment))
                         .foregroundStyle(tint).lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round))
                         .interpolationMethod(.linear)
                 }
                 ForEach(isolatedPoints) { point in
-                    PointMark(x: .value("Time", point.date), y: .value("Value", point.value))
+                    PointMark(x: .value(String(localized: "Time"), point.date), y: .value(String(localized: "Value"), point.value))
                         .foregroundStyle(tint).symbolSize(16)
                 }
                 if let point = selected ?? points.last {
-                    PointMark(x: .value("Time", point.date), y: .value("Value", point.value))
+                    PointMark(x: .value(String(localized: "Time"), point.date), y: .value(String(localized: "Value"), point.value))
                         .foregroundStyle(tint).symbolSize(24)
                 }
                 if let selected {
-                    RuleMark(x: .value("Selected time", selected.date))
+                    RuleMark(x: .value(String(localized: "Selected time"), selected.date))
                         .foregroundStyle(.secondary.opacity(0.35)).lineStyle(StrokeStyle(dash: [3, 3]))
                 }
             }
@@ -328,7 +338,9 @@ private struct CompactBatteryChart: View {
             }
             .overlay {
                 if points.isEmpty {
-                    Text(power ? "Waiting for power readings…" : "Waiting for battery readings…")
+                    Group {
+                        if power { Text("Waiting for power readings…") } else { Text("Waiting for battery readings…") }
+                    }
                         .font(.caption2).foregroundStyle(.secondary)
                 }
             }
@@ -345,9 +357,9 @@ private struct CompactBatteryChart: View {
 
     private var valueText: String {
         if let selected {
-            return power ? String(format: "%+.1f W", selected.value) : "\(Int(selected.value.rounded()))%"
+            return power ? BatteryReading.formatPower(selected.value) : BatteryReading.formatPercent(selected.value)
         }
-        return power ? reading.watts.map { String(format: "%+.1f W", $0) } ?? "—" : reading.percentText
+        return power ? reading.signedPowerText : reading.percentText
     }
 }
 
