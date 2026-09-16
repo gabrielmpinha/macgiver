@@ -15,7 +15,7 @@ final class AppState: ObservableObject {
     private let sleepPreventer = SleepPreventer()
     private let keyboardBlocker = KeyboardBlocker()
     private let keyboardBacklightController: KeyboardBacklightController
-    private static let keyboardLightReadError = "Could not read the built-in keyboard backlight. Try again."
+    private static let keyboardLightReadError = String(localized: "Could not read the built-in keyboard backlight. Try again.")
 
     init(keyboardBacklightController: KeyboardBacklightController = KeyboardBacklightController()) {
         self.keyboardBacklightController = keyboardBacklightController
@@ -56,9 +56,9 @@ final class AppState: ObservableObject {
             keyboardLockEnabled = true
             keyboardLockMessage = nil
         case .accessibilityRequired:
-            keyboardLockMessage = "Allow access in System Settings > Privacy & Security > Accessibility, then try again."
+            keyboardLockMessage = String(localized: "Allow access in System Settings > Privacy & Security > Accessibility, then try again.")
         case .failed:
-            keyboardLockMessage = "Could not lock the keyboard. Please try again."
+            keyboardLockMessage = String(localized: "Could not lock the keyboard. Please try again.")
         }
     }
 
@@ -93,7 +93,7 @@ final class AppState: ObservableObject {
         case .unavailable:
             keyboardLightMessage = Self.keyboardLightReadError
         case .failed:
-            keyboardLightMessage = "Could not confirm the keyboard brightness change. Try again."
+            keyboardLightMessage = String(localized: "Could not confirm the keyboard brightness change. Try again.")
         }
     }
 }

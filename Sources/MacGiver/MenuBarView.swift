@@ -240,7 +240,13 @@ private struct StatusBadge: View {
             Circle()
                 .fill(isActive ? MacGiverPalette.success : .secondary)
                 .frame(width: 5, height: 5)
-            Text(isActive ? "\(activeUtilities) ON" : "READY")
+            Group {
+                if isActive {
+                    Text("\(activeUtilities) ON", comment: "Compact count of enabled utilities.")
+                } else {
+                    Text("READY")
+                }
+            }
                 .font(.system(size: 9, weight: .bold, design: .rounded))
                 .tracking(0.8)
                 .foregroundStyle(isActive ? MacGiverPalette.success : .secondary)
@@ -248,14 +254,17 @@ private struct StatusBadge: View {
         .padding(.horizontal, 8)
         .padding(.vertical, 5)
         .background(.primary.opacity(0.045), in: Capsule())
+        .fixedSize()
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(isActive ? "\(activeUtilities) utilities active" : "No utilities active")
+        .accessibilityLabel(isActive
+            ? Text("\(activeUtilities) utilities active", comment: "VoiceOver count of enabled utilities.")
+            : Text("No utilities active"))
     }
 }
 
 private struct SectionLabel: View {
-    let title: String
-    let detail: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
 
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -274,8 +283,8 @@ private struct SectionLabel: View {
 
 private struct UtilityRow: View {
     let symbol: String
-    let title: String
-    let subtitle: String
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey
     let accent: Color
     let isActive: Bool
     var isAvailable = true
@@ -298,7 +307,7 @@ private struct UtilityRow: View {
                 Text(subtitle)
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             Spacer(minLength: 4)

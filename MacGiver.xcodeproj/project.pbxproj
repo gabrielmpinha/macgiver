@@ -13,6 +13,8 @@
 		2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */; };
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
 		5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */; };
+		66438FBA3DC12F2FCA444B45 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA71D2B3F7D3893A859E35C5 /* Localizable.xcstrings */; };
+		75A031EF5C5688EDE82D2B71 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */; };
 		7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
 		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
@@ -41,6 +43,8 @@
 		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		94F974A056AA13210CC10A17 /* BatteryReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryReading.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		DA71D2B3F7D3893A859E35C5 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMenuPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,6 +54,7 @@
 			children = (
 				77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */,
 				318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */,
+				E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */,
 			);
 			name = MacGiverTests;
 			path = Tests/MacGiverTests;
@@ -92,6 +97,7 @@
 		E727032D08CD7ACD1C9242A7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DA71D2B3F7D3893A859E35C5 /* Localizable.xcstrings */,
 				76524CDF64B5DC8F4689E4DE /* MacGiver.icon */,
 			);
 			path = Resources;
@@ -160,6 +166,8 @@
 			knownRegions = (
 				Base,
 				en,
+				es,
+				pt,
 			);
 			mainGroup = CAE0F2A0E5346B7B7446AB95;
 			minimizedProjectReferenceProxies = 1;
@@ -179,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66438FBA3DC12F2FCA444B45 /* Localizable.xcstrings in Resources */,
 				E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +222,7 @@
 			files = (
 				CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */,
 				2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */,
+				75A031EF5C5688EDE82D2B71 /* LocalizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

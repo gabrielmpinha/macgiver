@@ -31,6 +31,15 @@ flowchart TD
 | [BatteryReading.swift](../Sources/MacGiver/BatteryReading.swift) | Hardware reads, battery value decoding, availability states, and bounded chart history. |
 | [BatteryMonitor.swift](../Sources/MacGiver/BatteryMonitor.swift) | Five-second sampling, wake notifications, and in-memory history. |
 | [BatteryMenuPanel.swift](../Sources/MacGiver/BatteryMenuPanel.swift) | Battery summary, metrics, and charts. |
+| [Localizable.xcstrings](../Resources/Localizable.xcstrings) | English source strings, Portuguese and Spanish translations, plural forms, tooltips, and accessibility descriptions. |
+
+## Localization
+
+The app uses native bundle language selection with English as its development language. SwiftUI labels use `LocalizedStringKey`; model and error messages use `String(localized:)`. Battery state identifiers and hardware property names stay independent of translated display text. Numbers use Foundation's regional formatting, preserving the 0–100 percentage scale and signed battery power.
+
+To add or change text, build in Xcode to extract localizable strings, then update all three languages in the string catalog. Xcode compiles it into `.lproj` resources; regenerate the project with XcodeGen after adding resources. `LocalizationTests.swift` checks the compiled tables directly so English fallback cannot hide missing translations.
+
+Run the test suite with `-testLanguage en -testRegion US`, `-testLanguage pt -testRegion BR`, and `-testLanguage es -testRegion ES` to exercise native language selection in fresh app processes. Inspect compact and expanded layouts, unavailable states, errors, plural counts, tooltips, and VoiceOver labels in each language. Language changes take effect after relaunch.
 
 ## Utility state
 

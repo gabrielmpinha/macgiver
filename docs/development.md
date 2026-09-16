@@ -109,3 +109,16 @@ Record the Mac model, macOS version, device models, and observed results when re
 Run the relevant verification before committing. Commits use English Conventional Commits with a scope; non-trivial changes include an explanatory body.
 
 When behavior changes, update the matching guide and source-map entry, and append an entry to [CHANGELOG.md](../CHANGELOG.md).
+
+## Branches and pull requests
+
+- Treat `main` as the protected integration branch. Do not develop directly on `main`.
+- Create one short-lived branch per focused change from an up-to-date `main`.
+- Use descriptive branch names with one of these prefixes: `feat/`, `fix/`, `docs/`, `refactor/`, `test/`, `build/`, or `chore/`.
+- Keep each branch limited to one logical outcome; do not mix unrelated cleanup or generated artifacts into the change.
+- Open a pull request targeting `main` for every branch, including documentation, build, and repository changes.
+- Use a concise Conventional Commit-style pull request title, such as `feat(menu-bar): add utility status summary`.
+- Describe the motivation, important implementation details, user-visible impact, and verification performed in the pull request body.
+- Do not merge until the `Swift` GitHub Actions workflow passes its build and XCTest jobs and any requested review is resolved.
+- Prefer squash merging to keep `main`'s history focused. Delete the branch after merge.
+- Create release tags only from `main`; do not publish release artifacts from feature branches.
