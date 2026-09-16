@@ -10,7 +10,12 @@ enum MacGiverPalette {
 
 struct MenuBarView: View {
     @EnvironmentObject private var appState: AppState
-    @State private var batteryExpanded = false
+    @State private var expandedPanel: ExpandedPanel?
+
+    private enum ExpandedPanel {
+        case battery
+        case storage
+    }
 
     private var activeUtilities: Int {
         [
@@ -22,7 +27,7 @@ struct MenuBarView: View {
 
     var body: some View {
         Group {
-            if batteryExpanded {
+            if expandedPanel != nil {
                 ScrollView {
                     expandedContent
                         .padding(14)
@@ -35,7 +40,7 @@ struct MenuBarView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .frame(width: 380, height: batteryExpanded ? 700 : 458, alignment: .top)
+        .frame(width: 380, height: expandedPanel == nil ? 570 : 700, alignment: .top)
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay {
@@ -53,14 +58,15 @@ struct MenuBarView: View {
         }
         .onDisappear {
             // Reopen at the glanceable summary instead of restoring a tall panel.
-            batteryExpanded = false
+            expandedPanel = nil
         }
     }
 
     private var compactContent: some View {
         VStack(alignment: .leading, spacing: 14) {
             header
-            BatteryCollapsedSummary(onExpand: { batteryExpanded = true })
+            BatteryCollapsedSummary(onExpand: { expandedPanel = .battery })
+            StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
             controls
             messages
             footer
@@ -68,8 +74,15 @@ struct MenuBarView: View {
     }
 
     private var expandedContent: some View {
-        BatteryMenuPanel {
-            batteryExpanded = false
+        Group {
+            switch expandedPanel {
+            case .battery:
+                BatteryMenuPanel { expandedPanel = nil }
+            case .storage:
+                StorageMenuPanel { expandedPanel = nil }
+            case nil:
+                EmptyView()
+            }
         }
     }
 

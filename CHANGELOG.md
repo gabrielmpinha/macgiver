@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — Storage usage monitoring
+
+- Added a compact startup-disk storage summary alongside the battery summary in the menu-bar panel.
+- Added expanded storage details for used, free, and total capacity, plus interactive 15-minute, 1-hour, and 6-hour usage history.
+- Added local file-system capacity reading, unavailable-value handling, English/Portuguese/Spanish strings, and deterministic storage history tests.
+- Verification: XcodeGen regeneration; 38 XCTest cases passed in English, Portuguese, and Spanish with code signing disabled; signed Debug build and strict codesign verification; hosted compact, battery-detail, and storage-detail fixtures rendered.
+
 ## 2026-09-16 — Changelog-based release notes
 
 - Generate GitHub Release descriptions from only the `CHANGELOG.md` lines added since the previous version tag.

@@ -2,7 +2,7 @@
 
 > Everyday Mac utilities, one menu bar panel.
 
-MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, controlling the built-in keyboard backlight, and checking battery information. It lives in the menu bar, with a compact battery summary that expands into live readings and charts.
+MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, controlling the built-in keyboard backlight, and checking battery and storage information. It lives in the menu bar, with compact battery and storage summaries that expand into live readings and charts.
 
 ## Features
 
@@ -13,6 +13,8 @@ MacGiver is a native macOS app for keeping your Mac awake, locking keyboard inpu
 | **Keyboard Light** | Turns the built-in backlight off and restores its previous brightness during the same app session. |
 | **Mac battery** | Shows charge, charging state, time estimates, battery power, estimated health, and cycle count. |
 | **Energy history** | Charts charge and battery power over 15 minutes, 1 hour, or 6 hours. |
+| **Mac storage** | Shows used, free, and total space for the startup disk. |
+| **Storage history** | Charts startup-disk usage over 15 minutes, 1 hour, or 6 hours. |
 
 Hardware-dependent readings appear only when macOS exposes them. See the [usage guide](docs/usage.md) for support details.
 
@@ -81,12 +83,14 @@ Pushing a version tag such as `vX.Y.Z` starts the [DMG release workflow](.github
 
 1. Launch MacGiver and click its menu bar icon. It does not open a regular app window or show a Dock icon.
 2. Use **Keep Awake**, **Lock Keyboard**, and **Keyboard Light** independently.
-3. Click the battery summary to expand its details and history.
+3. Click the battery or storage summary to expand its details and history.
 4. Use **Quit** at the bottom of the panel to close the app.
 
 **Lock Keyboard** requires permission in **System Settings > Privacy & Security > Accessibility**. After enabling MacGiver there, return to the panel and try the switch again. Use your mouse or trackpad to turn the lock off.
 
 Keep Awake prevents idle system sleep; it does not request that the display stay on or provide a closed-lid mode. Battery power is the flow into or out of the battery, not total Mac or wall-outlet consumption.
+
+Storage usage reports the startup disk's used, free, and total capacity from macOS. Its history is sampled while MacGiver is running and is kept only for the current session.
 
 For brightness behavior and common problems, see the [usage and troubleshooting guide](docs/usage.md).
 
@@ -102,7 +106,7 @@ xcodebuild \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-Tests cover backlight state transitions, battery decoding/history, compiled translations, language selection, plurals, regional formatting, and rendered localization fixtures. Backlight tests use simulated hardware. Hardware integrations and menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
+Tests cover backlight state transitions, battery and storage decoding/history, compiled translations, language selection, plurals, regional formatting, and rendered localization fixtures. Backlight tests use simulated hardware. Hardware integrations and menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
 
 ## Tech stack
 
@@ -110,7 +114,7 @@ Tests cover backlight state transitions, battery decoding/history, compiled tran
 | --- | --- |
 | Swift 6 | Application code and concurrency |
 | SwiftUI and AppKit | Menu bar UI, application lifecycle, and wake notifications |
-| Swift Charts | Interactive battery history |
+| Swift Charts | Interactive battery and storage history |
 | Xcode String Catalogs | English, Portuguese, and Spanish localization with native language selection |
 | IOKit | Sleep prevention and Mac power-source data |
 | Core Graphics and Accessibility | Keyboard event interception and permission checks |

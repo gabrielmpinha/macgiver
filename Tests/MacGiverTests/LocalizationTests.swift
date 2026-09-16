@@ -132,16 +132,21 @@ final class LocalizationTests: XCTestCase {
                            watts: -6.9, healthPercent: 98, cycles: 43)
         })
         monitor.refreshBattery()
+        let storage = StorageMonitor(startAutomatically: false, readStorage: {
+            StorageReading.decode(totalBytes: 1_000_000_000_000, freeBytes: 420_000_000_000)
+        })
+        storage.refreshStorage()
         let litKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { 0.4 }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor), name: "compact")
+        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage), name: "compact")
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { nil }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor), name: "keyboard-error")
+        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor).environmentObject(storage), name: "keyboard-error")
         try await attachPanel(BatteryMenuPanel().environmentObject(monitor).padding(14).frame(width: 380), name: "battery-details")
+        try await attachPanel(StorageMenuPanel().environmentObject(storage).padding(14).frame(width: 380), name: "storage-details")
         let noBattery = BatteryMonitor(startAutomatically: false, readBattery: { BatteryReading(availability: .noBattery) })
         noBattery.refreshBattery()
         try await attachPanel(BatteryMenuPanel().environmentObject(noBattery).padding(14).frame(width: 380), name: "no-battery")
