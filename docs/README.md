@@ -1,6 +1,6 @@
 # MacGiver documentation
 
-MacGiver is a native macOS menu bar utility. These pages document its current controls, battery integrations, and development workflow.
+MacGiver is a native macOS menu bar utility. These pages document its current controls, battery and storage integrations, and development workflow.
 
 | I want to… | Read |
 | --- | --- |

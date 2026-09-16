@@ -6,7 +6,7 @@
 
 Launch MacGiver, then click its menu bar icon. The app runs without a Dock icon or a standalone window.
 
-The panel opens with a compact battery summary and three utility switches. Click the battery summary to expand details within the same panel. Use the upward chevron to collapse them. Closing and reopening the panel returns it to the compact layout.
+The panel opens with compact battery and storage summaries plus three utility switches. Click either summary to expand details within the same panel. Use the upward chevron to collapse them. Closing and reopening the panel returns it to the compact layout.
 
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
@@ -80,6 +80,22 @@ Accessibility access is used to intercept keyboard events for Lock Keyboard. The
 
 Mac battery readings come from local macOS interfaces. There is no application account, analytics service, or network backend in the current source. Battery history stays in memory; it is not exported or saved between launches.
 
+## Mac storage
+
+The storage summary reports the startup disk exposed by macOS:
+
+| Reading | Meaning |
+| --- | --- |
+| Used | Space currently occupied on the startup disk. |
+| Free space | Space available to store files. |
+| Total capacity | The complete capacity reported for the startup disk. |
+
+Values are read from the local file-system attributes for `/`. No files are scanned, opened, uploaded, or modified. If macOS does not provide valid total and free capacities, the panel shows **Storage unavailable** instead of fabricating a percentage.
+
+### Storage history
+
+Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage reading. Storage data is sampled every five seconds while the app is running, including when the panel is closed. History begins at launch, retains up to six hours in memory, and is cleared on quit. Sleep/wake transitions, long sampling gaps, and missing measurements break the chart line.
+
 ## Troubleshooting
 
 | Symptom | What to check |
@@ -90,5 +106,6 @@ Mac battery readings come from local macOS interfaces. There is no application a
 | Keep Awake allows the display to turn off | It prevents idle system sleep, not display sleep. |
 | Time remaining says **Estimating…** | macOS has not supplied a usable estimate. MacGiver does not invent one. |
 | History is empty after launch | Samples accumulate during the current run. The chart shows a point immediately and a line after the next five-second sample; previous sessions are not retained. |
+| Storage is unavailable | Check that macOS can report file-system capacity for the startup disk. MacGiver does not scan files or substitute an estimate. |
 
 For build or signing failures, see [development troubleshooting](development.md#build-troubleshooting).
