@@ -5,3 +5,10 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 .codex/
+.agents/
+AGENTS.md
+AGENTS.override.md
+CLAUDE.md
+GEMINI.md
+llms.txt
+llms-full.txt

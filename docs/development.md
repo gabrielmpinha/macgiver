@@ -1,0 +1,98 @@
+# Development and verification
+
+[Documentation index](README.md) · [Architecture](architecture.md)
+
+## Project setup
+
+Use Xcode 26 or later, Swift 6, and macOS. The deployment target is macOS 13.0. Install [XcodeGen](https://github.com/yonaskolb/XcodeGen) if you need to regenerate the project.
+
+Confirm the selected developer tools:
+
+```bash
+xcodebuild -version
+xcode-select -p
+```
+
+The developer directory must point to a full Xcode installation. If it points to Command Line Tools, select the intended Xcode installation in **Xcode > Settings > Locations > Command Line Tools**.
+
+[project.yml](../project.yml) defines the application and test targets, build settings, sources, resources, and shared scheme. [MacGiver.xcodeproj](../MacGiver.xcodeproj) is the committed generated project.
+
+From the repository root:
+
+```bash
+brew install xcodegen
+xcodegen generate
+open MacGiver.xcodeproj
+```
+
+In Xcode, select the **MacGiver** scheme and **My Mac** destination, then run. Regenerate the project after changing its specification or adding/removing source files. Review generated changes alongside the specification.
+
+## Command-line build
+
+```bash
+xcodebuild \
+  -project MacGiver.xcodeproj \
+  -scheme MacGiver \
+  -configuration Debug \
+  -derivedDataPath /tmp/MacGiverDerivedData \
+  build
+
+codesign --verify --deep --strict \
+  /tmp/MacGiverDerivedData/Build/Products/Debug/MacGiver.app
+
+open /tmp/MacGiverDerivedData/Build/Products/Debug/MacGiver.app
+```
+
+An external DerivedData directory keeps artifacts out of the checkout and avoids signing issues associated with synced-folder metadata. The project also normalizes app-bundle metadata before signing.
+
+A locally built app is not a notarized distribution artifact. Keyboard Light depends on a private framework and is not appropriate for Mac App Store submission.
+
+## Automated tests
+
+```bash
+xcodebuild \
+  -project MacGiver.xcodeproj \
+  -scheme MacGiver \
+  -configuration Debug \
+  -derivedDataPath /tmp/MacGiverTestsDerivedData \
+  test \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+Use a separate test DerivedData directory so the unsigned XCTest host does not replace the app used for signed manual validation. Tests disable signing because XCTest adds temporary bundles and frameworks to the host application.
+
+| Test file | Coverage |
+| --- | --- |
+| [AppStateTests.swift](../Tests/MacGiverTests/AppStateTests.swift) | Initial menu state, brightness restoration, initially dark keyboards, external changes, failed writes, readback confirmation, invalid readings, and retries. |
+| [BatteryTests.swift](../Tests/MacGiverTests/BatteryTests.swift) | Apple Silicon/Intel decoding fixtures, charge states, unavailable values, bounded history, sleep gaps, device parsing, subprocess timeouts, cancellation, failure, and output limits. |
+
+Backlight tests inject simulated reads and writes; they do not establish hardware compatibility. Device parser fixtures also do not prove that a particular accessory or OS release publishes the expected values.
+
+## Hardware and UI verification
+
+Use the signed application on real hardware for changes to system integrations or menu behavior.
+
+| Area | Verification |
+| --- | --- |
+| Menu bar | Launch, open and close the panel, expand battery details, collapse them, then reopen. Confirm the compact state returns and expanded content scrolls. |
+| Keep Awake | Enable and disable the switch; use `pmset -g assertions` to check that the MacGiver idle-sleep assertion appears and is released. |
+| Keyboard lock | Grant Accessibility access, enable the lock, verify keyboard input is blocked, and use the mouse/trackpad to disable it. |
+| Backlight | Start with visible light, turn it off, and turn it on again. Check the actual keys and restored brightness; also test an initially dark keyboard and external brightness changes while the panel is open. |
+| Mac battery | Compare state and available estimates with `pmset -g batt`. Test charging, discharge, unavailable fields, and sleep/wake history gaps. |
+| Connected devices | Check actual accessories, disconnect one and refresh, and verify that stale entries disappear. Test AirPods components and iPhone/iPad queries only with those devices present. |
+
+Record the Mac model, macOS version, device models, and observed results when reporting hardware validation. A successful build, deployment target, or passing fixture test is not evidence of broad hardware compatibility.
+
+## Build troubleshooting
+
+- **Wrong developer directory:** verify `xcode-select -p` and select the full Xcode installation.
+- **Missing or outdated generated files:** run `xcodegen generate` from the repository root and inspect the generated diff.
+- **Signing rejects resource forks or Finder metadata:** use the external DerivedData path shown above and check that the project's metadata-normalization build phase runs.
+- **The app fails signature verification after testing:** rebuild without `CODE_SIGNING_ALLOWED=NO`, using the normal build directory.
+- **A system control fails at runtime:** consult [usage troubleshooting](usage.md#troubleshooting) and validate the signed app on the affected hardware.
+
+## Documentation and contributions
+
+Run the relevant verification before committing. Commits use English Conventional Commits with a scope; non-trivial changes include an explanatory body.
+
+When behavior changes, update the matching guide and source-map entry, and append an entry to [CHANGELOG.md](../CHANGELOG.md).
