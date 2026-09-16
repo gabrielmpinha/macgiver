@@ -75,7 +75,7 @@ bash scripts/create-dmg.sh \
 
 The DMG contains `MacGiver.app` and an **Applications** shortcut. Because it is unsigned, macOS may show a Gatekeeper warning when another person opens it. No paid Apple Developer account is needed for this simple package.
 
-Pushing a tag such as `v0.1.0` starts the [DMG release workflow](.github/workflows/release-dmg.yml), which builds the app, creates the DMG, and attaches it to a GitHub Release using GitHub's built-in token. This workflow does not sign or notarize the app.
+Pushing a version tag such as `vX.Y.Z` starts the [DMG release workflow](.github/workflows/release-dmg.yml), which builds the app, creates the DMG, and attaches it to a GitHub Release using GitHub's built-in token. This workflow does not sign or notarize the app.
 
 ## Usage
 

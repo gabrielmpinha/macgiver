@@ -54,8 +54,8 @@ The repository includes `scripts/create-dmg.sh` for creating a simple unsigned D
 GitHub Actions creates a DMG release when a `v*` tag is pushed. For example, after committing a release-ready change:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag vX.Y.Z
+git push origin vX.Y.Z
 ```
 
 The workflow publishes the DMG to a GitHub Release with the repository's automatic `GITHUB_TOKEN`. Developer ID signing and notarization are intentionally outside this simple release path.

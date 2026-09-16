@@ -213,7 +213,7 @@ struct MenuBarView: View {
                 Circle()
                     .fill(MacGiverPalette.success)
                     .frame(width: 6, height: 6)
-                Text("MacGiver 0.1.0")
+                Text("MacGiver \(AppMetadata.version)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
