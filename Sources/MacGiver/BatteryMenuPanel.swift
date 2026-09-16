@@ -2,8 +2,8 @@ import Charts
 import SwiftUI
 
 private enum BatteryStyle {
-    static let mint = Color(red: 0.12, green: 0.64, blue: 0.53)
-    static let violet = Color(red: 0.53, green: 0.43, blue: 0.88)
+    static let mint = MacGiverPalette.success
+    static let violet = MacGiverPalette.violet
 }
 
 struct BatteryMenuPanel: View {
@@ -18,7 +18,8 @@ struct BatteryMenuPanel: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
+            detailHeader
             batterySummary
 
             if reading.availability == .available {
@@ -40,13 +41,58 @@ struct BatteryMenuPanel: View {
         }
     }
 
+    private var detailHeader: some View {
+        HStack(spacing: 10) {
+            Button(action: onCollapse) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 12, weight: .semibold))
+                    .frame(width: 26, height: 26)
+                    .background(.primary.opacity(0.06), in: Circle())
+            }
+            .buttonStyle(.plain)
+            .help("Back to quick controls")
+            .accessibilityLabel("Back to quick controls")
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Battery details")
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                Text("Live readings from this Mac")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer(minLength: 8)
+
+            if monitor.refreshingDevices {
+                ProgressView()
+                    .controlSize(.small)
+            }
+            Button {
+                monitor.refreshBattery()
+                monitor.refreshDevices()
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .font(.system(size: 12, weight: .semibold))
+                    .frame(width: 26, height: 26)
+                    .background(.primary.opacity(0.06), in: Circle())
+            }
+            .buttonStyle(.plain)
+            .disabled(monitor.refreshingDevices)
+            .help("Refresh battery and connected devices")
+            .accessibilityLabel("Refresh battery and connected devices")
+        }
+    }
+
     private var batterySummary: some View {
         BatteryMenuCard {
             HStack(spacing: 9) {
-                Image(systemName: reading.state == .charging ? "bolt.fill" : "battery.100percent")
-                    .font(.title3).foregroundStyle(BatteryStyle.mint)
+                Image(systemName: batterySymbol)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(BatteryStyle.mint)
+                    .frame(width: 36, height: 36)
+                    .background(BatteryStyle.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                 VStack(alignment: .leading, spacing: 1) {
-                    Text("Battery").font(.headline)
+                    Text("Mac battery").font(.headline)
                     Text(reading.state.rawValue).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
@@ -57,15 +103,8 @@ struct BatteryMenuPanel: View {
                             .foregroundStyle(BatteryStyle.mint)
                     }
                     Text(reading.percentText)
-                        .font(.system(size: 23, weight: .semibold, design: .rounded)).monospacedDigit()
+                        .font(.system(size: 27, weight: .semibold, design: .rounded)).monospacedDigit()
                 }
-                Button(action: onCollapse) {
-                    Image(systemName: "chevron.up")
-                        .font(.caption.weight(.semibold))
-                }
-                .buttonStyle(.plain)
-                .help("Collapse battery details")
-                .accessibilityLabel("Collapse battery details")
             }
             if let percent = reading.percent {
                 ProgressView(value: percent, total: 100).tint(BatteryStyle.mint).padding(.top, 10)
@@ -79,6 +118,14 @@ struct BatteryMenuPanel: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Battery \(reading.percentText), \(reading.state.rawValue), \(reading.timeText), \(reading.powerText)")
+    }
+
+    private var batterySymbol: String {
+        switch reading.state {
+        case .charging: return "battery.75percent"
+        case .charged: return "battery.100percent"
+        default: return "battery.50percent"
+        }
     }
 
     private var stats: some View {
@@ -211,17 +258,27 @@ struct BatteryCollapsedSummary: View {
         Button(action: onExpand) {
             BatteryMenuCard {
                 HStack(spacing: 9) {
-                    Image(systemName: monitor.reading.state == .charging ? "bolt.fill" : "battery.100percent")
-                        .font(.title3).foregroundStyle(BatteryStyle.mint)
+                    Image(systemName: collapsedBatterySymbol)
+                        .font(.system(size: 19, weight: .semibold))
+                        .foregroundStyle(BatteryStyle.mint)
+                        .frame(width: 35, height: 35)
+                        .background(BatteryStyle.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
                     VStack(alignment: .leading, spacing: 1) {
-                        Text("Battery").font(.headline)
+                        Text("Mac battery").font(.headline)
                         Text(monitor.reading.state.rawValue).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(monitor.reading.percentText)
-                            .font(.system(size: 23, weight: .semibold, design: .rounded)).monospacedDigit()
-                        Image(systemName: "chevron.down").font(.caption2).foregroundStyle(.secondary)
+                            .font(.system(size: 24, weight: .semibold, design: .rounded)).monospacedDigit()
+                        HStack(spacing: 3) {
+                            Text("DETAILS")
+                                .font(.system(size: 8, weight: .bold, design: .rounded))
+                                .tracking(0.7)
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 8, weight: .bold))
+                        }
+                        .foregroundStyle(.secondary)
                     }
                 }
                 if let percent = monitor.reading.percent {
@@ -241,6 +298,14 @@ struct BatteryCollapsedSummary: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Battery \(monitor.reading.percentText), \(monitor.reading.state.rawValue), \(monitor.reading.timeText). Show battery details")
         .accessibilityAddTraits(.isButton)
+    }
+
+    private var collapsedBatterySymbol: String {
+        switch monitor.reading.state {
+        case .charging: return "battery.75percent"
+        case .charged: return "battery.100percent"
+        default: return "battery.50percent"
+        }
     }
 }
 
@@ -395,7 +460,10 @@ private struct BatteryMenuCard<Content: View>: View {
         VStack(alignment: .leading, spacing: 0) { content }
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.background, in: RoundedRectangle(cornerRadius: 13))
-            .overlay(RoundedRectangle(cornerRadius: 13).strokeBorder(.primary.opacity(0.055)))
+            .background(.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .strokeBorder(.primary.opacity(0.07))
+            }
     }
 }
