@@ -85,8 +85,10 @@ struct MenuBarView: View {
             }
         }
         .padding(16)
-        .frame(width: 390)
-        .frame(maxHeight: 760)
+        // MenuBarExtra cannot infer a useful height from a vertical ScrollView
+        // with only a maxHeight. Give the popover a real viewport so it does
+        // not collapse to an empty panel when opened from the menu bar.
+        .frame(width: 390, height: 720, alignment: .top)
         .scrollIndicators(.automatic)
         .task {
             // This task is cancelled when the panel closes. Refresh external
