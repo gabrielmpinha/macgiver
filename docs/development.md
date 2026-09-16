@@ -58,7 +58,7 @@ git tag vX.Y.Z
 git push origin vX.Y.Z
 ```
 
-The workflow publishes the DMG to a GitHub Release with the repository's automatic `GITHUB_TOKEN`. Developer ID signing and notarization are intentionally outside this simple release path.
+The workflow publishes the DMG to a GitHub Release with a description containing only the lines added to `CHANGELOG.md` since the previous version tag. It fails if no changelog entries were added, so a release cannot silently receive an unrelated or empty description. Developer ID signing and notarization are intentionally outside this simple release path.
 
 ## Automated tests
 

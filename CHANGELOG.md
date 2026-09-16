@@ -2,6 +2,12 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — Changelog-based release notes
+
+- Generate GitHub Release descriptions from only the `CHANGELOG.md` lines added since the previous version tag.
+- Fail the release workflow when no new changelog entries are available instead of publishing an unrelated or empty description.
+- Verification: generated notes from the `v0.1.0` to current `CHANGELOG.md` diff and confirmed the output contains only newly added entries.
+
 ## 2026-09-16 — English, Portuguese, and Spanish localization
 
 - Added a native String Catalog covering the complete interface, battery states, utility errors, tooltips, chart labels, and accessibility descriptions in English, Portuguese, and Spanish.
