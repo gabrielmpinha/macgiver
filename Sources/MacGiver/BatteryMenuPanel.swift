@@ -8,9 +8,14 @@ private enum BatteryStyle {
 
 struct BatteryMenuPanel: View {
     @EnvironmentObject private var monitor: BatteryMonitor
+    private let onCollapse: () -> Void
     @State private var range = 15
     @State private var showingDeviceHelp = false
     private var reading: BatteryReading { monitor.reading }
+
+    init(onCollapse: @escaping () -> Void = {}) {
+        self.onCollapse = onCollapse
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -54,6 +59,13 @@ struct BatteryMenuPanel: View {
                     Text(reading.percentText)
                         .font(.system(size: 23, weight: .semibold, design: .rounded)).monospacedDigit()
                 }
+                Button(action: onCollapse) {
+                    Image(systemName: "chevron.up")
+                        .font(.caption.weight(.semibold))
+                }
+                .buttonStyle(.plain)
+                .help("Collapse battery details")
+                .accessibilityLabel("Collapse battery details")
             }
             if let percent = reading.percent {
                 ProgressView(value: percent, total: 100).tint(BatteryStyle.mint).padding(.top, 10)
@@ -188,6 +200,47 @@ struct BatteryMenuPanel: View {
             Text("Connected device readings are still checked below.")
                 .font(.caption).foregroundStyle(.secondary).padding(.top, 3)
         }
+    }
+}
+
+struct BatteryCollapsedSummary: View {
+    @EnvironmentObject private var monitor: BatteryMonitor
+    let onExpand: () -> Void
+
+    var body: some View {
+        Button(action: onExpand) {
+            BatteryMenuCard {
+                HStack(spacing: 9) {
+                    Image(systemName: monitor.reading.state == .charging ? "bolt.fill" : "battery.100percent")
+                        .font(.title3).foregroundStyle(BatteryStyle.mint)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("Battery").font(.headline)
+                        Text(monitor.reading.state.rawValue).font(.caption).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(monitor.reading.percentText)
+                            .font(.system(size: 23, weight: .semibold, design: .rounded)).monospacedDigit()
+                        Image(systemName: "chevron.down").font(.caption2).foregroundStyle(.secondary)
+                    }
+                }
+                if let percent = monitor.reading.percent {
+                    ProgressView(value: percent, total: 100).tint(BatteryStyle.mint).padding(.top, 10)
+                }
+                HStack {
+                    Label(monitor.reading.timeText, systemImage: "clock")
+                    Spacer()
+                    Text(monitor.reading.watts.map { String(format: "%+.1f W", $0) } ?? "—")
+                        .monospacedDigit()
+                }
+                .font(.caption).foregroundStyle(.secondary).padding(.top, 10)
+            }
+        }
+        .buttonStyle(.plain)
+        .help("Show battery details")
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Battery \(monitor.reading.percentText), \(monitor.reading.state.rawValue), \(monitor.reading.timeText). Show battery details")
+        .accessibilityAddTraits(.isButton)
     }
 }
 

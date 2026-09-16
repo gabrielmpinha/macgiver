@@ -46,7 +46,7 @@ MacGiver uses the private macOS CoreBrightness framework, loaded at runtime with
 
 ### Battery panel
 
-Open MacGiver from the menu bar to see the compact battery panel directly inside the existing utility interface. It shows:
+Open MacGiver from the menu bar to see a compact battery summary inside the existing utility interface. Click the summary to expand the full battery view in the same popover; click the chevron to collapse it again. It shows:
 
 - Charge level and macOS estimates for time until empty or until full. When macOS has no estimate, the dashboard shows “Estimating…”. A paused charge and a full battery are displayed separately.
 - Live **battery power** in watts, sampled every five seconds. This is power entering or leaving the battery, not total Mac or wall-outlet consumption. The power graph uses positive values for discharge and negative values for charge, independently of whether a charger is connected.
@@ -57,7 +57,7 @@ The app reads macOS power-source descriptions and AppleSmartBattery registry pro
 
 ### Connected devices
 
-The compact menu panel refreshes device readings once a minute while open, with a manual refresh button. Bluetooth devices appear only when macOS reports them as connected; disconnected cached levels are excluded. AirPods can report separate left, right, and case levels. USB HID accessories appear when they publish a battery percentage.
+The expanded menu panel refreshes device readings once a minute while open, with a manual refresh button. Bluetooth devices appear only when macOS reports them as connected; disconnected cached levels are excluded. AirPods can report separate left, right, and case levels. USB HID accessories appear when they publish a battery percentage.
 
 USB iPhones and iPads are detected without extra software. To enable battery-level and charging-status queries, optionally install [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice):
 
