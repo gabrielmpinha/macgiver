@@ -10,7 +10,6 @@ struct BatteryMenuPanel: View {
     @EnvironmentObject private var monitor: BatteryMonitor
     private let onCollapse: () -> Void
     @State private var range = 15
-    @State private var showingDeviceHelp = false
     private var reading: BatteryReading { monitor.reading }
 
     init(onCollapse: @escaping () -> Void = {}) {
@@ -28,16 +27,9 @@ struct BatteryMenuPanel: View {
             } else {
                 unavailable
             }
-
-            devices
         }
         .task {
             monitor.refreshBattery()
-            monitor.refreshDevices()
-            while !Task.isCancelled {
-                do { try await Task.sleep(for: .seconds(60)) } catch { break }
-                monitor.refreshDevices()
-            }
         }
     }
 
@@ -63,13 +55,8 @@ struct BatteryMenuPanel: View {
 
             Spacer(minLength: 8)
 
-            if monitor.refreshingDevices {
-                ProgressView()
-                    .controlSize(.small)
-            }
             Button {
                 monitor.refreshBattery()
-                monitor.refreshDevices()
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.system(size: 12, weight: .semibold))
@@ -77,9 +64,8 @@ struct BatteryMenuPanel: View {
                     .background(.primary.opacity(0.06), in: Circle())
             }
             .buttonStyle(.plain)
-            .disabled(monitor.refreshingDevices)
-            .help("Refresh battery and connected devices")
-            .accessibilityLabel("Refresh battery and connected devices")
+            .help("Refresh battery and history")
+            .accessibilityLabel("Refresh battery and history")
         }
     }
 
@@ -175,76 +161,11 @@ struct BatteryMenuPanel: View {
         }
     }
 
-    private var devices: some View {
-        BatteryMenuCard {
-            HStack(spacing: 8) {
-                Label("Connected devices", systemImage: "link")
-                    .font(.subheadline.weight(.semibold))
-                Spacer()
-                if monitor.refreshingDevices { ProgressView().controlSize(.small).scaleEffect(0.7) }
-                Button { showingDeviceHelp.toggle() } label: { Image(systemName: "info.circle") }
-                    .buttonStyle(.plain).help("Device battery support")
-                    .accessibilityLabel("Device battery support")
-                    .popover(isPresented: $showingDeviceHelp) { deviceHelp }
-                Button { monitor.refreshDevices() } label: { Image(systemName: "arrow.clockwise") }
-                    .buttonStyle(.plain).disabled(monitor.refreshingDevices).help("Refresh devices")
-                    .accessibilityLabel("Refresh connected devices")
-            }
-
-            if let scan = monitor.deviceScan {
-                if scan.bluetoothUnavailable {
-                    Label("Bluetooth readings unavailable", systemImage: "exclamationmark.circle")
-                        .font(.caption2).foregroundStyle(.orange).padding(.top, 8)
-                }
-                if scan.devices.isEmpty {
-                    HStack(spacing: 10) {
-                        Image(systemName: "headphones").font(.title3).foregroundStyle(.tertiary)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("No battery devices connected").font(.caption.weight(.medium))
-                            Text("Bluetooth accessories and USB iPhone/iPad devices appear here.")
-                                .font(.caption2).foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 10)
-                } else {
-                    VStack(spacing: 8) {
-                        ForEach(scan.devices) { device in DeviceBatteryTile(device: device) }
-                    }
-                    .padding(.top, 10)
-                }
-                HStack {
-                    Text("Connected only")
-                    Spacer()
-                    Text(scan.date.formatted(date: .omitted, time: .shortened))
-                }
-                .font(.caption2).foregroundStyle(.secondary)
-            } else {
-                Text("Checking connected devices…").font(.caption).foregroundStyle(.secondary)
-                    .padding(.vertical, 14)
-            }
-        }
-    }
-
-    private var deviceHelp: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Device support").font(.headline)
-            Text("Bluetooth accessories share levels when available. AirPods may show separate left, right, and case readings.")
-            Text("For USB iPhone and iPad levels, install libimobiledevice, unlock the device, and trust this Mac in Finder.")
-            if monitor.deviceScan?.phoneHelperAvailable != true {
-                Text("brew install libimobiledevice").font(.system(.caption, design: .monospaced))
-                    .textSelection(.enabled).padding(8).background(.quaternary, in: RoundedRectangle(cornerRadius: 7))
-            }
-            Text("Apple Watch battery details and accessory health are not exposed by these connections.")
-                .foregroundStyle(.secondary)
-        }
-        .font(.callout).padding(16).frame(width: 300)
-    }
-
     private var unavailable: some View {
         BatteryMenuCard {
             Label(reading.availability == .noBattery ? "No built-in battery" : "Battery unavailable",
                   systemImage: "battery.0percent").font(.subheadline.weight(.medium))
-            Text("Connected device readings are still checked below.")
+            Text("Mac battery history will appear when readings become available.")
                 .font(.caption).foregroundStyle(.secondary).padding(.top, 3)
         }
     }
@@ -338,8 +259,8 @@ private struct CompactBatteryChart: View {
     private var start: Date { reading.date.addingTimeInterval(-Double(minutes * 60)) }
     private var points: [BatteryHistory.Point] { history.points(since: start, power: power) }
     private var domain: ClosedRange<Date> {
-        let first = points.first?.date ?? reading.date
-        return max(start, min(first, reading.date.addingTimeInterval(-60)))...reading.date
+        let end = max(reading.date, points.last?.date ?? reading.date)
+        return start...max(end, start.addingTimeInterval(60))
     }
     private var yDomain: ClosedRange<Double> {
         guard power else { return 0...100 }
@@ -366,9 +287,15 @@ private struct CompactBatteryChart: View {
                              series: .value("Segment", point.segment))
                         .foregroundStyle(LinearGradient(colors: [tint.opacity(0.22), tint.opacity(0.01)],
                                                         startPoint: .top, endPoint: .bottom))
+                        .interpolationMethod(.linear)
                     LineMark(x: .value("Time", point.date), y: .value("Value", point.value),
                              series: .value("Segment", point.segment))
                         .foregroundStyle(tint).lineStyle(StrokeStyle(lineWidth: 2, lineCap: .round))
+                        .interpolationMethod(.linear)
+                }
+                ForEach(isolatedPoints) { point in
+                    PointMark(x: .value("Time", point.date), y: .value("Value", point.value))
+                        .foregroundStyle(tint).symbolSize(16)
                 }
                 if let point = selected ?? points.last {
                     PointMark(x: .value("Time", point.date), y: .value("Value", point.value))
@@ -400,11 +327,20 @@ private struct CompactBatteryChart: View {
                 }
             }
             .overlay {
-                if points.isEmpty { Text("Collecting readings…").font(.caption2).foregroundStyle(.secondary) }
+                if points.isEmpty {
+                    Text(power ? "Waiting for power readings…" : "Waiting for battery readings…")
+                        .font(.caption2).foregroundStyle(.secondary)
+                }
             }
             .frame(height: 82)
         }
         .padding(.top, 10)
+    }
+
+    private var isolatedPoints: [BatteryHistory.Point] {
+        Dictionary(grouping: points, by: \.segment).values
+            .filter { $0.count == 1 }
+            .compactMap(\.first)
     }
 
     private var valueText: String {
@@ -412,44 +348,6 @@ private struct CompactBatteryChart: View {
             return power ? String(format: "%+.1f W", selected.value) : "\(Int(selected.value.rounded()))%"
         }
         return power ? reading.watts.map { String(format: "%+.1f W", $0) } ?? "—" : reading.percentText
-    }
-}
-
-private struct DeviceBatteryTile: View {
-    let device: DeviceBattery
-
-    var body: some View {
-        HStack(spacing: 9) {
-            Image(systemName: device.symbol).font(.title3).foregroundStyle(BatteryStyle.violet).frame(width: 25)
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(spacing: 5) {
-                    Text(device.name).font(.caption.weight(.medium)).lineLimit(1).help(device.name)
-                    Text(device.transport + (device.charging == true ? " · Charging" : ""))
-                        .font(.caption2).foregroundStyle(.secondary)
-                }
-                if device.levels.isEmpty {
-                    Text(device.note ?? "Battery level not reported").font(.caption2).foregroundStyle(.secondary)
-                } else {
-                    HStack(spacing: 9) {
-                        ForEach(device.levels) { level in
-                            VStack(alignment: .leading, spacing: 3) {
-                                HStack(spacing: 2) {
-                                    Text(level.name).font(.caption2).foregroundStyle(.secondary)
-                                    Text("\(Int(level.percent.rounded()))%").font(.caption2).monospacedDigit()
-                                }
-                                ProgressView(value: level.percent, total: 100)
-                                    .tint(level.percent <= 20 ? .orange : BatteryStyle.mint)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .accessibilityElement(children: .combine)
-                        }
-                    }
-                }
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(9)
-        .background(.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 9))
     }
 }
 

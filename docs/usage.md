@@ -58,7 +58,7 @@ Expand the battery summary to see:
 
 Battery power is not total computer or wall-outlet power. A connected charger does not by itself determine whether the battery is charging or discharging.
 
-Health is calculated from available nominal/raw capacity values and may differ from System Settings. Unavailable fields appear as a dash or an unavailable state rather than a fabricated zero. Macs without an internal battery can still show connected devices.
+Health is calculated from available nominal/raw capacity values and may differ from System Settings. Unavailable fields appear as a dash or an unavailable state rather than a fabricated zero.
 
 ### Energy history
 
@@ -66,39 +66,11 @@ Select **15m**, **1h**, or **6h** and hover over a chart to inspect a reading.
 
 Mac battery data is sampled every five seconds while the app is running, including when the panel is closed. History begins at launch, retains up to six hours in memory, and is cleared on quit. Sleep/wake transitions, long sampling gaps, and missing measurements break the chart line.
 
-## Connected devices
-
-Connected-device scans run when battery details open and repeat approximately once a minute while those details remain visible. Use the refresh button for an immediate scan; the information button explains device support.
-
-| Device | Available readings and requirements |
-| --- | --- |
-| Connected Bluetooth accessories | Battery levels that macOS exposes; disconnected cached entries are excluded. |
-| AirPods | Separate left, right, and case levels when reported by macOS. |
-| USB HID accessories | Battery percentage when the device publishes it. |
-| USB iPhone or iPad | Device detection without a helper; battery level and charging state require the optional helper below and a successful query. |
-| Apple Watch | Watch battery details are not supported by the current integrations. |
-
-Accessory health, cycle count, and time remaining are not provided. Some connected devices can be listed without a reported battery level.
-
-### Enable iPhone and iPad readings
-
-Install [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice) using Homebrew:
-
-```bash
-brew install libimobiledevice
-```
-
-Connect the device over USB, unlock it, and establish trust with this Mac through Finder and the device's trust prompt. Open MacGiver's battery details and refresh connected devices.
-
-MacGiver looks for the `ideviceinfo` executable in `/opt/homebrew/bin` and `/usr/local/bin`. Installation elsewhere is not detected automatically. It does not install the helper or initiate pairing itself.
-
-Queries use the helper's simple-connection mode and a four-second timeout per device. Some iOS/iPadOS versions do not expose the requested battery data through this connection, even after trust is established.
-
 ## Permissions and data
 
 Accessibility access is used to intercept keyboard events for Lock Keyboard. The current implementation drops those events rather than recording their contents.
 
-Mac and accessory readings come from local macOS interfaces and local helper processes. There is no application account, analytics service, or network backend in the current source. Battery history stays in memory; it is not exported or saved between launches.
+Mac battery readings come from local macOS interfaces. There is no application account, analytics service, or network backend in the current source. Battery history stays in memory; it is not exported or saved between launches.
 
 ## Troubleshooting
 
@@ -109,9 +81,6 @@ Mac and accessory readings come from local macOS interfaces and local helper pro
 | Keyboard brightness is unavailable | Confirm the Mac has a built-in backlit keyboard, then click **Retry Keyboard Light**. The private interface may be unavailable on that system. |
 | Keep Awake allows the display to turn off | It prevents idle system sleep, not display sleep. |
 | Time remaining says **Estimating…** | macOS has not supplied a usable estimate. MacGiver does not invent one. |
-| History is empty after launch | Samples accumulate during the current run. Previous sessions are not retained. |
-| An accessory is missing or has no level | Confirm it is connected and refresh. A reading appears only if the underlying source exposes it. |
-| iPhone/iPad is listed without a level | Check the helper location, USB connection, unlock state, and trust. OS-specific query limitations may still apply. |
-| Bluetooth readings are unavailable | Refresh again; the macOS profiler query may have failed or exceeded its time limit. |
+| History is empty after launch | Samples accumulate during the current run. The chart shows a point immediately and a line after the next five-second sample; previous sessions are not retained. |
 
 For build or signing failures, see [development troubleshooting](development.md#build-troubleshooting).

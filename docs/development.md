@@ -79,7 +79,7 @@ Use the signed application on real hardware for changes to system integrations o
 | Keyboard lock | Grant Accessibility access, enable the lock, verify keyboard input is blocked, and use the mouse/trackpad to disable it. |
 | Backlight | Start with visible light, turn it off, and turn it on again. Check the actual keys and restored brightness; also test an initially dark keyboard and external brightness changes while the panel is open. |
 | Mac battery | Compare state and available estimates with `pmset -g batt`. Test charging, discharge, unavailable fields, and sleep/wake history gaps. |
-| Connected devices | Check actual accessories, disconnect one and refresh, and verify that stale entries disappear. Test AirPods components and iPhone/iPad queries only with those devices present. |
+| Energy history | Open battery details, confirm the current point appears, wait for another sample, switch between 15m/1h/6h, and verify the chart remains readable across gaps. |
 
 Record the Mac model, macOS version, device models, and observed results when reporting hardware validation. A successful build, deployment target, or passing fixture test is not evidence of broad hardware compatibility.
 

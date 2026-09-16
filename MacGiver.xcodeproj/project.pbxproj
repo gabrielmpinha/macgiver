@@ -14,7 +14,6 @@
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
 		5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */; };
 		7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */; };
-		900715E4A389890F0CEE4879 /* DeviceBatteryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
 		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
 		FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */; };
@@ -41,7 +40,6 @@
 		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
 		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		94F974A056AA13210CC10A17 /* BatteryReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryReading.swift; sourceTree = "<group>"; };
-		B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBatteryReader.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMenuPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,7 +71,6 @@
 				EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */,
 				44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */,
 				94F974A056AA13210CC10A17 /* BatteryReading.swift */,
-				B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */,
 				3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */,
 				20C307B8233A211C44204F09 /* MacGiverApp.swift */,
 				36C933D04077EDCE5A275C41 /* MenuBarView.swift */,
@@ -227,7 +224,6 @@
 				7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */,
 				5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */,
 				0418DA7541ECC068FD872FD8 /* BatteryReading.swift in Sources */,
-				900715E4A389890F0CEE4879 /* DeviceBatteryReader.swift in Sources */,
 				FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */,
 				0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */,
 				43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */,

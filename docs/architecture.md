@@ -20,10 +20,6 @@ flowchart TD
     Light --> CB[Private CoreBrightness framework]
     Monitor --> Mac[BatteryHardware and BatteryHistory]
     Mac --> IOKit[IOKit power sources and IORegistry]
-    Monitor --> Devices[DeviceBatteryReader actor]
-    Devices --> Profiler[system_profiler Bluetooth data]
-    Devices --> USB[USB IORegistry properties]
-    Devices --> Helper[Optional ideviceinfo helper]
 ```
 
 | Source | Responsibility |
@@ -33,9 +29,8 @@ flowchart TD
 | [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, and backlight errors. |
 | [KeyboardBacklight.swift](../Sources/MacGiver/KeyboardBacklight.swift) | Brightness restoration and verified writes through a runtime-loaded CoreBrightness adapter. |
 | [BatteryReading.swift](../Sources/MacGiver/BatteryReading.swift) | Hardware reads, battery value decoding, availability states, and bounded chart history. |
-| [BatteryMonitor.swift](../Sources/MacGiver/BatteryMonitor.swift) | Five-second sampling, wake notifications, in-memory history, and asynchronous device scans. |
-| [BatteryMenuPanel.swift](../Sources/MacGiver/BatteryMenuPanel.swift) | Summary, metrics, charts, connected devices, and device help. |
-| [DeviceBatteryReader.swift](../Sources/MacGiver/DeviceBatteryReader.swift) | Bluetooth/USB discovery, optional iOS queries, and bounded subprocess execution. |
+| [BatteryMonitor.swift](../Sources/MacGiver/BatteryMonitor.swift) | Five-second sampling, wake notifications, and in-memory history. |
+| [BatteryMenuPanel.swift](../Sources/MacGiver/BatteryMenuPanel.swift) | Battery summary, metrics, and charts. |
 
 ## Utility state
 
@@ -55,21 +50,6 @@ Health compares available nominal/raw capacity with design capacity. Normalized 
 
 History retains at most six hours and 4,321 samples. Chart series break after wake notifications, sampling gaps longer than 20 seconds, or missing measurements. Samples are kept only in memory.
 
-## Connected-device queries
-
-`DeviceBatteryReader` is an actor. The monitor prevents overlapping scans. The expanded battery view triggers scans on opening and at 60-second intervals while visible.
-
-| Source | Query and limits |
-| --- | --- |
-| Bluetooth | `/usr/sbin/system_profiler SPBluetoothDataType -json -detailLevel mini`; 12-second timeout; reads only connected entries. |
-| USB accessories | `IOHIDDevice` properties with USB transport and a published `BatteryPercent`. |
-| iPhone/iPad discovery | `IOUSBHostDevice` product name and serial number. |
-| iPhone/iPad readings | `ideviceinfo -s -u <UDID> -q com.apple.mobile.battery -x`; four-second timeout per device. |
-
-The helper is searched only in `/opt/homebrew/bin` and `/usr/local/bin`. It is optional and is not installed automatically.
-
-`BatteryCommand` launches executables directly without a shell, drains standard output without blocking, discards standard error, and limits output to 2,000,000 bytes. Timeout, cancellation, launch failure, nonzero exit, and oversized output return no result. Its deadline also applies when a descendant process holds the output pipe open.
-
 ## Repository layout
 
 ```text
@@ -83,4 +63,4 @@ CHANGELOG.md             Documented change history
 LICENSE                  MIT license
 ```
 
-There are no additional package dependencies for the main app. The optional device helper is an external executable, not a linked application dependency.
+There are no additional package dependencies for the main app.

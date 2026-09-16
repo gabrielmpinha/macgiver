@@ -2,7 +2,7 @@
 
 > Everyday Mac utilities, one menu bar panel.
 
-MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, controlling the built-in keyboard backlight, and checking battery information. It lives in the menu bar, with a compact battery summary that expands into charts and connected-device readings.
+MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, controlling the built-in keyboard backlight, and checking battery information. It lives in the menu bar, with a compact battery summary that expands into live readings and charts.
 
 ## Features
 
@@ -13,16 +13,14 @@ MacGiver is a native macOS app for keeping your Mac awake, locking keyboard inpu
 | **Keyboard Light** | Turns the built-in backlight off and restores its previous brightness during the same app session. |
 | **Mac battery** | Shows charge, charging state, time estimates, battery power, estimated health, and cycle count. |
 | **Energy history** | Charts charge and battery power over 15 minutes, 1 hour, or 6 hours. |
-| **Connected devices** | Shows available battery levels for connected Bluetooth accessories and USB devices, with optional iPhone/iPad readings. |
 
-Hardware-dependent readings appear only when macOS or the device exposes them. See the [usage guide](docs/usage.md) for support details.
+Hardware-dependent readings appear only when macOS exposes them. See the [usage guide](docs/usage.md) for support details.
 
 ## Requirements
 
 - **To run:** macOS 13 Ventura or later. Backlight control requires a supported built-in backlit keyboard.
 - **To build:** Xcode 26 or later. The project uses Swift 6 and includes an Icon Composer asset.
 - **To regenerate the project:** [XcodeGen](https://github.com/yonaskolb/XcodeGen).
-- **Optional:** [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice) for USB iPhone/iPad battery queries.
 
 The macOS deployment target is 13.0; this does not guarantee every hardware integration works on every supported release. Keyboard Light uses a private macOS interface that can change between releases.
 
@@ -56,14 +54,14 @@ See the [development guide](docs/development.md) for Xcode setup, testing, and s
 
 1. Launch MacGiver and click its menu bar icon. It does not open a regular app window or show a Dock icon.
 2. Use **Keep Awake**, **Lock Keyboard**, and **Keyboard Light** independently.
-3. Click the battery summary to expand its details, history, and connected devices.
+3. Click the battery summary to expand its details and history.
 4. Use **Quit** at the bottom of the panel to close the app.
 
 **Lock Keyboard** requires permission in **System Settings > Privacy & Security > Accessibility**. After enabling MacGiver there, return to the panel and try the switch again. Use your mouse or trackpad to turn the lock off.
 
 Keep Awake prevents idle system sleep; it does not request that the display stay on or provide a closed-lid mode. Battery power is the flow into or out of the battery, not total Mac or wall-outlet consumption.
 
-For device setup, brightness behavior, and common problems, see the [usage and troubleshooting guide](docs/usage.md).
+For brightness behavior and common problems, see the [usage and troubleshooting guide](docs/usage.md).
 
 ## Testing
 
@@ -77,7 +75,7 @@ xcodebuild \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-Tests cover backlight state transitions, battery decoding and history, connected-device parsing, and subprocess limits. Backlight tests use simulated hardware. Real devices and the menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
+Tests cover backlight state transitions and battery decoding/history. Backlight tests use simulated hardware. Hardware integrations and menu bar interaction require the [manual verification steps](docs/development.md#hardware-and-ui-verification).
 
 ## Tech stack
 
@@ -86,17 +84,15 @@ Tests cover backlight state transitions, battery decoding and history, connected
 | Swift 6 | Application code and concurrency |
 | SwiftUI and AppKit | Menu bar UI, application lifecycle, and wake notifications |
 | Swift Charts | Interactive battery history |
-| IOKit | Sleep prevention, Mac power-source data, and USB device properties |
+| IOKit | Sleep prevention and Mac power-source data |
 | Core Graphics and Accessibility | Keyboard event interception and permission checks |
 | CoreBrightness (private, loaded at runtime) | Built-in keyboard backlight control |
-| macOS `system_profiler` | Connected Bluetooth device readings |
-| libimobiledevice (optional) | USB iPhone/iPad battery queries |
 | XcodeGen and XCTest | Project generation and automated tests |
 
 ## Documentation
 
 - [Documentation index](docs/README.md) — find the guide for your task.
-- [Usage and troubleshooting](docs/usage.md) — controls, permissions, battery readings, and device support.
+- [Usage and troubleshooting](docs/usage.md) — controls, permissions, battery readings, and common problems.
 - [Development and verification](docs/development.md) — build, test, and validate changes.
 - [Architecture and source map](docs/architecture.md) — components, data flow, and integration limits.
 - [Changelog](CHANGELOG.md) — documented changes.

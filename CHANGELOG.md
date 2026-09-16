@@ -2,6 +2,12 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — Battery history cleanup
+
+- Removed connected-device battery discovery and its optional iPhone/iPad helper from the battery panel.
+- Fixed the energy-history charts so the selected time window remains stable and isolated readings remain visible while the next samples are collected.
+- Verification: battery and app-state XCTest suites pass after removing device-only coverage.
+
 ## 2026-09-16 — Menu bar interface refresh
 
 - Reworked the menu bar panel into a compact utility cockpit with a clearer header, active utility count, and native macOS material styling.
