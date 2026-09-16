@@ -13,7 +13,7 @@
 		2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */; };
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
 		5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */; };
-		6FB1CEFC3ECAB5033D3F9D2D /* BatteryDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62D30CDFBF8F6BE1D684C19 /* BatteryDashboardView.swift */; };
+		7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */; };
 		900715E4A389890F0CEE4879 /* DeviceBatteryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
 		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
@@ -41,9 +41,9 @@
 		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
 		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		94F974A056AA13210CC10A17 /* BatteryReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryReading.swift; sourceTree = "<group>"; };
-		A62D30CDFBF8F6BE1D684C19 /* BatteryDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryDashboardView.swift; sourceTree = "<group>"; };
 		B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBatteryReader.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMenuPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -70,7 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				C519A42C6F993DEB350AC65C /* AppState.swift */,
-				A62D30CDFBF8F6BE1D684C19 /* BatteryDashboardView.swift */,
+				EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */,
 				44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */,
 				94F974A056AA13210CC10A17 /* BatteryReading.swift */,
 				B6283D8DD34FEFE73F0B740D /* DeviceBatteryReader.swift */,
@@ -224,7 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				074AD03AD311D039C41C5822 /* AppState.swift in Sources */,
-				6FB1CEFC3ECAB5033D3F9D2D /* BatteryDashboardView.swift in Sources */,
+				7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */,
 				5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */,
 				0418DA7541ECC068FD872FD8 /* BatteryReading.swift in Sources */,
 				900715E4A389890F0CEE4879 /* DeviceBatteryReader.swift in Sources */,

@@ -16,12 +16,5 @@ struct MacGiverApp: App {
                 .help("MacGiver")
         }
         .menuBarExtraStyle(.window)
-
-        Window("Battery — MacGiver", id: "battery") {
-            BatteryDashboardView()
-                .environmentObject(batteryMonitor)
-        }
-        .defaultSize(width: 960, height: 850)
-        .windowResizability(.contentMinSize)
     }
 }
