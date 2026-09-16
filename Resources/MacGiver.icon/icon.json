@@ -1,29 +1,83 @@
 {
-  "fill" : {
-    "automatic-gradient" : "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+  "color-space-for-untagged-svg-colors": "display-p3",
+  "fill": {
+    "linear-gradient": [
+      "extended-srgb:0.02745,0.04706,0.12157,1.00000",
+      "extended-srgb:0.09020,0.27059,0.60392,1.00000"
+    ],
+    "orientation": {
+      "start": {
+        "x": 0.08,
+        "y": 0.08
+      },
+      "stop": {
+        "x": 0.92,
+        "y": 0.92
+      }
+    }
   },
-  "groups" : [
+  "groups": [
     {
-      "layers" : [
+      "blend-mode": "normal",
+      "hidden": false,
+      "layers": [
         {
-          "image-name" : "MacGiverIcon.svg",
-          "name" : "MacGiverIcon"
+          "image-name": "03-command-tool.svg",
+          "name": "command tool",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "image-name": "02-battery-charge-bars.svg",
+          "name": "battery charge bars",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "image-name": "01-battery-backplate.svg",
+          "name": "battery backplate",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
         }
       ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
+      "lighting": "individual",
+      "name": "macgiver",
+      "position": {
+        "scale": 1,
+        "translation-in-points": [
+          0,
+          0
+        ]
       },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.5
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.45
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.24
       }
     }
   ],
-  "supported-platforms" : {
-    "circles" : [
+  "supported-platforms": {
+    "circles": [
       "watchOS"
     ],
-    "squares" : "shared"
+    "squares": "shared"
   }
 }
