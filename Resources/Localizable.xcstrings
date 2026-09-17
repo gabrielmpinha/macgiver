@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Battery": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Battery" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Bateria" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Batería" } }
+      }
+    },
+    "Storage": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Storage" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Armazenamento" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Almacenamiento" } }
+      }
+    },
+    "%@ used": {
+      "comment": "Used disk percentage in the compact storage tile.",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "%@ used" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "%@ usado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "%@ usado" } }
+      }
+    },
     "—": {
       "shouldTranslate": false
     },

@@ -12,6 +12,8 @@ struct MenuBarView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var audioMixer: AudioMixer
     @State private var expandedPanel: ExpandedPanel?
+    @State private var availableHeight: CGFloat = 700
+    @State private var openingScreenID: NSNumber?
 
     private enum ExpandedPanel {
         case battery
@@ -28,21 +30,18 @@ struct MenuBarView: View {
     }
 
     var body: some View {
-        Group {
-            if expandedPanel != nil {
-                ScrollView {
+        ContentSizedScrollView(maxHeight: availableHeight) {
+            Group {
+                if expandedPanel != nil {
                     expandedContent
-                        .padding(14)
-                }
-            } else {
-                ScrollView {
+                } else {
                     compactContent
-                        .padding(14)
                 }
-                .scrollIndicators(.hidden)
             }
+            .padding(14)
         }
-        .frame(width: 380, height: expandedPanel == nil ? 570 : 700, alignment: .top)
+        .id(expandedPanel)
+        .frame(width: 380, alignment: .top)
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay {
@@ -50,6 +49,10 @@ struct MenuBarView: View {
                 .strokeBorder(.white.opacity(0.12))
         }
         .tint(MacGiverPalette.accent)
+        .onAppear { updateAvailableHeight(isOpening: true) }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
+            updateAvailableHeight()
+        }
         .task {
             // External keyboard brightness changes are relevant only while the
             // menu panel is visible.
@@ -66,15 +69,28 @@ struct MenuBarView: View {
     }
 
     private var compactContent: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 12) {
             header
-            BatteryCollapsedSummary(onExpand: { expandedPanel = .battery })
-            StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
+            HStack(spacing: 12) {
+                BatteryCollapsedSummary(onExpand: { expandedPanel = .battery })
+                StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
+            }
             VolumeCollapsedSummary(onExpand: { expandedPanel = .volume })
             controls
             messages
             footer
         }
+    }
+
+    private func updateAvailableHeight(isOpening: Bool = false) {
+        let screenIDKey = NSDeviceDescriptionKey("NSScreenNumber")
+        let openingScreen = NSScreen.screens.first {
+            openingScreenID != nil && $0.deviceDescription[screenIDKey] as? NSNumber == openingScreenID
+        }
+        let pointerScreen = NSScreen.screens.first { $0.frame.contains(NSEvent.mouseLocation) }
+        let screen = isOpening ? (pointerScreen ?? NSScreen.main) : (openingScreen ?? NSScreen.main)
+        openingScreenID = screen?.deviceDescription[screenIDKey] as? NSNumber
+        availableHeight = min(700, max(1, (screen?.visibleFrame.height ?? 724) - 24))
     }
 
     private var expandedContent: some View {
@@ -245,6 +261,128 @@ struct MenuBarView: View {
                 .keyboardShortcut("q", modifiers: .command)
                 .help("Quit MacGiver")
             }
+        }
+    }
+}
+
+/// Measure the unconstrained content, then scroll only when it exceeds the screen budget.
+/// A fixed initial height keeps MenuBarExtra from proposing zero to a bare ScrollView.
+struct ContentSizedScrollView<Content: View>: View {
+    let maxHeight: CGFloat
+    @ViewBuilder let content: Content
+    @State private var contentHeight: CGFloat?
+
+    var body: some View {
+        ScrollView {
+            content
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .fixedSize(horizontal: false, vertical: true)
+                .background {
+                    GeometryReader { geometry in
+                        Color.clear.preference(key: PanelContentHeight.self, value: geometry.size.height)
+                    }
+                }
+        }
+        .frame(height: min(contentHeight ?? maxHeight, maxHeight))
+        .onPreferenceChange(PanelContentHeight.self) { height in
+            if height > 0 { contentHeight = height }
+        }
+    }
+}
+
+private struct PanelContentHeight: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
+struct SummaryTile: View {
+    let title: LocalizedStringKey
+    let symbol: String
+    let value: String
+    let status: String
+    let detail: String
+    let progress: Double?
+    let tint: Color
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Image(systemName: symbol)
+                    .font(.system(size: 17, weight: .medium))
+                    .foregroundStyle(tint)
+                    .symbolRenderingMode(.hierarchical)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.tertiary)
+            }
+            .frame(height: 20)
+
+            Text(title)
+                .font(.system(size: 12, weight: .medium))
+                .lineLimit(1)
+
+            Text(value)
+                .font(.system(size: 28, weight: .semibold, design: .rounded))
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+
+            Text(status)
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer(minLength: 0)
+
+            if let progress {
+                ProgressView(value: progress, total: 100)
+                    .tint(tint)
+                    .accessibilityHidden(true)
+            }
+
+            if !detail.isEmpty {
+                Text(detail)
+                    .font(.system(size: 10))
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+        }
+        .padding(12)
+        .frame(width: 170, height: 170, alignment: .topLeading)
+        .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+    }
+}
+
+struct SummaryButtonStyle: ButtonStyle {
+    var tint: Color = MacGiverPalette.accent
+
+    func makeBody(configuration: Configuration) -> some View {
+        Surface(configuration: configuration, tint: tint)
+    }
+
+    private struct Surface: View {
+        let configuration: ButtonStyleConfiguration
+        let tint: Color
+        @State private var isHovered = false
+
+        var body: some View {
+            configuration.label
+                .background(
+                    tint.opacity(configuration.isPressed ? 0.14 : isHovered ? 0.09 : 0.045),
+                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .strokeBorder(tint.opacity(isHovered ? 0.30 : 0.12))
+                }
+                .onHover { isHovered = $0 }
         }
     }
 }

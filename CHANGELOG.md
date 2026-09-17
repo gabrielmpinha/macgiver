@@ -2,6 +2,14 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-17 — Compact menu overview
+
+- Placed battery and storage in matching 170-point square tiles side by side, keeping the quick controls and footer visible in the normal overview.
+- Let the panel fit its content within the opening display's available height, with scrolling for longer details or error messages.
+- Made the entire app-volume row clickable and added hover/pressed feedback to the summary buttons.
+- Clarified free versus used storage and unavailable battery/storage states, with English, Portuguese, and Spanish labels.
+- Verification: 43 XCTest cases passed in each supported language; localized light/dark and unavailable-state renders inspected; compact height and constrained-scroll fixtures passed; signed Debug build and strict code-signature verification passed. Live menu interaction remains unverified because macOS was locked during UI validation.
+
 ## 2026-09-17 — Per-application volume mixer
 
 - Replaced the output-device volume panel with independent sliders and mute controls for running applications.

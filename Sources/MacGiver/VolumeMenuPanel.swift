@@ -9,7 +9,7 @@ struct VolumeCollapsedSummary: View {
     let onExpand: () -> Void
 
     var body: some View {
-        VolumeMenuCard {
+        Button(action: onExpand) {
             HStack(spacing: 9) {
                 Image(systemName: "waveform")
                     .font(.system(size: 18, weight: .semibold))
@@ -38,20 +38,20 @@ struct VolumeCollapsedSummary: View {
                         .foregroundStyle(MacGiverPalette.success)
                 }
 
-                Button(action: onExpand) {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 9, weight: .bold))
-                        .foregroundStyle(.secondary)
-                        .frame(width: 25, height: 25)
-                        .background(.primary.opacity(0.06), in: Circle())
-                }
-                .buttonStyle(.plain)
-                .help("Show app volume mixer")
-                .accessibilityLabel("Show app volume mixer")
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
-        .accessibilityElement(children: .contain)
+        .buttonStyle(SummaryButtonStyle())
+        .help("Show app volume mixer")
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("App volume mixer")
+        .accessibilityValue(mixer.applicationSummary)
+        .accessibilityHint("Show app volume mixer")
     }
 }
 
