@@ -96,16 +96,18 @@ Values are read from the local file-system attributes for `/`. No files are scan
 
 Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage reading. Storage data is sampled every five seconds while the app is running, including when the panel is closed. History begins at launch, retains up to six hours in memory, and is cleared on quit. Sleep/wake transitions, long sampling gaps, and missing measurements break the chart line.
 
-## Volume mixer
+## App volume mixer
 
-The **Volume** card controls the output devices that macOS exposes through CoreAudio:
+The **App volume** card controls application audio independently:
 
-- Drag the compact slider to change the default output volume.
-- Use the speaker button to mute or unmute the default output.
-- Expand the card to adjust each available output device independently.
-- Use **Refresh output devices** after connecting or disconnecting headphones, displays, USB interfaces, or other audio hardware.
+- Expand the card to see running applications.
+- Drag an app's slider to change only that app's level.
+- Use the speaker button to mute or unmute one app.
+- Use **Refresh applications** after opening a new audio app or when an app's helper process has just started.
 
-The mixer uses the public macOS output-device controls. It does not change microphone input levels and does not provide per-app volume; per-app routing requires a third-party audio driver. A device can appear with an unavailable slider when its driver does not expose a writable volume control.
+MacGiver uses the macOS 14.2+ Core Audio process-tap API to apply gain while routing tapped audio through a private mixer. Starting the mixer may require **System Settings > Privacy & Security > Screen & System Audio Recording** access. This permission is for app audio capture and does not use the microphone.
+
+The device used to play the final mix remains managed by macOS; MacGiver does not expose an output-device mixer in this panel.
 
 ## Troubleshooting
 
@@ -118,6 +120,6 @@ The mixer uses the public macOS output-device controls. It does not change micro
 | Time remaining says **Estimating…** | macOS has not supplied a usable estimate. MacGiver does not invent one. |
 | History is empty after launch | Samples accumulate during the current run. The chart shows a point immediately and a line after the next five-second sample; previous sessions are not retained. |
 | Storage is unavailable | Check that macOS can report file-system capacity for the startup disk. MacGiver does not scan files or substitute an estimate. |
-| Volume is unavailable | Connect an output device, open the volume mixer, and use **Refresh output devices**. Some drivers expose no writable volume or mute control. |
+| App volume is unavailable | Allow MacGiver under **System Audio Recording**, then open the mixer and use **Refresh applications**. A usable macOS output must also be connected. |
 
 For build or signing failures, see [development troubleshooting](development.md#build-troubleshooting).

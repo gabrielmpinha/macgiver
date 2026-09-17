@@ -2253,6 +2253,139 @@
         "es": { "stringUnit": { "state": "translated", "value": "Volumen de %@" } }
       }
     },
+    "App volume": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "App volume" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Volume dos apps" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Volumen de apps" } }
+      }
+    },
+    "App volume mixer": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "App volume mixer" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Mixer de volume dos apps" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Mezclador de volumen de apps" } }
+      }
+    },
+    "Adjust each app independently": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Adjust each app independently" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ajuste cada app individualmente" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ajusta cada app individualmente" } }
+      }
+    },
+    "Allow System Audio Recording for MacGiver, then refresh the mixer.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Allow System Audio Recording for MacGiver, then refresh the mixer." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Permita a Gravação de Áudio do Sistema para o MacGiver e atualize o mixer." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Permite la grabación de audio del sistema para MacGiver y actualiza el mezclador." } }
+      }
+    },
+    "APPLICATIONS": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "APPLICATIONS" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "APLICATIVOS" } },
+        "es": { "stringUnit": { "state": "translated", "value": "APLICACIONES" } }
+      }
+    },
+    "AVAILABLE": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "AVAILABLE" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "DISPONÍVEL" } },
+        "es": { "stringUnit": { "state": "translated", "value": "DISPONIBLE" } }
+      }
+    },
+    "Could not start the app volume mixer. Check System Audio Recording permission.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not start the app volume mixer. Check System Audio Recording permission." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível iniciar o mixer de volume dos apps. Verifique a permissão de Gravação de Áudio do Sistema." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo iniciar el mezclador de volumen de apps. Comprueba el permiso de grabación de audio del sistema." } }
+      }
+    },
+    "Each slider controls one app independently. macOS may ask for System Audio Recording permission when the mixer starts.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Each slider controls one app independently. macOS may ask for System Audio Recording permission when the mixer starts." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Cada controle ajusta um app individualmente. O macOS pode pedir a permissão de Gravação de Áudio do Sistema quando o mixer iniciar." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cada control ajusta una app de forma independiente. macOS puede pedir permiso de grabación de audio del sistema cuando se inicie el mezclador." } }
+      }
+    },
+    "Independent levels": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Independent levels" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Níveis individuais" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Niveles independientes" } }
+      }
+    },
+    "No audio applications": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No audio applications" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum app de áudio" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ninguna app de audio" } }
+      }
+    },
+    "No audio applications found": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No audio applications found" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum app de áudio encontrado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron apps de audio" } }
+      }
+    },
+    "No audio applications found.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No audio applications found." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum app de áudio encontrado." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron apps de audio." } }
+      }
+    },
+    "No audio output is available.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No audio output is available." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhuma saída de áudio está disponível." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay ninguna salida de audio disponible." } }
+      }
+    },
+    "Muted": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Muted" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Silenciado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Silenciado" } }
+      }
+    },
+    "Open an app that can play audio, then refresh the mixer.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Open an app that can play audio, then refresh the mixer." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Abra um app que reproduza áudio e atualize o mixer." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abre una app que pueda reproducir audio y actualiza el mezclador." } }
+      }
+    },
+    "PLAYING": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "PLAYING" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "REPRODUZINDO" } },
+        "es": { "stringUnit": { "state": "translated", "value": "REPRODUCIENDO" } }
+      }
+    },
+    "Refresh applications": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Refresh applications" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar aplicativos" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar aplicaciones" } }
+      }
+    },
+    "Show app volume mixer": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show app volume mixer" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Mostrar mixer de volume dos apps" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Mostrar mezclador de volumen de apps" } }
+      }
+    },
+    "Unknown application": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Unknown application" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Aplicativo desconhecido" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Aplicación desconocida" } }
+      }
+    },
     "Zero": {
       "localizations": {
         "en": {

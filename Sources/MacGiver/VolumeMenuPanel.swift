@@ -11,15 +11,19 @@ struct VolumeCollapsedSummary: View {
     var body: some View {
         VolumeMenuCard {
             HStack(spacing: 9) {
-                Image(systemName: volumeSymbol)
+                Image(systemName: "waveform")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(VolumeStyle.accent)
                     .frame(width: 35, height: 35)
-                    .background(VolumeStyle.accent.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
+                    .background(
+                        VolumeStyle.accent.opacity(0.12),
+                        in: RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    )
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Volume").font(.headline)
-                    Text(mixer.defaultDeviceName)
+                    Text("App volume")
+                        .font(.headline)
+                    Text(mixer.applicationSummary)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
@@ -27,23 +31,11 @@ struct VolumeCollapsedSummary: View {
 
                 Spacer(minLength: 4)
 
-                if mixer.defaultVolume != nil,
-                   let percent = mixer.defaultDevice?.volumePercent {
-                    Text("\(percent)%")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .monospacedDigit()
-                        .contentTransition(.numericText())
-                    Button(action: mixer.toggleDefaultMute) {
-                        Image(systemName: mixer.defaultIsMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
-                            .font(.system(size: 11, weight: .semibold))
-                            .frame(width: 25, height: 25)
-                            .background(.primary.opacity(0.06), in: Circle())
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(mixer.defaultDevice?.canSetMute != true)
-                    .help(mixer.defaultIsMuted ? "Unmute output" : "Mute output")
-                    .accessibilityLabel(mixer.defaultIsMuted ? "Unmute output" : "Mute output")
-                    .accessibilityHint("Changes the selected output device.")
+                if mixer.activeApplicationCount > 0 {
+                    Text("LIVE")
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .tracking(0.8)
+                        .foregroundStyle(MacGiverPalette.success)
                 }
 
                 Button(action: onExpand) {
@@ -54,46 +46,12 @@ struct VolumeCollapsedSummary: View {
                         .background(.primary.opacity(0.06), in: Circle())
                 }
                 .buttonStyle(.plain)
-                .help("Show volume mixer")
-                .accessibilityLabel("Show volume mixer")
-            }
-
-            if let volume = mixer.defaultVolume {
-                HStack(spacing: 8) {
-                    Image(systemName: "speaker.fill")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                    Slider(
-                        value: Binding(
-                            get: { mixer.defaultVolume ?? volume },
-                            set: { mixer.setDefaultVolume($0) }
-                        ),
-                        in: 0...1
-                    )
-                    .controlSize(.small)
-                    Image(systemName: "speaker.wave.3.fill")
-                        .font(.system(size: 10, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                }
-                .padding(.top, 8)
-                .disabled(mixer.defaultDevice?.canSetVolume != true)
-            } else {
-                Text(mixer.message ?? "Output volume is unavailable")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .padding(.top, 8)
+                .help("Show app volume mixer")
+                .accessibilityLabel("Show app volume mixer")
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Volume, \(mixer.defaultDeviceName)")
-    }
-
-    private var volumeSymbol: String {
-        if mixer.defaultIsMuted { return "speaker.slash.fill" }
-        guard let volume = mixer.defaultVolume else { return "speaker.fill" }
-        if volume == 0 { return "speaker.fill" }
-        if volume < 0.5 { return "speaker.wave.1.fill" }
-        return "speaker.wave.2.fill"
+        .accessibilityLabel("App volume mixer")
     }
 }
 
@@ -109,17 +67,17 @@ struct VolumeMenuPanel: View {
         VStack(alignment: .leading, spacing: 12) {
             detailHeader
 
-            if mixer.devices.isEmpty {
+            if mixer.applications.isEmpty {
                 unavailable
             } else {
-                deviceList
+                applicationList
             }
 
             if let message = mixer.message {
                 InlineVolumeMessage(message: message)
             }
 
-            Text("Controls the output volume exposed by macOS. App-by-app volume requires a third-party audio driver.")
+            Text("Each slider controls one app independently. macOS may ask for System Audio Recording permission when the mixer starts.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -142,9 +100,9 @@ struct VolumeMenuPanel: View {
             .accessibilityLabel("Back to quick controls")
 
             VStack(alignment: .leading, spacing: 2) {
-                Text("Volume mixer")
+                Text("App volume mixer")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
-                Text("Output devices available to macOS")
+                Text("Adjust each app independently")
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
             }
@@ -158,16 +116,16 @@ struct VolumeMenuPanel: View {
                     .background(.primary.opacity(0.06), in: Circle())
             }
             .buttonStyle(.plain)
-            .help("Refresh output devices")
-            .accessibilityLabel("Refresh output devices")
+            .help("Refresh applications")
+            .accessibilityLabel("Refresh applications")
         }
     }
 
-    private var deviceList: some View {
+    private var applicationList: some View {
         VStack(alignment: .leading, spacing: 9) {
-            VolumeSectionLabel(title: "OUTPUT DEVICES", detail: "Adjust independently")
-            ForEach(mixer.devices) { device in
-                VolumeDeviceRow(device: device)
+            VolumeSectionLabel(title: "APPLICATIONS", detail: "Independent levels")
+            ForEach(mixer.applications) { application in
+                VolumeApplicationRow(application: application)
             }
         }
     }
@@ -175,12 +133,12 @@ struct VolumeMenuPanel: View {
     private var unavailable: some View {
         VolumeMenuCard {
             Label {
-                Text("No output devices found")
+                Text("No audio applications found")
             } icon: {
-                Image(systemName: "speaker.slash")
+                Image(systemName: "waveform.slash")
             }
             .font(.subheadline.weight(.medium))
-            Text("Connect an audio output and refresh the mixer.")
+            Text("Open an app that can play audio, then refresh the mixer.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .padding(.top, 3)
@@ -188,76 +146,73 @@ struct VolumeMenuPanel: View {
     }
 }
 
-private struct VolumeDeviceRow: View {
+private struct VolumeApplicationRow: View {
     @EnvironmentObject private var mixer: AudioMixer
-    let device: AudioOutputDevice
+    let application: AudioApplication
 
     var body: some View {
         VolumeMenuCard {
             HStack(spacing: 8) {
-                Image(systemName: device.isDefault ? "checkmark.circle.fill" : "speaker.wave.2.fill")
+                Image(systemName: application.isMuted ? "speaker.slash.fill" : "app.fill")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(device.isDefault ? VolumeStyle.accent : .secondary)
+                    .foregroundStyle(application.isAudioActive ? VolumeStyle.accent : .secondary)
                     .frame(width: 24)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(device.name)
+                    Text(application.name)
                         .font(.system(size: 13, weight: .medium))
                         .lineLimit(1)
-                    if device.isDefault {
-                        Text("DEFAULT OUTPUT")
-                            .font(.system(size: 8, weight: .bold, design: .rounded))
-                            .tracking(0.7)
-                            .foregroundStyle(VolumeStyle.accent)
-                    }
+                    Text(application.isAudioActive ? "PLAYING" : "AVAILABLE")
+                        .font(.system(size: 8, weight: .bold, design: .rounded))
+                        .tracking(0.7)
+                        .foregroundStyle(
+                            application.isAudioActive
+                                ? VolumeStyle.accent
+                                : Color.secondary.opacity(0.65)
+                        )
                 }
 
                 Spacer(minLength: 4)
 
-                if let volumePercent = device.volumePercent {
-                    Text("\(volumePercent)%")
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .monospacedDigit()
-                } else {
-                    Text("Unavailable")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
+                Text(application.isMuted ? "Muted" : "\(application.volumePercent)%")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(application.isMuted ? .secondary : .primary)
 
                 Button {
-                    if let isMuted = device.isMuted {
-                        mixer.setMuted(!isMuted, for: device.id)
-                    }
+                    mixer.toggleMute(for: application.id)
                 } label: {
-                    Image(systemName: device.isMuted == true ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                    Image(systemName: application.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
                         .font(.system(size: 11, weight: .semibold))
                         .frame(width: 25, height: 25)
-                        .background(device.isMuted == true ? VolumeStyle.accent.opacity(0.15) : .primary.opacity(0.06), in: Circle())
+                        .background(
+                            application.isMuted
+                                ? VolumeStyle.accent.opacity(0.15)
+                                : .primary.opacity(0.06),
+                            in: Circle()
+                        )
                 }
                 .buttonStyle(.plain)
-                .disabled(device.isMuted == nil || !device.canSetMute)
-                .help(device.isMuted == true ? "Unmute output" : "Mute output")
-                .accessibilityLabel(device.isMuted == true ? "Unmute \(device.name)" : "Mute \(device.name)")
+                .help(application.isMuted ? "Unmute \(application.name)" : "Mute \(application.name)")
+                .accessibilityLabel(application.isMuted ? "Unmute \(application.name)" : "Mute \(application.name)")
             }
 
-            if let volume = device.volume {
-                Slider(
-                    value: Binding(
-                        get: {
-                            mixer.devices.first(where: { $0.id == device.id })?.volume.map(Double.init)
-                                ?? Double(volume)
-                        },
-                        set: { mixer.setVolume($0, for: device.id) }
-                    ),
-                    in: 0...1
-                )
-                .controlSize(.small)
-                .tint(device.isDefault ? VolumeStyle.accent : .secondary)
-                .disabled(!device.canSetVolume)
-                .padding(.leading, 32)
-                .padding(.top, 4)
-                .accessibilityLabel("Volume for \(device.name)")
-            }
+            Slider(
+                value: Binding(
+                    get: {
+                        mixer.applications.first(where: { $0.id == application.id }).map { Double($0.volume) }
+                            ?? Double(application.volume)
+                    },
+                    set: { mixer.setVolume($0, for: application.id) }
+                ),
+                in: 0...1
+            )
+            .controlSize(.small)
+            .tint(application.isAudioActive ? VolumeStyle.accent : .secondary)
+            .padding(.leading, 32)
+            .padding(.top, 4)
+            .accessibilityLabel("Volume for \(application.name)")
+            .accessibilityValue(application.isMuted ? "Muted" : "\(application.volumePercent) percent")
         }
         .accessibilityElement(children: .contain)
     }

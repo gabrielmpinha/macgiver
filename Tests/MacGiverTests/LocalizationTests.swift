@@ -139,7 +139,11 @@ final class LocalizationTests: XCTestCase {
         let litKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { 0.4 }, writeBrightness: { _ in false }
         ))
-        let audioMixer = AudioMixer(hardware: LocalizationAudioHardware())
+        let audioMixer = AudioMixer(
+            applicationProvider: LocalizationAudioApplicationProvider(),
+            engine: LocalizationAudioProcessMixer(),
+            startsAutomatically: false
+        )
         try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "compact")
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
@@ -188,13 +192,20 @@ final class LocalizationTests: XCTestCase {
 }
 
 @MainActor
-private final class LocalizationAudioHardware: AudioHardwareProviding {
-    func outputDevices() -> [AudioOutputDevice] {
-        [AudioOutputDevice(id: 1, name: "MacBook Pro Speakers", volume: 0.64, isMuted: false,
-                           isDefault: true, canSetVolume: true, canSetMute: true)]
+private final class LocalizationAudioApplicationProvider: AudioApplicationProviding {
+    func applications() -> [AudioApplicationInfo] {
+        [AudioApplicationInfo(id: 1, name: "Music", bundleID: "com.apple.Music", isAudioActive: true)]
     }
+}
 
-    func setVolume(_ volume: Float, for deviceID: UInt32) -> Bool { true }
+@MainActor
+private final class LocalizationAudioProcessMixer: AudioProcessMixingProviding {
+    var isRunning = false
+    var message: String?
 
-    func setMuted(_ muted: Bool, for deviceID: UInt32) -> Bool { true }
+    func start() throws { isRunning = true }
+    func stop() { isRunning = false }
+    func updateApplications(_ applications: [AudioApplication]) {}
+    func setVolume(_ volume: Float, for applicationID: pid_t) {}
+    func setMuted(_ muted: Bool, for applicationID: pid_t) {}
 }

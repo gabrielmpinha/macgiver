@@ -3,109 +3,127 @@ import XCTest
 
 @MainActor
 final class VolumeMixerTests: XCTestCase {
-    func testDefaultOutputIsSelectedAndFormatted() {
-        let stub = AudioMixerStub(devices: [
-            .init(id: 1, name: "MacBook Pro Speakers", volume: 0.42, isMuted: false,
-                  isDefault: true, canSetVolume: true, canSetMute: true),
-            .init(id: 2, name: "Headphones", volume: 0.80, isMuted: false,
-                  isDefault: false, canSetVolume: true, canSetMute: true)
+    func testApplicationsAreDiscoveredAndSorted() {
+        let provider = AudioApplicationProviderStub(applications: [
+            .init(id: 2, name: "Safari", bundleID: "com.apple.Safari", isAudioActive: true),
+            .init(id: 1, name: "Music", bundleID: "com.apple.Music", isAudioActive: false)
         ])
-        let mixer = AudioMixer(hardware: stub)
+        let mixer = AudioMixer(
+            applicationProvider: provider,
+            engine: AudioProcessMixerStub(),
+            startsAutomatically: false
+        )
 
-        XCTAssertEqual(mixer.defaultDeviceName, "MacBook Pro Speakers")
-        XCTAssertEqual(mixer.defaultVolume ?? 0, 0.42, accuracy: 0.0001)
-        XCTAssertEqual(mixer.defaultDevice?.volumePercent, 42)
-        XCTAssertFalse(mixer.defaultIsMuted)
+        XCTAssertEqual(mixer.applications.map(\.name), ["Music", "Safari"])
+        XCTAssertEqual(mixer.applications.first?.volumePercent, 100)
+        XCTAssertEqual(mixer.activeApplicationCount, 1)
+        XCTAssertEqual(mixer.applicationSummary, String(localized: "Adjust each app independently"))
     }
 
-    func testVolumeIsClampedAndRefreshedAfterWrite() {
-        let stub = AudioMixerStub(devices: [
-            .init(id: 1, name: "Speakers", volume: 0.42, isMuted: false,
-                  isDefault: true, canSetVolume: true, canSetMute: true)
-        ])
-        let mixer = AudioMixer(hardware: stub)
+    func testVolumeIsClampedAndForwardedToTheApplicationEngine() {
+        let engine = AudioProcessMixerStub()
+        let mixer = AudioMixer(
+            applicationProvider: AudioApplicationProviderStub(applications: [
+                .init(id: 1, name: "Safari", bundleID: "com.apple.Safari", isAudioActive: true)
+            ]),
+            engine: engine,
+            startsAutomatically: false
+        )
 
-        mixer.setDefaultVolume(1.5)
+        mixer.setVolume(1.5, for: 1)
 
-        XCTAssertEqual(stub.volumeWrites.count, 1)
-        XCTAssertEqual(stub.volumeWrites.first?.0, 1)
-        XCTAssertEqual(stub.volumeWrites.first?.1 ?? 0, 1, accuracy: 0.0001)
-        XCTAssertEqual(mixer.defaultVolume ?? 0, 1, accuracy: 0.0001)
-        XCTAssertNil(mixer.message)
+        XCTAssertEqual(engine.volumeWrites.count, 1)
+        XCTAssertEqual(engine.volumeWrites.first?.0, 1)
+        XCTAssertEqual(engine.volumeWrites.first?.1 ?? 0, 1, accuracy: 0.0001)
+        XCTAssertEqual(mixer.applications.first?.volume ?? 0, 1, accuracy: 0.0001)
     }
 
-    func testMuteToggleWritesAndRefreshes() {
-        let stub = AudioMixerStub(devices: [
-            .init(id: 1, name: "Speakers", volume: 0.42, isMuted: false,
-                  isDefault: true, canSetVolume: true, canSetMute: true)
-        ])
-        let mixer = AudioMixer(hardware: stub)
+    func testMuteToggleIsForwardedAndReflectedLocally() {
+        let engine = AudioProcessMixerStub()
+        let mixer = AudioMixer(
+            applicationProvider: AudioApplicationProviderStub(applications: [
+                .init(id: 1, name: "Music", bundleID: "com.apple.Music", isAudioActive: true)
+            ]),
+            engine: engine,
+            startsAutomatically: false
+        )
 
-        mixer.toggleDefaultMute()
+        mixer.toggleMute(for: 1)
 
-        XCTAssertEqual(stub.muteWrites.count, 1)
-        XCTAssertEqual(stub.muteWrites.first?.0, 1)
-        XCTAssertEqual(stub.muteWrites.first?.1, true)
-        XCTAssertTrue(mixer.defaultIsMuted)
+        XCTAssertEqual(engine.muteWrites.count, 1)
+        XCTAssertEqual(engine.muteWrites.first?.0, 1)
+        XCTAssertEqual(engine.muteWrites.first?.1, true)
+        XCTAssertTrue(mixer.applications.first?.isMuted == true)
     }
 
-    func testUnavailableOutputDoesNotPretendToBeZero() {
-        let mixer = AudioMixer(hardware: AudioMixerStub(devices: []))
+    func testNoApplicationsShowsActionableEmptyState() {
+        let mixer = AudioMixer(
+            applicationProvider: AudioApplicationProviderStub(applications: []),
+            engine: AudioProcessMixerStub(),
+            startsAutomatically: false
+        )
 
-        XCTAssertNil(mixer.defaultVolume)
-        XCTAssertEqual(mixer.defaultDeviceName, String(localized: "No output device"))
-        XCTAssertEqual(mixer.message, String(localized: "No output devices found."))
+        XCTAssertTrue(mixer.applications.isEmpty)
+        XCTAssertEqual(mixer.message, String(localized: "No audio applications found."))
+        XCTAssertEqual(mixer.applicationSummary, String(localized: "No audio applications"))
     }
 
-    func testFailedWriteKeepsActionableMessage() {
-        let stub = AudioMixerStub(devices: [
-            .init(id: 1, name: "Speakers", volume: 0.42, isMuted: false,
-                  isDefault: true, canSetVolume: false, canSetMute: true)
+    func testExistingVolumeIsPreservedAcrossRefresh() {
+        let provider = AudioApplicationProviderStub(applications: [
+            .init(id: 1, name: "Safari", bundleID: "com.apple.Safari", isAudioActive: true)
         ])
-        let mixer = AudioMixer(hardware: stub)
+        let mixer = AudioMixer(
+            applicationProvider: provider,
+            engine: AudioProcessMixerStub(),
+            startsAutomatically: false
+        )
 
-        mixer.setDefaultVolume(0.2)
+        mixer.setVolume(0.35, for: 1)
+        provider.items = [
+            .init(id: 1, name: "Safari", bundleID: "com.apple.Safari", isAudioActive: false)
+        ]
+        mixer.refresh()
 
-        XCTAssertEqual(mixer.defaultVolume ?? 0, 0.42, accuracy: 0.0001)
-        XCTAssertEqual(mixer.message, String(localized: "Could not change output volume. Try again."))
+        XCTAssertEqual(mixer.applications.first?.volume ?? 0, 0.35, accuracy: 0.0001)
+        XCTAssertFalse(mixer.applications.first?.isAudioActive == true)
     }
 }
 
 @MainActor
-private final class AudioMixerStub: AudioHardwareProviding {
-    var devices: [AudioOutputDevice]
-    var volumeWrites: [(UInt32, Float)] = []
-    var muteWrites: [(UInt32, Bool)] = []
+private final class AudioApplicationProviderStub: AudioApplicationProviding {
+    var items: [AudioApplicationInfo]
 
-    init(devices: [AudioOutputDevice]) {
-        self.devices = devices
+    init(applications: [AudioApplicationInfo]) {
+        self.items = applications
     }
 
-    func outputDevices() -> [AudioOutputDevice] {
-        devices
+    func applications() -> [AudioApplicationInfo] {
+        items
+    }
+}
+
+@MainActor
+private final class AudioProcessMixerStub: AudioProcessMixingProviding {
+    var isRunning = false
+    var message: String?
+    var volumeWrites: [(pid_t, Float)] = []
+    var muteWrites: [(pid_t, Bool)] = []
+
+    func start() throws {
+        isRunning = true
     }
 
-    func setVolume(_ volume: Float, for deviceID: UInt32) -> Bool {
-        volumeWrites.append((deviceID, volume))
-        guard let index = devices.firstIndex(where: { $0.id == deviceID }), devices[index].canSetVolume else {
-            return false
-        }
-        let device = devices[index]
-        devices[index] = AudioOutputDevice(id: device.id, name: device.name, volume: volume,
-                                           isMuted: device.isMuted, isDefault: device.isDefault,
-                                           canSetVolume: device.canSetVolume, canSetMute: device.canSetMute)
-        return true
+    func stop() {
+        isRunning = false
     }
 
-    func setMuted(_ muted: Bool, for deviceID: UInt32) -> Bool {
-        muteWrites.append((deviceID, muted))
-        guard let index = devices.firstIndex(where: { $0.id == deviceID }), devices[index].canSetMute else {
-            return false
-        }
-        let device = devices[index]
-        devices[index] = AudioOutputDevice(id: device.id, name: device.name, volume: device.volume,
-                                           isMuted: muted, isDefault: device.isDefault,
-                                           canSetVolume: device.canSetVolume, canSetMute: device.canSetMute)
-        return true
+    func updateApplications(_ applications: [AudioApplication]) {}
+
+    func setVolume(_ volume: Float, for applicationID: pid_t) {
+        volumeWrites.append((applicationID, volume))
+    }
+
+    func setMuted(_ muted: Bool, for applicationID: pid_t) {
+        muteWrites.append((applicationID, muted))
     }
 }
