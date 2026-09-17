@@ -6,7 +6,7 @@
 
 Launch MacGiver, then click its menu bar icon. The app runs without a Dock icon or a standalone window.
 
-The panel opens with compact battery and storage summaries plus three utility switches. Click either summary to expand details within the same panel. Use the upward chevron to collapse them. Closing and reopening the panel returns it to the compact layout.
+The panel opens with compact battery and storage summaries, a volume card, and three utility switches. Click a summary to expand details within the same panel. Use the upward chevron to collapse it. Closing and reopening the panel returns it to the compact layout.
 
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
@@ -96,6 +96,17 @@ Values are read from the local file-system attributes for `/`. No files are scan
 
 Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage reading. Storage data is sampled every five seconds while the app is running, including when the panel is closed. History begins at launch, retains up to six hours in memory, and is cleared on quit. Sleep/wake transitions, long sampling gaps, and missing measurements break the chart line.
 
+## Volume mixer
+
+The **Volume** card controls the output devices that macOS exposes through CoreAudio:
+
+- Drag the compact slider to change the default output volume.
+- Use the speaker button to mute or unmute the default output.
+- Expand the card to adjust each available output device independently.
+- Use **Refresh output devices** after connecting or disconnecting headphones, displays, USB interfaces, or other audio hardware.
+
+The mixer uses the public macOS output-device controls. It does not change microphone input levels and does not provide per-app volume; per-app routing requires a third-party audio driver. A device can appear with an unavailable slider when its driver does not expose a writable volume control.
+
 ## Troubleshooting
 
 | Symptom | What to check |
@@ -107,5 +118,6 @@ Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage re
 | Time remaining says **Estimating…** | macOS has not supplied a usable estimate. MacGiver does not invent one. |
 | History is empty after launch | Samples accumulate during the current run. The chart shows a point immediately and a line after the next five-second sample; previous sessions are not retained. |
 | Storage is unavailable | Check that macOS can report file-system capacity for the startup disk. MacGiver does not scan files or substitute an estimate. |
+| Volume is unavailable | Connect an output device, open the volume mixer, and use **Refresh output devices**. Some drivers expose no writable volume or mute control. |
 
 For build or signing failures, see [development troubleshooting](development.md#build-troubleshooting).

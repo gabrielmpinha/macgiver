@@ -10,6 +10,7 @@
 		0418DA7541ECC068FD872FD8 /* BatteryReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F974A056AA13210CC10A17 /* BatteryReading.swift */; };
 		074AD03AD311D039C41C5822 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C519A42C6F993DEB350AC65C /* AppState.swift */; };
 		0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C307B8233A211C44204F09 /* MacGiverApp.swift */; };
+		1C12DDE6EF395E0B2D195C56 /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2F4650979E280C5B16117D /* VolumeTests.swift */; };
 		2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */; };
 		38834636CBCE25426D6F2A5A /* StorageMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5711EFEB4F1991E6FD7A27 /* StorageMenuPanel.swift */; };
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
@@ -22,8 +23,10 @@
 		BEA2E312393E68922D200DBC /* StorageReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8F9A6777C0CB24F96A99F6 /* StorageReading.swift */; };
 		CD826A6B08AABBB135147312 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC52F0C647EB7B98777CDD2 /* StorageTests.swift */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
+		E5CBEA9D6ECC17AC90E8B763 /* VolumeMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A392242418916A34CBF405B /* VolumeMenuPanel.swift */; };
 		E926CCA0287E2D38E50F2B1D /* MacGiver.icon in Resources */ = {isa = PBXBuildFile; fileRef = 76524CDF64B5DC8F4689E4DE /* MacGiver.icon */; };
 		FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */; };
+		FF0CFB2E58E1F5748918AB46 /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7040708C58AB015E9FE5019 /* AudioMixer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,7 @@
 		318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryTests.swift; sourceTree = "<group>"; };
 		3634513B01C4E4ED72F3F903 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		36C933D04077EDCE5A275C41 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		3A392242418916A34CBF405B /* VolumeMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuPanel.swift; sourceTree = "<group>"; };
 		3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBacklight.swift; sourceTree = "<group>"; };
 		44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMonitor.swift; sourceTree = "<group>"; };
 		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
@@ -50,11 +54,13 @@
 		94F974A056AA13210CC10A17 /* BatteryReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryReading.swift; sourceTree = "<group>"; };
 		BA8F9A6777C0CB24F96A99F6 /* StorageReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageReading.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		CA2F4650979E280C5B16117D /* VolumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeTests.swift; sourceTree = "<group>"; };
 		CE6B140D52430544259E8C37 /* StorageMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMonitor.swift; sourceTree = "<group>"; };
 		DA71D2B3F7D3893A859E35C5 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		E9EF1D510764ABDEC6E11BEE /* AppMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetadata.swift; sourceTree = "<group>"; };
 		EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMenuPanel.swift; sourceTree = "<group>"; };
+		F7040708C58AB015E9FE5019 /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
 		FB5711EFEB4F1991E6FD7A27 /* StorageMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMenuPanel.swift; sourceTree = "<group>"; };
 		FBC52F0C647EB7B98777CDD2 /* StorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +73,7 @@
 				318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */,
 				E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */,
 				FBC52F0C647EB7B98777CDD2 /* StorageTests.swift */,
+				CA2F4650979E280C5B16117D /* VolumeTests.swift */,
 			);
 			name = MacGiverTests;
 			path = Tests/MacGiverTests;
@@ -94,6 +101,7 @@
 			children = (
 				E9EF1D510764ABDEC6E11BEE /* AppMetadata.swift */,
 				C519A42C6F993DEB350AC65C /* AppState.swift */,
+				F7040708C58AB015E9FE5019 /* AudioMixer.swift */,
 				EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */,
 				44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */,
 				94F974A056AA13210CC10A17 /* BatteryReading.swift */,
@@ -103,6 +111,7 @@
 				FB5711EFEB4F1991E6FD7A27 /* StorageMenuPanel.swift */,
 				CE6B140D52430544259E8C37 /* StorageMonitor.swift */,
 				BA8F9A6777C0CB24F96A99F6 /* StorageReading.swift */,
+				3A392242418916A34CBF405B /* VolumeMenuPanel.swift */,
 			);
 			name = MacGiver;
 			path = Sources/MacGiver;
@@ -249,6 +258,7 @@
 				2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */,
 				75A031EF5C5688EDE82D2B71 /* LocalizationTests.swift in Sources */,
 				CD826A6B08AABBB135147312 /* StorageTests.swift in Sources */,
+				1C12DDE6EF395E0B2D195C56 /* VolumeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +268,7 @@
 			files = (
 				5AEA37D5EDC84B6572BBA86D /* AppMetadata.swift in Sources */,
 				074AD03AD311D039C41C5822 /* AppState.swift in Sources */,
+				FF0CFB2E58E1F5748918AB46 /* AudioMixer.swift in Sources */,
 				7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */,
 				5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */,
 				0418DA7541ECC068FD872FD8 /* BatteryReading.swift in Sources */,
@@ -267,6 +278,7 @@
 				38834636CBCE25426D6F2A5A /* StorageMenuPanel.swift in Sources */,
 				B6AB050B7301E3B0EDACB8F9 /* StorageMonitor.swift in Sources */,
 				BEA2E312393E68922D200DBC /* StorageReading.swift in Sources */,
+				E5CBEA9D6ECC17AC90E8B763 /* VolumeMenuPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

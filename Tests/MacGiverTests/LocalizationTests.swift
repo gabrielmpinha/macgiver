@@ -139,14 +139,16 @@ final class LocalizationTests: XCTestCase {
         let litKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { 0.4 }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage), name: "compact")
+        let audioMixer = AudioMixer(hardware: LocalizationAudioHardware())
+        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "compact")
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { nil }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor).environmentObject(storage), name: "keyboard-error")
+        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "keyboard-error")
         try await attachPanel(BatteryMenuPanel().environmentObject(monitor).padding(14).frame(width: 380), name: "battery-details")
         try await attachPanel(StorageMenuPanel().environmentObject(storage).padding(14).frame(width: 380), name: "storage-details")
+        try await attachPanel(VolumeMenuPanel().environmentObject(audioMixer).padding(14).frame(width: 380), name: "volume-details")
         let noBattery = BatteryMonitor(startAutomatically: false, readBattery: { BatteryReading(availability: .noBattery) })
         noBattery.refreshBattery()
         try await attachPanel(BatteryMenuPanel().environmentObject(noBattery).padding(14).frame(width: 380), name: "no-battery")
@@ -183,4 +185,16 @@ final class LocalizationTests: XCTestCase {
         let data = try Data(contentsOf: url)
         return try XCTUnwrap(PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any])
     }
+}
+
+@MainActor
+private final class LocalizationAudioHardware: AudioHardwareProviding {
+    func outputDevices() -> [AudioOutputDevice] {
+        [AudioOutputDevice(id: 1, name: "MacBook Pro Speakers", volume: 0.64, isMuted: false,
+                           isDefault: true, canSetVolume: true, canSetMute: true)]
+    }
+
+    func setVolume(_ volume: Float, for deviceID: UInt32) -> Bool { true }
+
+    func setMuted(_ muted: Bool, for deviceID: UInt32) -> Bool { true }
 }

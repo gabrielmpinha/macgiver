@@ -10,11 +10,13 @@ enum MacGiverPalette {
 
 struct MenuBarView: View {
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var audioMixer: AudioMixer
     @State private var expandedPanel: ExpandedPanel?
 
     private enum ExpandedPanel {
         case battery
         case storage
+        case volume
     }
 
     private var activeUtilities: Int {
@@ -53,6 +55,7 @@ struct MenuBarView: View {
             // menu panel is visible.
             while !Task.isCancelled {
                 appState.refreshKeyboardLight()
+                audioMixer.refresh()
                 do { try await Task.sleep(for: .seconds(1)) } catch { break }
             }
         }
@@ -67,6 +70,7 @@ struct MenuBarView: View {
             header
             BatteryCollapsedSummary(onExpand: { expandedPanel = .battery })
             StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
+            VolumeCollapsedSummary(onExpand: { expandedPanel = .volume })
             controls
             messages
             footer
@@ -80,6 +84,8 @@ struct MenuBarView: View {
                 BatteryMenuPanel { expandedPanel = nil }
             case .storage:
                 StorageMenuPanel { expandedPanel = nil }
+            case .volume:
+                VolumeMenuPanel { expandedPanel = nil }
             case nil:
                 EmptyView()
             }

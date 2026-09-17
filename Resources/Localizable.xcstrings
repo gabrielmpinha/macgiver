@@ -2085,6 +2085,174 @@
         }
       }
     },
+    "Adjust independently": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Adjust independently" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ajuste individual" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ajuste individual" } }
+      }
+    },
+    "Changes the selected output device.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Changes the selected output device." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Altera o dispositivo de saída selecionado." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cambia el dispositivo de salida seleccionado." } }
+      }
+    },
+    "Connect an audio output and refresh the mixer.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Connect an audio output and refresh the mixer." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Conecte uma saída de áudio e atualize o mixer." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Conecta una salida de audio y actualiza el mezclador." } }
+      }
+    },
+    "Controls the output volume exposed by macOS. App-by-app volume requires a third-party audio driver.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Controls the output volume exposed by macOS. App-by-app volume requires a third-party audio driver." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Controla o volume de saída exposto pelo macOS. O volume por app exige um driver de áudio de terceiros." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Controla el volumen de salida expuesto por macOS. El volumen por app requiere un controlador de audio de terceros." } }
+      }
+    },
+    "Could not change output mute. Try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not change output mute. Try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível alterar o mudo da saída. Tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo cambiar el silencio de la salida. Vuelve a intentarlo." } }
+      }
+    },
+    "Could not change output volume. Try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not change output volume. Try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível alterar o volume de saída. Tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo cambiar el volumen de salida. Vuelve a intentarlo." } }
+      }
+    },
+    "DEFAULT OUTPUT": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "DEFAULT OUTPUT" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "SAÍDA PADRÃO" } },
+        "es": { "stringUnit": { "state": "translated", "value": "SALIDA PREDETERMINADA" } }
+      }
+    },
+    "Mute %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Mute %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Silenciar %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Silenciar %@" } }
+      }
+    },
+    "Mute output": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Mute output" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Silenciar saída" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Silenciar salida" } }
+      }
+    },
+    "No output device": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No output device" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum dispositivo de saída" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ningún dispositivo de salida" } }
+      }
+    },
+    "No output devices found": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No output devices found" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum dispositivo de saída encontrado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron dispositivos de salida" } }
+      }
+    },
+    "No output devices found.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No output devices found." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum dispositivo de saída encontrado." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron dispositivos de salida." } }
+      }
+    },
+    "OUTPUT DEVICES": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "OUTPUT DEVICES" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "DISPOSITIVOS DE SAÍDA" } },
+        "es": { "stringUnit": { "state": "translated", "value": "DISPOSITIVOS DE SALIDA" } }
+      }
+    },
+    "Output devices available to macOS": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Output devices available to macOS" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Dispositivos de saída disponíveis para o macOS" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Dispositivos de salida disponibles para macOS" } }
+      }
+    },
+    "Output volume is unavailable": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Output volume is unavailable" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O volume de saída está indisponível" } },
+        "es": { "stringUnit": { "state": "translated", "value": "El volumen de salida no está disponible" } }
+      }
+    },
+    "Refresh output devices": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Refresh output devices" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar dispositivos de saída" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar dispositivos de salida" } }
+      }
+    },
+    "Show volume mixer": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Show volume mixer" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Mostrar mixer de volume" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Mostrar mezclador de volumen" } }
+      }
+    },
+    "Unknown output": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Unknown output" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Saída desconhecida" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Salida desconocida" } }
+      }
+    },
+    "Unmute %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Unmute %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ativar som de %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Activar sonido de %@" } }
+      }
+    },
+    "Unmute output": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Unmute output" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ativar som da saída" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Activar sonido de salida" } }
+      }
+    },
+    "Volume": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Volume" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Volume" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Volumen" } }
+      }
+    },
+    "Volume mixer": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Volume mixer" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Mixer de volume" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Mezclador de volumen" } }
+      }
+    },
+    "Volume, %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Volume, %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Volume, %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Volumen, %@" } }
+      }
+    },
+    "Volume for %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Volume for %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Volume de %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Volumen de %@" } }
+      }
+    },
     "Zero": {
       "localizations": {
         "en": {

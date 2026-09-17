@@ -96,6 +96,8 @@ Use the signed application on real hardware for changes to system integrations o
 | Energy history | Open battery details, confirm the current point appears, wait for another sample, switch between 15m/1h/6h, and verify the chart remains readable across gaps. |
 | Mac storage | Compare used and free values with Finder's startup-disk information. Confirm unavailable values render as a clear state if the file-system attributes cannot be read. |
 | Storage history | Open storage details, confirm the current usage point appears, wait for another sample, switch between 15m/1h/6h, and verify the chart remains readable across gaps. |
+| Volume mixer | Launch the signed app, open the panel, confirm the default output name and percentage, drag the compact slider, mute/unmute, expand the mixer, and verify each connected output reflects changes in System Settings or the menu-bar sound control. |
+| Output changes | Connect and disconnect headphones or another output while the panel is open, then use **Refresh output devices** and confirm the device list and default-output marker update. |
 
 Record the Mac model, macOS version, device models, and observed results when reporting hardware validation. A successful build, deployment target, or passing fixture test is not evidence of broad hardware compatibility.
 

@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-16 — Output volume mixer
+
+- Added a compact menu-bar volume card with direct default-output volume and mute controls.
+- Added an expanded CoreAudio mixer for independently exposed output devices, default-output highlighting, refresh handling, unavailable states, and asynchronous readback.
+- Added English, Portuguese, and Spanish volume strings, simulated hardware tests, usage/architecture documentation, and manual output-device verification steps.
+- Verification: XcodeGen regeneration; 43 XCTest cases passed in English with code signing disabled; hosted compact and volume-detail fixtures rendered.
+
 ## 2026-09-16 — Storage usage monitoring
 
 - Added a compact startup-disk storage summary alongside the battery summary in the menu-bar panel.
