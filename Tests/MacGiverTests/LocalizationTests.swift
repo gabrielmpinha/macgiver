@@ -139,14 +139,20 @@ final class LocalizationTests: XCTestCase {
         let litKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { 0.4 }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage), name: "compact")
+        let audioMixer = AudioMixer(
+            applicationProvider: LocalizationAudioApplicationProvider(),
+            engine: LocalizationAudioProcessMixer(),
+            startsAutomatically: false
+        )
+        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "compact")
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { nil }, writeBrightness: { _ in false }
         ))
-        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor).environmentObject(storage), name: "keyboard-error")
+        try await attachPanel(MenuBarView().environmentObject(unavailableKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "keyboard-error")
         try await attachPanel(BatteryMenuPanel().environmentObject(monitor).padding(14).frame(width: 380), name: "battery-details")
         try await attachPanel(StorageMenuPanel().environmentObject(storage).padding(14).frame(width: 380), name: "storage-details")
+        try await attachPanel(VolumeMenuPanel().environmentObject(audioMixer).padding(14).frame(width: 380), name: "volume-details")
         let noBattery = BatteryMonitor(startAutomatically: false, readBattery: { BatteryReading(availability: .noBattery) })
         noBattery.refreshBattery()
         try await attachPanel(BatteryMenuPanel().environmentObject(noBattery).padding(14).frame(width: 380), name: "no-battery")
@@ -183,4 +189,23 @@ final class LocalizationTests: XCTestCase {
         let data = try Data(contentsOf: url)
         return try XCTUnwrap(PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any])
     }
+}
+
+@MainActor
+private final class LocalizationAudioApplicationProvider: AudioApplicationProviding {
+    func applications() -> [AudioApplicationInfo] {
+        [AudioApplicationInfo(id: 1, name: "Music", bundleID: "com.apple.Music", isAudioActive: true)]
+    }
+}
+
+@MainActor
+private final class LocalizationAudioProcessMixer: AudioProcessMixingProviding {
+    var isRunning = false
+    var message: String?
+
+    func start() throws { isRunning = true }
+    func stop() { isRunning = false }
+    func updateApplications(_ applications: [AudioApplication]) {}
+    func setVolume(_ volume: Float, for applicationID: pid_t) {}
+    func setMuted(_ muted: Bool, for applicationID: pid_t) {}
 }

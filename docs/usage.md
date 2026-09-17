@@ -6,7 +6,7 @@
 
 Launch MacGiver, then click its menu bar icon. The app runs without a Dock icon or a standalone window.
 
-The panel opens with compact battery and storage summaries plus three utility switches. Click either summary to expand details within the same panel. Use the upward chevron to collapse them. Closing and reopening the panel returns it to the compact layout.
+The panel opens with compact battery and storage summaries, a volume card, and three utility switches. Click a summary to expand details within the same panel. Use the upward chevron to collapse it. Closing and reopening the panel returns it to the compact layout.
 
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
@@ -96,6 +96,19 @@ Values are read from the local file-system attributes for `/`. No files are scan
 
 Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage reading. Storage data is sampled every five seconds while the app is running, including when the panel is closed. History begins at launch, retains up to six hours in memory, and is cleared on quit. Sleep/wake transitions, long sampling gaps, and missing measurements break the chart line.
 
+## App volume mixer
+
+The **App volume** card controls application audio independently:
+
+- Expand the card to see running applications.
+- Drag an app's slider to change only that app's level.
+- Use the speaker button to mute or unmute one app.
+- Use **Refresh applications** after opening a new audio app or when an app's helper process has just started.
+
+MacGiver uses the macOS 14.2+ Core Audio process-tap API to apply gain while routing tapped audio through a private mixer. Starting the mixer may require **System Settings > Privacy & Security > Screen & System Audio Recording** access. This permission is for app audio capture and does not use the microphone.
+
+The device used to play the final mix remains managed by macOS; MacGiver does not expose an output-device mixer in this panel.
+
 ## Troubleshooting
 
 | Symptom | What to check |
@@ -107,5 +120,6 @@ Select **15m**, **1h**, or **6h** and hover over the chart to inspect a usage re
 | Time remaining says **Estimating…** | macOS has not supplied a usable estimate. MacGiver does not invent one. |
 | History is empty after launch | Samples accumulate during the current run. The chart shows a point immediately and a line after the next five-second sample; previous sessions are not retained. |
 | Storage is unavailable | Check that macOS can report file-system capacity for the startup disk. MacGiver does not scan files or substitute an estimate. |
+| App volume is unavailable | Allow MacGiver under **System Audio Recording**, then open the mixer and use **Refresh applications**. A usable macOS output must also be connected. |
 
 For build or signing failures, see [development troubleshooting](development.md#build-troubleshooting).

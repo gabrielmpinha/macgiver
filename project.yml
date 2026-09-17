@@ -2,7 +2,7 @@ name: MacGiver
 options:
   bundleIdPrefix: com.macgiver
   deploymentTarget:
-    macOS: "13.0"
+    macOS: "14.2"
   developmentLanguage: en
 configFiles:
   Debug: Config/Version.xcconfig
@@ -11,7 +11,7 @@ settings:
   base:
     PRODUCT_BUNDLE_IDENTIFIER: com.macgiver.app
     SWIFT_VERSION: 6.0
-    MACOSX_DEPLOYMENT_TARGET: 13.0
+    MACOSX_DEPLOYMENT_TARGET: 14.2
     INFOPLIST_KEY_LSUIElement: YES
     INFOPLIST_KEY_CFBundleDisplayName: MacGiver
     INFOPLIST_KEY_NSHumanReadableCopyright: "Copyright © 2026 Gabriel Pinheiro"
@@ -32,7 +32,7 @@ targets:
         PRODUCT_NAME: MacGiver
         ASSETCATALOG_COMPILER_APPICON_NAME: MacGiver
         INFOPLIST_KEY_NSHighResolutionCapable: YES
-        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: Config/MacGiver-Info.plist
     postBuildScripts:
       - name: Normalize app bundle metadata
         script: |

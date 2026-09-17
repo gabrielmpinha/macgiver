@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-17 — Per-application volume mixer
+
+- Replaced the output-device volume panel with independent sliders and mute controls for running applications.
+- Added a macOS 14.2+ Core Audio process-tap engine that applies per-app gain through a private aggregate render path, including helper-process attribution and permission guidance.
+- Updated English, Portuguese, and Spanish strings, simulated provider/engine tests, app-volume usage and architecture documentation, and manual permission/audio verification steps.
+- Verification: XcodeGen regeneration; English, Portuguese, and Spanish XCTest suites; signed Debug build; strict bundle code-sign verification.
+
 ## 2026-09-16 — Storage usage monitoring
 
 - Added a compact startup-disk storage summary alongside the battery summary in the menu-bar panel.

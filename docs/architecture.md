@@ -13,6 +13,7 @@ flowchart TD
     App --> Monitor[BatteryMonitor]
     App --> StorageMonitor[StorageMonitor]
     UI --> State
+    UI --> AudioMixer
     UI --> Panel[BatteryMenuPanel]
     UI --> StoragePanel[StorageMenuPanel]
     Panel --> Monitor
@@ -23,14 +24,16 @@ flowchart TD
     Light --> CB[Private CoreBrightness framework]
     Monitor --> Mac[BatteryHardware and BatteryHistory]
     StorageMonitor --> Storage[StorageHardware and StorageHistory]
+    AudioMixer --> CoreAudio[CoreAudio process taps]
     Mac --> IOKit[IOKit power sources and IORegistry]
     Storage --> FileSystem[Startup volume file-system attributes]
 ```
 
 | Source | Responsibility |
 | --- | --- |
-| [MacGiverApp.swift](../Sources/MacGiver/MacGiverApp.swift) | Owns app-lifetime state, battery monitoring, and storage monitoring; injects them into the menu bar UI. |
-| [MenuBarView.swift](../Sources/MacGiver/MenuBarView.swift) | Utility switches, compact/expanded presentation, one-second visible-panel brightness refresh, and quit action. |
+| [MacGiverApp.swift](../Sources/MacGiver/MacGiverApp.swift) | Owns app-lifetime state, battery monitoring, storage monitoring, and audio mixing; injects them into the menu bar UI. |
+| [MenuBarView.swift](../Sources/MacGiver/MenuBarView.swift) | Utility switches, compact/expanded presentation, one-second visible-panel brightness/audio refresh, and quit action. |
+| [AudioMixer.swift](../Sources/MacGiver/AudioMixer.swift) | Running-application discovery, per-app volume state, Core Audio process taps, private aggregate rendering, and injectable provider/engine boundaries. |
 | [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, and backlight errors. |
 | [KeyboardBacklight.swift](../Sources/MacGiver/KeyboardBacklight.swift) | Brightness restoration and verified writes through a runtime-loaded CoreBrightness adapter. |
 | [BatteryReading.swift](../Sources/MacGiver/BatteryReading.swift) | Hardware reads, battery value decoding, availability states, and bounded chart history. |
@@ -39,11 +42,14 @@ flowchart TD
 | [StorageReading.swift](../Sources/MacGiver/StorageReading.swift) | Startup-disk capacity decoding, regional byte formatting, and bounded usage history. |
 | [StorageMonitor.swift](../Sources/MacGiver/StorageMonitor.swift) | Five-second storage sampling, wake notifications, and in-memory history. |
 | [StorageMenuPanel.swift](../Sources/MacGiver/StorageMenuPanel.swift) | Storage summary, capacity metrics, and usage chart. |
+| [VolumeMenuPanel.swift](../Sources/MacGiver/VolumeMenuPanel.swift) | Compact app-volume summary, per-application rows, mute controls, permission states, and refresh action. |
 | [Localizable.xcstrings](../Resources/Localizable.xcstrings) | English source strings, Portuguese and Spanish translations, plural forms, tooltips, and accessibility descriptions. |
 
 ## Localization
 
 The app uses native bundle language selection with English as its development language. SwiftUI labels use `LocalizedStringKey`; model and error messages use `String(localized:)`. Battery state identifiers, storage labels, and hardware property names stay independent of translated display text. Numbers use Foundation's regional formatting, preserving the 0–100 percentage scale, signed battery power, and byte units.
+
+App volume control uses macOS 14.2+ Core Audio process taps. Each active process is tapped with muted-when-read behavior, then a private aggregate device feeds a realtime render callback that applies the per-app gain before sending the mixed stream to the current system output. The UI stores the desired level by application process ID while the process remains available; helper processes are attributed by bundle-ID prefix. The system output device is an engine clock source only and is not part of the user-facing mixer model.
 
 To add or change text, build in Xcode to extract localizable strings, then update all three languages in the string catalog. Xcode compiles it into `.lproj` resources; regenerate the project with XcodeGen after adding resources. `LocalizationTests.swift` checks the compiled tables directly so English fallback cannot hide missing translations.
 
