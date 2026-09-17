@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 private enum VolumeStyle {
@@ -149,14 +150,24 @@ struct VolumeMenuPanel: View {
 private struct VolumeApplicationRow: View {
     @EnvironmentObject private var mixer: AudioMixer
     let application: AudioApplication
+    @State private var applicationIcon: NSImage?
 
     var body: some View {
         VolumeMenuCard {
             HStack(spacing: 8) {
-                Image(systemName: application.isMuted ? "speaker.slash.fill" : "app.fill")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(application.isAudioActive ? VolumeStyle.accent : .secondary)
-                    .frame(width: 24)
+                Group {
+                    if let applicationIcon {
+                        Image(nsImage: applicationIcon)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        Image(systemName: "app.fill")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(application.name)
@@ -215,6 +226,20 @@ private struct VolumeApplicationRow: View {
             .accessibilityValue(application.isMuted ? "Muted" : "\(application.volumePercent) percent")
         }
         .accessibilityElement(children: .contain)
+        .task(id: application.bundleID) {
+            // Resolve once per row identity, not on each volume or polling update.
+            // Prefer the running instance, including apps outside /Applications.
+            if let running = NSRunningApplication(processIdentifier: application.id),
+               application.bundleID == nil || running.bundleIdentifier == application.bundleID,
+               let icon = running.icon {
+                applicationIcon = icon
+            } else if let bundleID = application.bundleID,
+                      let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
+                applicationIcon = NSWorkspace.shared.icon(forFile: url.path)
+            } else {
+                applicationIcon = nil
+            }
+        }
     }
 }
 

@@ -2,6 +2,12 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-17 — Application icons in the volume mixer
+
+- Show each application's native icon in the volume mixer, resolving the running instance first and its installed bundle as a fallback.
+- Keep the application icon visible while muted, and use a generic app symbol only when no icon can be resolved.
+- Verification: five mixer tests and the localized panel-rendering test passed; inspected the Music icon in the rendered mixer; signed Debug build and strict code-signature verification passed.
+
 ## 2026-09-17 — Compact menu overview
 
 - Placed battery and storage in matching 170-point square tiles side by side, keeping the quick controls and footer visible in the normal overview.
