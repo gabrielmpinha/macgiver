@@ -13,6 +13,7 @@ flowchart TD
     App --> Monitor[BatteryMonitor]
     App --> StorageMonitor[StorageMonitor]
     UI --> State
+    State --> Extractor[Text extractor]
     UI --> AudioMixer
     UI --> Panel[BatteryMenuPanel]
     UI --> StoragePanel[StorageMenuPanel]
@@ -27,6 +28,8 @@ flowchart TD
     AudioMixer --> CoreAudio[CoreAudio process taps]
     Mac --> IOKit[IOKit power sources and IORegistry]
     Storage --> FileSystem[Startup volume file-system attributes]
+    Extractor --> Capture[Core Graphics display capture]
+    Extractor --> Vision[Vision OCR]
 ```
 
 | Source | Responsibility |
@@ -34,7 +37,8 @@ flowchart TD
 | [MacGiverApp.swift](../Sources/MacGiver/MacGiverApp.swift) | Owns app-lifetime state, battery monitoring, storage monitoring, and audio mixing; injects them into the menu bar UI. |
 | [MenuBarView.swift](../Sources/MacGiver/MenuBarView.swift) | Utility switches, compact/expanded presentation, one-second visible-panel brightness/audio refresh, and quit action. |
 | [AudioMixer.swift](../Sources/MacGiver/AudioMixer.swift) | Running-application discovery, per-app volume state, Core Audio process taps, private aggregate rendering, and injectable provider/engine boundaries. |
-| [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, and backlight errors. |
+| [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, backlight errors, and text-extractor launch action. |
+| [TextExtractor.swift](../Sources/MacGiver/TextExtractor.swift) | Display capture, drag-selection overlay, Vision OCR, copyable result panel, and Screen Recording permission guidance. |
 | [KeyboardBacklight.swift](../Sources/MacGiver/KeyboardBacklight.swift) | Brightness restoration and verified writes through a runtime-loaded CoreBrightness adapter. |
 | [BatteryReading.swift](../Sources/MacGiver/BatteryReading.swift) | Hardware reads, battery value decoding, availability states, and bounded chart history. |
 | [BatteryMonitor.swift](../Sources/MacGiver/BatteryMonitor.swift) | Five-second sampling, wake notifications, and in-memory history. |
@@ -60,6 +64,8 @@ Run the test suite with `-testLanguage en -testRegion US`, `-testLanguage pt -te
 Keep Awake creates an IOKit `PreventUserIdleSystemSleep` assertion and releases it on disable or cleanup. It does not create a display-sleep assertion.
 
 Lock Keyboard requires Accessibility trust and installs a session event tap for key-down, key-up, and modifier-change events. Mouse events are outside the subscribed mask. A disabled event tap is re-enabled when macOS reports a timeout or user-input disable event.
+
+Text Extractor captures the display containing the pointer with Core Graphics before presenting a full-screen selection panel. The selected rectangle is cropped at the display's backing scale, recognized locally with Vision, and presented in a floating AppKit panel. macOS Screen Recording permission is required because the feature reads pixels from other applications; no screenshot or recognized text is persisted.
 
 Backlight state distinguishes **on**, **off**, and **unavailable**. The controller validates finite brightness values in the range `0...1`, saves the latest brightness before turning it off, and uses `0.5` only when no restore value exists. An accepted write is followed by readback attempts for up to approximately 500 ms.
 

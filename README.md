@@ -2,7 +2,7 @@
 
 > Everyday Mac utilities, one menu bar panel.
 
-MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, controlling the built-in keyboard backlight, mixing application volume, and checking battery and storage information. It lives in the menu bar, with compact summaries that expand into live readings, charts, and utility controls.
+MacGiver is a native macOS app for keeping your Mac awake, locking keyboard input while cleaning, extracting text from the screen, controlling the built-in keyboard backlight, mixing application volume, and checking battery and storage information. It lives in the menu bar, with compact summaries that expand into live readings, charts, and utility controls.
 
 ## Features
 
@@ -10,6 +10,7 @@ MacGiver is a native macOS app for keeping your Mac awake, locking keyboard inpu
 | --- | --- |
 | **Keep Awake** | Prevents idle system sleep while enabled. |
 | **Lock Keyboard** | Blocks keyboard events while leaving mouse and trackpad input available. |
+| **Text Extractor** | Selects an area of the screen, recognizes its text locally, and opens it in a copyable popup. |
 | **Keyboard Light** | Turns the built-in backlight off and restores its previous brightness during the same app session. |
 | **Mac battery** | Shows charge, charging state, time estimates, battery power, estimated health, and cycle count. |
 | **Energy history** | Charts charge and battery power over 15 minutes, 1 hour, or 6 hours. |
@@ -84,11 +85,15 @@ Pushing a version tag such as `vX.Y.Z` starts the [DMG release workflow](.github
 
 1. Launch MacGiver and click its menu bar icon. It does not open a regular app window or show a Dock icon.
 2. Use **Keep Awake**, **Lock Keyboard**, and **Keyboard Light** independently.
-3. Click the battery or storage summary to expand its details and history.
-4. Use the **App volume** card to expand the per-application mixer. Move a slider or mute one app without changing the others.
-5. Use **Quit** at the bottom of the panel to close the app.
+3. Click the **Text Extractor** icon beside **Quick Controls**, drag over text on the screen, and wait for the extracted text popup.
+4. Click **Copy All**, or select only part of the extracted text and use the normal macOS copy command.
+5. Click the battery or storage summary to expand its details and history.
+6. Use the **App volume** card to expand the per-application mixer. Move a slider or mute one app without changing the others.
+7. Use **Quit** at the bottom of the panel to close the app.
 
 **Lock Keyboard** requires permission in **System Settings > Privacy & Security > Accessibility**. After enabling MacGiver there, return to the panel and try the switch again. Use your mouse or trackpad to turn the lock off.
+
+**Text Extractor** requires **System Settings > Privacy & Security > Screen Recording** permission. MacGiver captures the selected display locally, sends the selected image to Apple's Vision text recognizer, and does not upload the screenshot or recognized text. Press **Esc** while selecting to cancel.
 
 Keep Awake prevents idle system sleep; it does not request that the display stay on or provide a closed-lid mode. Battery power is the flow into or out of the battery, not total Mac or wall-outlet consumption.
 
@@ -120,6 +125,7 @@ Tests cover backlight state transitions, battery, storage, per-application volum
 | Xcode String Catalogs | English, Portuguese, and Spanish localization with native language selection |
 | IOKit | Sleep prevention and Mac power-source data |
 | Core Graphics and Accessibility | Keyboard event interception and permission checks |
+| Vision | Local OCR for the Text Extractor |
 | CoreAudio | Process taps, per-application gain/mute, and private aggregate-device rendering |
 | CoreBrightness (private, loaded at runtime) | Built-in keyboard backlight control |
 | XcodeGen and XCTest | Project generation and automated tests |

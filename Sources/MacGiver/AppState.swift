@@ -14,6 +14,7 @@ final class AppState: ObservableObject {
 
     private let sleepPreventer = SleepPreventer()
     private let keyboardBlocker = KeyboardBlocker()
+    private let textExtractor = TextExtractorController()
     private let keyboardBacklightController: KeyboardBacklightController
     private static let keyboardLightReadError = String(localized: "Could not read the built-in keyboard backlight. Try again.")
 
@@ -60,6 +61,10 @@ final class AppState: ObservableObject {
         case .failed:
             keyboardLockMessage = String(localized: "Could not lock the keyboard. Please try again.")
         }
+    }
+
+    func beginTextExtraction() {
+        textExtractor.begin()
     }
 
     func refreshKeyboardLight() {

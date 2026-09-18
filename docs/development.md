@@ -98,6 +98,7 @@ Use the signed application on real hardware for changes to system integrations o
 | Storage history | Open storage details, confirm the current usage point appears, wait for another sample, switch between 15m/1h/6h, and verify the chart remains readable across gaps. |
 | App volume mixer | Launch the signed app on macOS 14.2+, open the panel, allow System Audio Recording when prompted, open the app mixer, move one app slider, mute/unmute it, and verify a second app is unaffected. |
 | Application refresh | Start and stop an audio-producing app or its helper process while the panel is open, then use **Refresh applications** and confirm the app row and PLAYING/AVAILABLE state update. |
+| Text extractor | Launch the signed app, allow Screen Recording when prompted, click the text-viewfinder icon, drag over readable text, confirm the popup contains selectable OCR text, and verify **Copy All** updates the clipboard. Press **Esc** to cancel a second selection. |
 
 Record the Mac model, macOS version, device models, and observed results when reporting hardware validation. A successful build, deployment target, or passing fixture test is not evidence of broad hardware compatibility.
 

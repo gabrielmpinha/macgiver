@@ -147,6 +147,24 @@ final class LocalizationTests: XCTestCase {
         let compact = MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer)
         try await attachPanel(compact.preferredColorScheme(.light), name: "compact", maximumHeight: 570)
         try await attachPanel(compact.preferredColorScheme(.dark), name: "compact-dark", maximumHeight: 570)
+        try await attachPanel(
+            TextExtractorResultView(
+                text: "A short extracted heading\nA second line of text",
+                message: nil,
+                isProcessing: false,
+                onCopy: {}
+            ).preferredColorScheme(.light),
+            name: "text-extractor-result"
+        )
+        try await attachPanel(
+            TextExtractorResultView(
+                text: nil,
+                message: "No text was found in that area. Try a larger or sharper selection.",
+                isProcessing: false,
+                onCopy: {}
+            ).preferredColorScheme(.dark),
+            name: "text-extractor-error"
+        )
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { nil }, writeBrightness: { _ in false }

@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-18 — Screen text extractor
+
+- Added a menu-bar Text Extractor action with a full-screen drag-selection overlay.
+- Capture the selected display area locally, recognize text with Vision, and show the result in a small floating, selectable popup with a Copy All action.
+- Added Screen Recording permission guidance, localized English/Portuguese/Spanish UI strings, geometry/OCR normalization tests, and usage/development/architecture documentation.
+- Verification: XcodeGen regeneration and 46 XCTest cases passed with code signing disabled; signed manual UI verification remains to be completed on an unlocked desktop with Screen Recording permission available.
+
 ## 2026-09-17 — Application icons in the volume mixer
 
 - Show each application's native icon in the volume mixer, resolving the running instance first and its installed bundle as a fallback.

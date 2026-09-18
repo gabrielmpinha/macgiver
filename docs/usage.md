@@ -10,6 +10,14 @@ The panel opens with square battery and storage summaries side by side, an app-v
 
 The panel fits its content up to the available screen height. Scrolling is available when details, status messages, or a smaller display need more room.
 
+## Text Extractor
+
+Click the small **Text Extractor** icon beside **Quick Controls** to begin. MacGiver captures the display under the pointer, dims it, and shows a selection overlay. Drag around the text you want, then release. A small floating window opens with the locally recognized text.
+
+The extracted text is selectable. Use **Copy All** to copy the complete result, or select a smaller part and use the normal macOS copy command. Press **Esc** to cancel an active selection.
+
+The first use requires **System Settings > Privacy & Security > Screen Recording** permission. The selected screenshot and recognized text stay on the Mac; MacGiver has no network backend for this feature. OCR quality depends on the source size, contrast, and legibility. If no text is found, select a larger or sharper area.
+
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
 ## Language

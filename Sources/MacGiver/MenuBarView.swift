@@ -141,7 +141,26 @@ struct MenuBarView: View {
 
     private var controls: some View {
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(title: "QUICK CONTROLS", detail: "Click a row to change")
+            HStack(alignment: .firstTextBaseline) {
+                Text("QUICK CONTROLS")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .tracking(1.15)
+                    .foregroundStyle(.secondary)
+                Spacer(minLength: 4)
+                Button {
+                    appState.beginTextExtraction()
+                } label: {
+                    Image(systemName: "text.viewfinder")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(MacGiverPalette.accent)
+                        .padding(4)
+                        .background(MacGiverPalette.accent.opacity(0.10), in: Circle())
+                }
+                .buttonStyle(.plain)
+                .help("Text Extractor")
+                .accessibilityLabel(Text("Text Extractor"))
+                .accessibilityHint(Text("Select text from anywhere"))
+            }
 
             utilityToggle(
                 isOn: appState.keepAwakeEnabled,
@@ -416,25 +435,6 @@ private struct StatusBadge: View {
         .accessibilityLabel(isActive
             ? Text("\(activeUtilities) utilities active", comment: "VoiceOver count of enabled utilities.")
             : Text("No utilities active"))
-    }
-}
-
-private struct SectionLabel: View {
-    let title: LocalizedStringKey
-    let detail: LocalizedStringKey
-
-    var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(title)
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-                .tracking(1.15)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Text(detail)
-                .font(.system(size: 10))
-                .foregroundStyle(.tertiary)
-        }
-        .padding(.horizontal, 2)
     }
 }
 
