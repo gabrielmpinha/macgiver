@@ -3,6 +3,27 @@ import XCTest
 @testable import MacGiver
 
 final class TextExtractorTests: XCTestCase {
+    func testDefaultShortcutIsCommandShift7() {
+        XCTAssertEqual(TextExtractorShortcut.defaultValue.keyCode, 26)
+        XCTAssertEqual(TextExtractorShortcut.defaultValue.displayString, "⇧⌘7")
+        XCTAssertTrue(TextExtractorShortcut.defaultValue.isValid)
+    }
+
+    func testShortcutRoundTripsThroughUserDefaults() {
+        let suiteName = "MacGiverTests.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let shortcut = TextExtractorShortcut(keyCode: 12, modifiers: TextExtractorShortcut.defaultValue.modifiers, keyName: "Q")
+        shortcut.save(to: defaults)
+
+        XCTAssertEqual(TextExtractorShortcut.load(from: defaults), shortcut)
+    }
+
+    func testShortcutRequiresACommandControlOrOptionModifier() {
+        XCTAssertFalse(TextExtractorShortcut(keyCode: 26, modifiers: 0).isValid)
+    }
+
     func testOCRLinesAreTrimmedAndJoined() {
         XCTAssertEqual(
             TextRecognitionService.normalizedText(["  First line ", "", "Second line\n"]),

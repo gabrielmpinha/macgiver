@@ -2430,6 +2430,69 @@
         }
       }
     },
+    "Settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Settings" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ajustes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ajustes" } }
+      }
+    },
+    "Text Extractor Shortcut": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Text Extractor Shortcut" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atalho do extrator de texto" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Atajo del extractor de texto" } }
+      }
+    },
+    "Press a shortcut…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Press a shortcut…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Pressione um atalho…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Pulsa un atajo…" } }
+      }
+    },
+    "Choose a shortcut to start Text Extractor from anywhere.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Choose a shortcut to start Text Extractor from anywhere." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Escolha um atalho para iniciar o Extrator de texto de qualquer lugar." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Elige un atajo para iniciar el extractor de texto desde cualquier lugar." } }
+      }
+    },
+    "The default shortcut is Command-Shift-7.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "The default shortcut is Command-Shift-7." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O atalho padrão é Command-Shift-7." } },
+        "es": { "stringUnit": { "state": "translated", "value": "El atajo predeterminado es Command-Shift-7." } }
+      }
+    },
+    "Reset to Default": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset to Default" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Restaurar padrão" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Restablecer valor predeterminado" } }
+      }
+    },
+    "That shortcut is already in use. Choose another one.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "That shortcut is already in use. Choose another one." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Esse atalho já está em uso. Escolha outro." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ese atajo ya está en uso. Elige otro." } }
+      }
+    },
+    "Use at least one Command, Control, or Option modifier.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Use at least one Command, Control, or Option modifier." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Use pelo menos um modificador Command, Control ou Option." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Usa al menos un modificador Command, Control u Option." } }
+      }
+    },
+    "Screen Recording permission is required for selection.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Screen Recording permission is required for selection." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "A permissão de Gravação de Tela é necessária para selecionar uma área." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Se necesita el permiso de grabación de pantalla para seleccionar un área." } }
+      }
+    },
     "Text Extractor": {
       "localizations": {
         "en": { "stringUnit": { "state": "translated", "value": "Text Extractor" } },

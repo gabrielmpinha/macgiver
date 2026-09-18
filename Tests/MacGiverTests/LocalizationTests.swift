@@ -147,6 +147,7 @@ final class LocalizationTests: XCTestCase {
         let compact = MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer)
         try await attachPanel(compact.preferredColorScheme(.light), name: "compact", maximumHeight: 570)
         try await attachPanel(compact.preferredColorScheme(.dark), name: "compact-dark", maximumHeight: 570)
+        try await attachPanel(SettingsView().environmentObject(litKeyboard).preferredColorScheme(.light), name: "settings")
         try await attachPanel(
             TextExtractorResultView(
                 text: "A short extracted heading\nA second line of text",

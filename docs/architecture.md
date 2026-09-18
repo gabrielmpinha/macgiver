@@ -37,7 +37,9 @@ flowchart TD
 | [MacGiverApp.swift](../Sources/MacGiver/MacGiverApp.swift) | Owns app-lifetime state, battery monitoring, storage monitoring, and audio mixing; injects them into the menu bar UI. |
 | [MenuBarView.swift](../Sources/MacGiver/MenuBarView.swift) | Utility switches, compact/expanded presentation, one-second visible-panel brightness/audio refresh, and quit action. |
 | [AudioMixer.swift](../Sources/MacGiver/AudioMixer.swift) | Running-application discovery, per-app volume state, Core Audio process taps, private aggregate rendering, and injectable provider/engine boundaries. |
-| [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, backlight errors, and text-extractor launch action. |
+| [AppState.swift](../Sources/MacGiver/AppState.swift) | Main-actor published utility state, menu symbol, idle-sleep assertion, keyboard event tap, backlight errors, text-extractor launch action, and persisted shortcut registration. |
+| [GlobalShortcut.swift](../Sources/MacGiver/GlobalShortcut.swift) | Carbon global hot-key registration, shortcut persistence/formatting, and the native settings recorder control. |
+| [SettingsView.swift](../Sources/MacGiver/SettingsView.swift) | Native macOS Settings scene content for configuring Text Extractor and showing its permission prerequisite. |
 | [TextExtractor.swift](../Sources/MacGiver/TextExtractor.swift) | Display capture, drag-selection overlay, Vision OCR, copyable result panel, and Screen Recording permission guidance. |
 | [KeyboardBacklight.swift](../Sources/MacGiver/KeyboardBacklight.swift) | Brightness restoration and verified writes through a runtime-loaded CoreBrightness adapter. |
 | [BatteryReading.swift](../Sources/MacGiver/BatteryReading.swift) | Hardware reads, battery value decoding, availability states, and bounded chart history. |
@@ -66,6 +68,8 @@ Keep Awake creates an IOKit `PreventUserIdleSystemSleep` assertion and releases 
 Lock Keyboard requires Accessibility trust and installs a session event tap for key-down, key-up, and modifier-change events. Mouse events are outside the subscribed mask. A disabled event tap is re-enabled when macOS reports a timeout or user-input disable event.
 
 Text Extractor captures the display containing the pointer with Core Graphics before presenting a full-screen selection panel. The selected rectangle is cropped at the display's backing scale, recognized locally with Vision, and presented in a floating AppKit panel. macOS Screen Recording permission is required because the feature reads pixels from other applications; no screenshot or recognized text is persisted.
+
+The Text Extractor global shortcut uses Carbon's `RegisterEventHotKey`, so it works outside MacGiver without an Accessibility event tap. The default `Command-Shift-7` is loaded from `UserDefaults`; Settings records a physical key code plus modifier mask, attempts registration before saving, and restores the previous registration when the new combination is unavailable.
 
 Backlight state distinguishes **on**, **off**, and **unavailable**. The controller validates finite brightness values in the range `0...1`, saves the latest brightness before turning it off, and uses `0.5` only when no restore value exists. An accepted write is followed by readback attempts for up to approximately 500 ms.
 

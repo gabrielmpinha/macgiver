@@ -11,6 +11,7 @@ enum MacGiverPalette {
 struct MenuBarView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var audioMixer: AudioMixer
+    @Environment(\.openSettings) private var openSettings
     @State private var expandedPanel: ExpandedPanel?
     @State private var availableHeight: CGFloat = 700
     @State private var openingScreenID: NSNumber?
@@ -271,6 +272,13 @@ struct MenuBarView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
+                Button("Settings") {
+                    openSettings()
+                }
+                .buttonStyle(.plain)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
+                .help("Settings")
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
                 }

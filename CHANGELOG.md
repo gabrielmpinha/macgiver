@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-18 — Configurable text extractor shortcut
+
+- Added a native global shortcut for Text Extractor, defaulting to Command-Shift-7 after checking the current macOS screenshot and symbolic shortcut configuration.
+- Added a native Settings window and menu-bar Settings button where users can record, reset, and persist a different shortcut.
+- Preserve the previous working registration when a chosen combination is unavailable, require a Command, Control, or Option modifier, and document the shortcut behavior in English, Portuguese, and Spanish.
+- Verification: XcodeGen regeneration; 49 XCTest cases passed in English/US, Portuguese/Brazil, and Spanish/Spain; live interaction remains unverified because the macOS session is locked.
+
 ## 2026-09-18 — Screen text extractor
 
 - Added a menu-bar Text Extractor action with a full-screen drag-selection overlay.

@@ -89,11 +89,14 @@ Pushing a version tag such as `vX.Y.Z` starts the [DMG release workflow](.github
 4. Click **Copy All**, or select only part of the extracted text and use the normal macOS copy command.
 5. Click the battery or storage summary to expand its details and history.
 6. Use the **App volume** card to expand the per-application mixer. Move a slider or mute one app without changing the others.
-7. Use **Quit** at the bottom of the panel to close the app.
+7. Open **Settings** at the bottom of the panel to change the Text Extractor keyboard shortcut.
+8. Use **Quit** at the bottom of the panel to close the app.
 
 **Lock Keyboard** requires permission in **System Settings > Privacy & Security > Accessibility**. After enabling MacGiver there, return to the panel and try the switch again. Use your mouse or trackpad to turn the lock off.
 
 **Text Extractor** requires **System Settings > Privacy & Security > Screen Recording** permission. MacGiver captures the selected display locally, sends the selected image to Apple's Vision text recognizer, and does not upload the screenshot or recognized text. Press **Esc** while selecting to cancel.
+
+The Text Extractor shortcut defaults to **Command-Shift-7**. Open **Settings** or press **Command-,** to record a different shortcut. The shortcut must include Command, Control, or Option; if macOS or another app already owns the combination, MacGiver keeps the previous shortcut and reports the conflict.
 
 Keep Awake prevents idle system sleep; it does not request that the display stay on or provide a closed-lid mode. Battery power is the flow into or out of the battery, not total Mac or wall-outlet consumption.
 

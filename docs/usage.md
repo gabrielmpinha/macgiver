@@ -18,6 +18,8 @@ The extracted text is selectable. Use **Copy All** to copy the complete result, 
 
 The first use requires **System Settings > Privacy & Security > Screen Recording** permission. The selected screenshot and recognized text stay on the Mac; MacGiver has no network backend for this feature. OCR quality depends on the source size, contrast, and legibility. If no text is found, select a larger or sharper area.
 
+The Text Extractor shortcut defaults to **Command-Shift-7**. Open **Settings** from the bottom of the menu-bar panel, or use the standard **Command-,** shortcut, then click the shortcut control and press a new combination. The shortcut must include Command, Control, or Option. If a combination is already registered by macOS or another app, MacGiver keeps the previous working shortcut.
+
 The menu bar symbol changes when Keep Awake or Lock Keyboard is active; the keyboard-lock symbol takes priority when both are enabled.
 
 ## Language

@@ -11,16 +11,36 @@ final class AppState: ObservableObject {
     @Published private(set) var keyboardLightEnabled: Bool?
     @Published private(set) var keyboardLightChanging = false
     @Published private(set) var keyboardLightMessage: String?
+    @Published private(set) var textExtractorShortcut: TextExtractorShortcut
+    @Published private(set) var textExtractorShortcutMessage: String?
 
     private let sleepPreventer = SleepPreventer()
     private let keyboardBlocker = KeyboardBlocker()
     private let textExtractor = TextExtractorController()
     private let keyboardBacklightController: KeyboardBacklightController
+    private let shortcutDefaults: UserDefaults
+    private var globalShortcut: GlobalShortcutRegistrar?
     private static let keyboardLightReadError = String(localized: "Could not read the built-in keyboard backlight. Try again.")
 
-    init(keyboardBacklightController: KeyboardBacklightController = KeyboardBacklightController()) {
+    init(
+        keyboardBacklightController: KeyboardBacklightController = KeyboardBacklightController(),
+        registerGlobalShortcut: Bool = false,
+        shortcutDefaults: UserDefaults = .standard
+    ) {
         self.keyboardBacklightController = keyboardBacklightController
+        self.shortcutDefaults = shortcutDefaults
+        self.textExtractorShortcut = TextExtractorShortcut.load(from: shortcutDefaults)
         refreshKeyboardLight()
+
+        guard registerGlobalShortcut else { return }
+
+        let registrar = GlobalShortcutRegistrar { [weak self] in
+            self?.beginTextExtraction()
+        }
+        globalShortcut = registrar
+        if !registrar.register(textExtractorShortcut) {
+            textExtractorShortcutMessage = String(localized: "That shortcut is already in use. Choose another one.")
+        }
     }
 
     var menuBarSymbolName: String {
@@ -65,6 +85,28 @@ final class AppState: ObservableObject {
 
     func beginTextExtraction() {
         textExtractor.begin()
+    }
+
+    @discardableResult
+    func setTextExtractorShortcut(_ shortcut: TextExtractorShortcut) -> Bool {
+        guard shortcut.isValid else {
+            textExtractorShortcutMessage = String(localized: "Use at least one Command, Control, or Option modifier.")
+            return false
+        }
+
+        if let globalShortcut, !globalShortcut.register(shortcut) {
+            textExtractorShortcutMessage = String(localized: "That shortcut is already in use. Choose another one.")
+            return false
+        }
+
+        shortcut.save(to: shortcutDefaults)
+        textExtractorShortcut = shortcut
+        textExtractorShortcutMessage = nil
+        return true
+    }
+
+    func resetTextExtractorShortcut() {
+        _ = setTextExtractorShortcut(.defaultValue)
     }
 
     func refreshKeyboardLight() {
