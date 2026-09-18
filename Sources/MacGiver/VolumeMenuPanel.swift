@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 private enum VolumeStyle {
@@ -9,7 +10,7 @@ struct VolumeCollapsedSummary: View {
     let onExpand: () -> Void
 
     var body: some View {
-        VolumeMenuCard {
+        Button(action: onExpand) {
             HStack(spacing: 9) {
                 Image(systemName: "waveform")
                     .font(.system(size: 18, weight: .semibold))
@@ -38,20 +39,20 @@ struct VolumeCollapsedSummary: View {
                         .foregroundStyle(MacGiverPalette.success)
                 }
 
-                Button(action: onExpand) {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 9, weight: .bold))
-                        .foregroundStyle(.secondary)
-                        .frame(width: 25, height: 25)
-                        .background(.primary.opacity(0.06), in: Circle())
-                }
-                .buttonStyle(.plain)
-                .help("Show app volume mixer")
-                .accessibilityLabel("Show app volume mixer")
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
-        .accessibilityElement(children: .contain)
+        .buttonStyle(SummaryButtonStyle())
+        .help("Show app volume mixer")
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("App volume mixer")
+        .accessibilityValue(mixer.applicationSummary)
+        .accessibilityHint("Show app volume mixer")
     }
 }
 
@@ -149,14 +150,24 @@ struct VolumeMenuPanel: View {
 private struct VolumeApplicationRow: View {
     @EnvironmentObject private var mixer: AudioMixer
     let application: AudioApplication
+    @State private var applicationIcon: NSImage?
 
     var body: some View {
         VolumeMenuCard {
             HStack(spacing: 8) {
-                Image(systemName: application.isMuted ? "speaker.slash.fill" : "app.fill")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(application.isAudioActive ? VolumeStyle.accent : .secondary)
-                    .frame(width: 24)
+                Group {
+                    if let applicationIcon {
+                        Image(nsImage: applicationIcon)
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        Image(systemName: "app.fill")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(application.name)
@@ -215,6 +226,20 @@ private struct VolumeApplicationRow: View {
             .accessibilityValue(application.isMuted ? "Muted" : "\(application.volumePercent) percent")
         }
         .accessibilityElement(children: .contain)
+        .task(id: application.bundleID) {
+            // Resolve once per row identity, not on each volume or polling update.
+            // Prefer the running instance, including apps outside /Applications.
+            if let running = NSRunningApplication(processIdentifier: application.id),
+               application.bundleID == nil || running.bundleIdentifier == application.bundleID,
+               let icon = running.icon {
+                applicationIcon = icon
+            } else if let bundleID = application.bundleID,
+                      let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
+                applicationIcon = NSWorkspace.shared.icon(forFile: url.path)
+            } else {
+                applicationIcon = nil
+            }
+        }
     }
 }
 

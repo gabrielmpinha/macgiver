@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct MacGiverApp: App {
-    @StateObject private var appState = AppState()
+    @StateObject private var appState = AppState(registerGlobalShortcut: true)
     @StateObject private var batteryMonitor = BatteryMonitor()
     @StateObject private var storageMonitor = StorageMonitor()
     @StateObject private var audioMixer = AudioMixer()
@@ -20,5 +20,10 @@ struct MacGiverApp: App {
                 .help("MacGiver")
         }
         .menuBarExtraStyle(.window)
+
+        Settings {
+            SettingsView()
+                .environmentObject(appState)
+        }
     }
 }

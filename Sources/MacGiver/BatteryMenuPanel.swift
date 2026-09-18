@@ -182,53 +182,37 @@ struct BatteryCollapsedSummary: View {
     @EnvironmentObject private var monitor: BatteryMonitor
     let onExpand: () -> Void
 
+    private var isAvailable: Bool { monitor.reading.availability == .available }
+
+    private var status: String {
+        switch monitor.reading.availability {
+        case .available: monitor.reading.state.localizedTitle
+        case .noBattery: String(localized: "No built-in battery")
+        case .unavailable: String(localized: "Battery unavailable")
+        }
+    }
+
     var body: some View {
         Button(action: onExpand) {
-            BatteryMenuCard {
-                HStack(spacing: 9) {
-                    Image(systemName: collapsedBatterySymbol)
-                        .font(.system(size: 19, weight: .semibold))
-                        .foregroundStyle(BatteryStyle.mint)
-                        .frame(width: 35, height: 35)
-                        .background(BatteryStyle.mint.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text("Mac battery").font(.headline)
-                        Text(monitor.reading.state.localizedTitle).font(.caption).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(monitor.reading.percentText)
-                            .font(.system(size: 24, weight: .semibold, design: .rounded)).monospacedDigit()
-                        HStack(spacing: 3) {
-                            Text("DETAILS")
-                                .font(.system(size: 8, weight: .bold, design: .rounded))
-                                .tracking(0.7)
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 8, weight: .bold))
-                        }
-                        .foregroundStyle(.secondary)
-                    }
-                }
-                if let percent = monitor.reading.percent {
-                    ProgressView(value: percent, total: 100).tint(BatteryStyle.mint).padding(.top, 10)
-                }
-                HStack {
-                    Label(monitor.reading.timeText, systemImage: "clock")
-                    Spacer()
-                    Text(monitor.reading.signedPowerText)
-                        .monospacedDigit()
-                }
-                .font(.caption).foregroundStyle(.secondary).padding(.top, 10)
-            }
+            SummaryTile(
+                title: "Battery", symbol: collapsedBatterySymbol,
+                value: isAvailable ? monitor.reading.percentText : "—",
+                status: status,
+                detail: isAvailable ? monitor.reading.timeText : "",
+                progress: isAvailable ? monitor.reading.percent : nil,
+                tint: BatteryStyle.mint
+            )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(SummaryButtonStyle(tint: BatteryStyle.mint))
         .help("Show battery details")
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Battery \(monitor.reading.percentText), \(monitor.reading.state.localizedTitle), \(monitor.reading.timeText). Show battery details")
-        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel("Battery")
+        .accessibilityValue(isAvailable ? "\(monitor.reading.percentText), \(status), \(monitor.reading.timeText)" : status)
+        .accessibilityHint("Show battery details")
     }
 
     private var collapsedBatterySymbol: String {
+        guard isAvailable else { return "battery.0percent" }
         switch monitor.reading.state {
         case .charging: return "battery.75percent"
         case .charged: return "battery.100percent"

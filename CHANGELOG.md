@@ -2,6 +2,34 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-18 — Configurable text extractor shortcut
+
+- Added a native global shortcut for Text Extractor, defaulting to Command-Shift-7 after checking the current macOS screenshot and symbolic shortcut configuration.
+- Added a native Settings window and menu-bar Settings button where users can record, reset, and persist a different shortcut.
+- Preserve the previous working registration when a chosen combination is unavailable, require a Command, Control, or Option modifier, and document the shortcut behavior in English, Portuguese, and Spanish.
+- Verification: XcodeGen regeneration; 49 XCTest cases passed in English/US, Portuguese/Brazil, and Spanish/Spain; live interaction remains unverified because the macOS session is locked.
+
+## 2026-09-18 — Screen text extractor
+
+- Added a menu-bar Text Extractor action with a full-screen drag-selection overlay.
+- Capture the selected display area locally, recognize text with Vision, and show the result in a small floating, selectable popup with a Copy All action.
+- Added Screen Recording permission guidance, localized English/Portuguese/Spanish UI strings, geometry/OCR normalization tests, and usage/development/architecture documentation.
+- Verification: XcodeGen regeneration and 46 XCTest cases passed with code signing disabled; signed manual UI verification remains to be completed on an unlocked desktop with Screen Recording permission available.
+
+## 2026-09-17 — Application icons in the volume mixer
+
+- Show each application's native icon in the volume mixer, resolving the running instance first and its installed bundle as a fallback.
+- Keep the application icon visible while muted, and use a generic app symbol only when no icon can be resolved.
+- Verification: five mixer tests and the localized panel-rendering test passed; inspected the Music icon in the rendered mixer; signed Debug build and strict code-signature verification passed.
+
+## 2026-09-17 — Compact menu overview
+
+- Placed battery and storage in matching 170-point square tiles side by side, keeping the quick controls and footer visible in the normal overview.
+- Let the panel fit its content within the opening display's available height, with scrolling for longer details or error messages.
+- Made the entire app-volume row clickable and added hover/pressed feedback to the summary buttons.
+- Clarified free versus used storage and unavailable battery/storage states, with English, Portuguese, and Spanish labels.
+- Verification: 43 XCTest cases passed in each supported language; localized light/dark and unavailable-state renders inspected; compact height and constrained-scroll fixtures passed; signed Debug build and strict code-signature verification passed. Live menu interaction remains unverified because macOS was locked during UI validation.
+
 ## 2026-09-17 — Per-application volume mixer
 
 - Replaced the output-device volume panel with independent sliders and mute controls for running applications.

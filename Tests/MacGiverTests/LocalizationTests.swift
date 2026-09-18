@@ -144,7 +144,28 @@ final class LocalizationTests: XCTestCase {
             engine: LocalizationAudioProcessMixer(),
             startsAutomatically: false
         )
-        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer), name: "compact")
+        let compact = MenuBarView().environmentObject(litKeyboard).environmentObject(monitor).environmentObject(storage).environmentObject(audioMixer)
+        try await attachPanel(compact.preferredColorScheme(.light), name: "compact", maximumHeight: 570)
+        try await attachPanel(compact.preferredColorScheme(.dark), name: "compact-dark", maximumHeight: 570)
+        try await attachPanel(SettingsView().environmentObject(litKeyboard).preferredColorScheme(.light), name: "settings")
+        try await attachPanel(
+            TextExtractorResultView(
+                text: "A short extracted heading\nA second line of text",
+                message: nil,
+                isProcessing: false,
+                onCopy: {}
+            ).preferredColorScheme(.light),
+            name: "text-extractor-result"
+        )
+        try await attachPanel(
+            TextExtractorResultView(
+                text: nil,
+                message: "No text was found in that area. Try a larger or sharper selection.",
+                isProcessing: false,
+                onCopy: {}
+            ).preferredColorScheme(.dark),
+            name: "text-extractor-error"
+        )
 
         let unavailableKeyboard = AppState(keyboardBacklightController: KeyboardBacklightController(
             readBrightness: { nil }, writeBrightness: { _ in false }
@@ -156,22 +177,41 @@ final class LocalizationTests: XCTestCase {
         let noBattery = BatteryMonitor(startAutomatically: false, readBattery: { BatteryReading(availability: .noBattery) })
         noBattery.refreshBattery()
         try await attachPanel(BatteryMenuPanel().environmentObject(noBattery).padding(14).frame(width: 380), name: "no-battery")
+        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(noBattery).environmentObject(storage).environmentObject(audioMixer), name: "compact-no-battery", maximumHeight: 570)
         let unavailable = BatteryMonitor(startAutomatically: false, readBattery: { BatteryReading() })
         try await attachPanel(BatteryMenuPanel().environmentObject(unavailable).padding(14).frame(width: 380), name: "battery-unavailable")
+        let unavailableStorage = StorageMonitor(startAutomatically: false, readStorage: { StorageReading() })
+        try await attachPanel(MenuBarView().environmentObject(litKeyboard).environmentObject(unavailable).environmentObject(unavailableStorage).environmentObject(audioMixer), name: "compact-unavailable", maximumHeight: 570)
+
+        // Exercise the same scroll container with more content than a small display allows.
+        try await attachPanel(ContentSizedScrollView(maxHeight: 300) {
+            BatteryMenuPanel().environmentObject(monitor).padding(14)
+        }.frame(width: 380), name: "small-screen-details", maximumHeight: 300)
     }
 
     @MainActor
-    private func attachPanel<V: View>(_ view: V, name: String) async throws {
+    private func attachPanel<V: View>(_ view: V, name: String, maximumHeight: CGFloat? = nil) async throws {
         // Hosting through AppKit includes native pickers, progress indicators,
         // and scroll views that ImageRenderer cannot capture.
         let host = NSHostingView(rootView: view.background(Color(nsColor: .windowBackgroundColor)))
-        let size = host.fittingSize
+        var size = host.fittingSize
         let window = NSWindow(contentRect: NSRect(origin: .zero, size: size),
                               styleMask: .borderless, backing: .buffered, defer: false)
         window.contentView = host
         host.frame = NSRect(origin: .zero, size: size)
-        host.layoutSubtreeIfNeeded()
-        try await Task.sleep(for: .milliseconds(100))
+        // Content-sized scroll views publish their measured height after layout.
+        // Refit the host so the attachment represents the settled popover size.
+        for _ in 0..<3 {
+            host.layoutSubtreeIfNeeded()
+            try await Task.sleep(for: .milliseconds(100))
+            size = host.fittingSize
+            window.setContentSize(size)
+            host.frame = NSRect(origin: .zero, size: size)
+        }
+        if let maximumHeight {
+            XCTAssertGreaterThan(size.height, 100, "\(name) must not collapse")
+            XCTAssertLessThanOrEqual(size.height, maximumHeight, "\(name) exceeds its height budget")
+        }
         host.displayIfNeeded()
         let bitmap = try XCTUnwrap(host.bitmapImageRepForCachingDisplay(in: host.bounds))
         host.cacheDisplay(in: host.bounds, to: bitmap)

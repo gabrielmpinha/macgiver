@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Battery": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Battery" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Bateria" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Batería" } }
+      }
+    },
+    "Storage": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Storage" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Armazenamento" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Almacenamiento" } }
+      }
+    },
+    "%@ used": {
+      "comment": "Used disk percentage in the compact storage tile.",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "%@ used" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "%@ usado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "%@ usado" } }
+      }
+    },
     "—": {
       "shouldTranslate": false
     },
@@ -2406,6 +2428,174 @@
             "value": "Cero"
           }
         }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Settings" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ajustes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ajustes" } }
+      }
+    },
+    "Text Extractor Shortcut": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Text Extractor Shortcut" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atalho do extrator de texto" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Atajo del extractor de texto" } }
+      }
+    },
+    "Press a shortcut…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Press a shortcut…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Pressione um atalho…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Pulsa un atajo…" } }
+      }
+    },
+    "Choose a shortcut to start Text Extractor from anywhere.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Choose a shortcut to start Text Extractor from anywhere." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Escolha um atalho para iniciar o Extrator de texto de qualquer lugar." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Elige un atajo para iniciar el extractor de texto desde cualquier lugar." } }
+      }
+    },
+    "The default shortcut is Command-Shift-7.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "The default shortcut is Command-Shift-7." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O atalho padrão é Command-Shift-7." } },
+        "es": { "stringUnit": { "state": "translated", "value": "El atajo predeterminado es Command-Shift-7." } }
+      }
+    },
+    "Reset to Default": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Reset to Default" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Restaurar padrão" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Restablecer valor predeterminado" } }
+      }
+    },
+    "That shortcut is already in use. Choose another one.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "That shortcut is already in use. Choose another one." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Esse atalho já está em uso. Escolha outro." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ese atajo ya está en uso. Elige otro." } }
+      }
+    },
+    "Use at least one Command, Control, or Option modifier.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Use at least one Command, Control, or Option modifier." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Use pelo menos um modificador Command, Control ou Option." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Usa al menos un modificador Command, Control u Option." } }
+      }
+    },
+    "Screen Recording permission is required for selection.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Screen Recording permission is required for selection." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "A permissão de Gravação de Tela é necessária para selecionar uma área." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Se necesita el permiso de grabación de pantalla para seleccionar un área." } }
+      }
+    },
+    "Text Extractor": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Text Extractor" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Extrator de texto" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Extractor de texto" } }
+      }
+    },
+    "Select text from anywhere": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Select text from anywhere" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Selecione texto de qualquer lugar" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Selecciona texto desde cualquier lugar" } }
+      }
+    },
+    "Could not find the active display. Try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not find the active display. Try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível encontrar a tela ativa. Tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo encontrar la pantalla activa. Vuelve a intentarlo." } }
+      }
+    },
+    "Allow Screen Recording access for MacGiver in System Settings > Privacy & Security > Screen Recording, then try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Allow Screen Recording access for MacGiver in System Settings > Privacy & Security > Screen Recording, then try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Permita a Gravação de Tela para o MacGiver em Ajustes do Sistema > Privacidade e Segurança > Gravação de Tela e tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Permite la grabación de pantalla para MacGiver en Ajustes del Sistema > Privacidad y seguridad > Grabación de pantalla y vuelve a intentarlo." } }
+      }
+    },
+    "Could not capture the display. Check Screen Recording permission and try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not capture the display. Check Screen Recording permission and try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível capturar a tela. Verifique a permissão de Gravação de Tela e tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo capturar la pantalla. Comprueba el permiso de grabación de pantalla y vuelve a intentarlo." } }
+      }
+    },
+    "Select a larger area to extract text.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Select a larger area to extract text." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Selecione uma área maior para extrair o texto." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Selecciona un área más grande para extraer el texto." } }
+      }
+    },
+    "Extracting text…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Extracting text…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Extraindo texto…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Extrayendo texto…" } }
+      }
+    },
+    "Extracted Text": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Extracted Text" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Texto extraído" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Texto extraído" } }
+      }
+    },
+    "Select text or copy everything below.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Select text or copy everything below." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Selecione um trecho ou copie tudo abaixo." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Selecciona texto o copia todo lo que aparece abajo." } }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Copied" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Copiado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Copiado" } }
+      }
+    },
+    "Copy All": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Copy All" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Copiar tudo" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Copiar todo" } }
+      }
+    },
+    "Could not extract text.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not extract text." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível extrair o texto." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo extraer el texto." } }
+      }
+    },
+    "Drag to highlight an area · Esc to cancel": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Drag to highlight an area · Esc to cancel" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Arraste para destacar uma área · Esc para cancelar" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Arrastra para resaltar un área · Esc para cancelar" } }
+      }
+    },
+    "No text was found in that area. Try a larger or sharper selection.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No text was found in that area. Try a larger or sharper selection." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum texto foi encontrado nessa área. Tente uma seleção maior ou mais nítida." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontró texto en esa área. Prueba una selección más grande o nítida." } }
+      }
+    },
+    "Could not recognize text in that area. Try again with a clearer selection.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not recognize text in that area. Try again with a clearer selection." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível reconhecer texto nessa área. Tente novamente com uma seleção mais nítida." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo reconocer texto en esa área. Vuelve a intentarlo con una selección más clara." } }
       }
     }
   },

@@ -155,50 +155,26 @@ struct StorageCollapsedSummary: View {
     @EnvironmentObject private var monitor: StorageMonitor
     let onExpand: () -> Void
 
+    private var isAvailable: Bool { monitor.reading.availability == .available }
+
     var body: some View {
         Button(action: onExpand) {
-            StorageMenuCard {
-                HStack(spacing: 9) {
-                    Image(systemName: "internaldrive.fill")
-                        .font(.system(size: 19, weight: .semibold))
-                        .foregroundStyle(StorageStyle.blue)
-                        .frame(width: 35, height: 35)
-                        .background(StorageStyle.blue.opacity(0.12), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text("Mac storage").font(.headline)
-                        Text("Free space").font(.caption).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(monitor.reading.usedPercentText)
-                            .font(.system(size: 24, weight: .semibold, design: .rounded)).monospacedDigit()
-                        HStack(spacing: 3) {
-                            Text("DETAILS")
-                                .font(.system(size: 8, weight: .bold, design: .rounded))
-                                .tracking(0.7)
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 8, weight: .bold))
-                        }
-                        .foregroundStyle(.secondary)
-                    }
-                }
-                if let percent = monitor.reading.usedPercent {
-                    ProgressView(value: percent, total: 100).tint(StorageStyle.blue).padding(.top, 10)
-                }
-                HStack {
-                    Label(monitor.reading.freeText, systemImage: "arrow.down.left")
-                    Spacer()
-                    Text(monitor.reading.totalText)
-                        .monospacedDigit()
-                }
-                .font(.caption).foregroundStyle(.secondary).padding(.top, 10)
-            }
+            SummaryTile(
+                title: "Storage", symbol: "internaldrive.fill",
+                value: isAvailable ? monitor.reading.freeText : "—",
+                status: isAvailable ? String(localized: "Free space") : String(localized: "Storage unavailable"),
+                detail: isAvailable ? String(localized: "\(monitor.reading.usedPercentText) used", comment: "Used disk percentage in the compact storage tile.") : "",
+                progress: isAvailable ? monitor.reading.usedPercent : nil,
+                tint: StorageStyle.blue
+            )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(SummaryButtonStyle(tint: StorageStyle.blue))
         .help("Show storage details")
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Storage \(monitor.reading.usedPercentText) used, \(monitor.reading.freeText) available. Show storage details")
-        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(isAvailable
+            ? Text("Storage \(monitor.reading.usedPercentText) used, \(monitor.reading.freeText) available. Show storage details")
+            : Text("Storage unavailable"))
+        .accessibilityHint("Show storage details")
     }
 }
 
