@@ -20,6 +20,14 @@ staging_dir="$(mktemp -d "${TMPDIR:-/tmp}/macgiver-dmg.XXXXXX")"
 trap 'rm -R "$staging_dir"' EXIT
 
 ditto --norsrc "$app_path" "$staging_dir/MacGiver.app"
+# Unsigned Xcode builds may only have a linker signature on the executable.
+# Seal the complete staged bundle so its identifier and resources are bound.
+# Keep an existing valid developer signature intact.
+if ! codesign --verify --deep --strict "$staging_dir/MacGiver.app" 2>/dev/null; then
+  xattr -cr "$staging_dir/MacGiver.app"
+  codesign --force --sign - --identifier com.macgiver.app "$staging_dir/MacGiver.app"
+fi
+codesign --verify --deep --strict "$staging_dir/MacGiver.app"
 ln -s /Applications "$staging_dir/Applications"
 
 hdiutil create \

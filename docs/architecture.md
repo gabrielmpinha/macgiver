@@ -28,7 +28,7 @@ flowchart TD
     AudioMixer --> CoreAudio[CoreAudio process taps]
     Mac --> IOKit[IOKit power sources and IORegistry]
     Storage --> FileSystem[Startup volume file-system attributes]
-    Extractor --> Capture[Core Graphics display capture]
+    Extractor --> Capture[ScreenCaptureKit display capture]
     Extractor --> Vision[Vision OCR]
 ```
 
@@ -67,7 +67,7 @@ Keep Awake creates an IOKit `PreventUserIdleSystemSleep` assertion and releases 
 
 Lock Keyboard requires Accessibility trust and installs a session event tap for key-down, key-up, and modifier-change events. Mouse events are outside the subscribed mask. A disabled event tap is re-enabled when macOS reports a timeout or user-input disable event.
 
-Text Extractor captures the display containing the pointer with Core Graphics before presenting a full-screen selection panel. The selected rectangle is cropped at the display's backing scale, recognized locally with Vision, and presented in a floating AppKit panel. macOS Screen Recording permission is required because the feature reads pixels from other applications; no screenshot or recognized text is persisted.
+Text Extractor captures the display containing the pointer asynchronously with ScreenCaptureKit before presenting a full-screen selection panel. Capture requests use the display ID and native pixel scale; a repeated invocation cancels the previous request and ignores its late result. ScreenCaptureKit handles authorization directly, without a Core Graphics preflight gate. Only an explicit permission-denied capture error prompts the user to check Screen Recording; other capture failures remain retryable errors. The selected rectangle is cropped at the display's backing scale, recognized locally with Vision, and presented in a floating AppKit panel. macOS Screen Recording permission is required because the feature reads pixels from other applications; no screenshot or recognized text is persisted.
 
 The Text Extractor global shortcut uses Carbon's `RegisterEventHotKey`, so it works outside MacGiver without an Accessibility event tap. The default `Command-Shift-7` is loaded from `UserDefaults`; Settings records a physical key code plus modifier mask, attempts registration before saving, and restores the previous registration when the new combination is unavailable.
 

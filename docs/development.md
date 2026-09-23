@@ -49,7 +49,7 @@ A locally built app is not a notarized distribution artifact. Keyboard Light dep
 
 ## DMG release
 
-The repository includes `scripts/create-dmg.sh` for creating a simple unsigned DMG. It packages the Release `.app` with an **Applications** shortcut and does not require an Apple Developer account. An unsigned download may trigger a Gatekeeper warning on another Mac.
+The repository includes `scripts/create-dmg.sh` for creating a simple unsigned DMG. It packages the Release `.app` with an **Applications** shortcut and does not require an Apple Developer account. It preserves valid app signatures; otherwise, it ad-hoc signs the complete staged app and verifies the bundle before packaging. Ad-hoc signing is not Developer ID signing or notarization, and permissions may need to be granted again after an update. An unsigned download may trigger a Gatekeeper warning on another Mac. For repeatable local permission testing, sign builds with the same Apple Development identity and launch the same installed app path.
 
 GitHub Actions creates a DMG release when a `v*` tag is pushed. For example, after committing a release-ready change:
 

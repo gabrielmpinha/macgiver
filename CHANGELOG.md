@@ -2,6 +2,13 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-09-23 — Text extractor permission recovery
+
+- Capture through ScreenCaptureKit instead of blocking on a Core Graphics permission preflight result, and show permission guidance only when capture actually reports access denied.
+- Preserve display pixel resolution and ignore late capture results or errors after another extraction starts.
+- Seal and verify unsigned app bundles during DMG packaging while preserving valid developer signatures.
+- Verification: 54 XCTest cases passed, followed by all 11 Text Extractor tests after a cancellation refinement; Apple Development-signed Release build and strict installed-bundle verification passed. Both developer-signed and unsigned-input DMGs were created, mounted, and signature-verified. Installed-app selection/OCR still needs live confirmation; menu-bar automation timed out.
+
 ## 2026-09-18 — Configurable text extractor shortcut
 
 - Added a native global shortcut for Text Extractor, defaulting to Command-Shift-7 after checking the current macOS screenshot and symbolic shortcut configuration.
