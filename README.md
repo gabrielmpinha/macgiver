@@ -17,6 +17,8 @@ MacGiver is a native macOS app for keeping your Mac awake, locking keyboard inpu
 | **Mac storage** | Shows used, free, and total space for the startup disk. |
 | **Storage history** | Charts startup-disk usage over 15 minutes, 1 hour, or 6 hours. |
 | **App volume mixer** | Adjusts volume and mute state independently for running applications. |
+| **Homebrew packages** | Browses installed formulas and apps, updates one, selected, or all outdated packages, and uninstalls individual packages. |
+| **GitHub updates** | Checks the latest GitHub Release, shows its changelog, and links to the official DMG download. |
 
 Hardware-dependent readings appear only when macOS exposes them. See the [usage guide](docs/usage.md) for support details.
 
@@ -89,8 +91,9 @@ Pushing a version tag such as `vX.Y.Z` starts the [DMG release workflow](.github
 4. Click **Copy All**, or select only part of the extracted text and use the normal macOS copy command.
 5. Click the battery or storage summary to expand its details and history.
 6. Use the **App volume** card to expand the per-application mixer. Move a slider or mute one app without changing the others.
-7. Open **Settings** at the bottom of the panel to change the Text Extractor keyboard shortcut.
-8. Use **Quit** at the bottom of the panel to close the app.
+7. Open **Homebrew** to search installed formulas and apps, review available updates, or update and uninstall a package.
+8. Open **Settings** at the bottom of the panel to change the Text Extractor keyboard shortcut.
+9. Use **Quit** at the bottom of the panel to close the app.
 
 **Lock Keyboard** requires permission in **System Settings > Privacy & Security > Accessibility**. After enabling MacGiver there, return to the panel and try the switch again. Use your mouse or trackpad to turn the lock off.
 
@@ -125,6 +128,7 @@ Tests cover backlight state transitions, battery, storage, per-application volum
 | Swift 6 | Application code and concurrency |
 | SwiftUI and AppKit | Menu bar UI, application lifecycle, and wake notifications |
 | Swift Charts | Interactive battery and storage history |
+| Homebrew CLI | Local package inventory, updates, and uninstall actions |
 | Xcode String Catalogs | English, Portuguese, and Spanish localization with native language selection |
 | IOKit | Sleep prevention and Mac power-source data |
 | Core Graphics and Accessibility | Keyboard event interception and permission checks |

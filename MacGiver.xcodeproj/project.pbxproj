@@ -12,18 +12,22 @@
 		0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C307B8233A211C44204F09 /* MacGiverApp.swift */; };
 		1A76393C8E133445A47D3383 /* TextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA81F82DF7628C221D51B4A /* TextExtractor.swift */; };
 		1C12DDE6EF395E0B2D195C56 /* VolumeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2F4650979E280C5B16117D /* VolumeTests.swift */; };
+		276D216B292E6BBB98361588 /* GitHubReleaseChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB94D96F2C210E4F74B82121 /* GitHubReleaseChecker.swift */; };
 		2A6FDCB6B9FC31772076E760 /* BatteryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318ED74D2AF7C44D1F6BA2F0 /* BatteryTests.swift */; };
 		38834636CBCE25426D6F2A5A /* StorageMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5711EFEB4F1991E6FD7A27 /* StorageMenuPanel.swift */; };
 		43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C933D04077EDCE5A275C41 /* MenuBarView.swift */; };
 		5AEA37D5EDC84B6572BBA86D /* AppMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EF1D510764ABDEC6E11BEE /* AppMetadata.swift */; };
 		5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */; };
+		5D3DA5D500F7C7BBECEFA78D /* HomebrewMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AF319A2FF136B17A7866C6 /* HomebrewMenuPanel.swift */; };
 		66438FBA3DC12F2FCA444B45 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA71D2B3F7D3893A859E35C5 /* Localizable.xcstrings */; };
 		75A031EF5C5688EDE82D2B71 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BF8AF9F808BF918B2E6101 /* LocalizationTests.swift */; };
 		7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */; };
 		7EF7AB19E98C451BC7AE5477 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D38890654D3B3CB78FFA27 /* SettingsView.swift */; };
+		89A62612A1566AF3616F17DF /* HomebrewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BE9B6A408C87B713EA6840 /* HomebrewManager.swift */; };
 		937B2FDCE0CB71723E288A48 /* GlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEE3ECDFCC03E47E67547D6 /* GlobalShortcut.swift */; };
 		B6AB050B7301E3B0EDACB8F9 /* StorageMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6B140D52430544259E8C37 /* StorageMonitor.swift */; };
 		BEA2E312393E68922D200DBC /* StorageReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8F9A6777C0CB24F96A99F6 /* StorageReading.swift */; };
+		C2770E53962957063C9A7DFD /* GitHubUpdatesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78EB49FFFDA28152F6B1671 /* GitHubUpdatesPanel.swift */; };
 		CD826A6B08AABBB135147312 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC52F0C647EB7B98777CDD2 /* StorageTests.swift */; };
 		CEEC751DB1036FE73EA2BB65 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */; };
 		E5CBEA9D6ECC17AC90E8B763 /* VolumeMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A392242418916A34CBF405B /* VolumeMenuPanel.swift */; };
@@ -56,9 +60,13 @@
 		76524CDF64B5DC8F4689E4DE /* MacGiver.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = MacGiver.icon; sourceTree = "<group>"; };
 		77CBE02D1EF13CD69A4433D0 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
 		7AEE3ECDFCC03E47E67547D6 /* GlobalShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcut.swift; sourceTree = "<group>"; };
+		92AF319A2FF136B17A7866C6 /* HomebrewMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewMenuPanel.swift; sourceTree = "<group>"; };
 		94F974A056AA13210CC10A17 /* BatteryReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryReading.swift; sourceTree = "<group>"; };
 		A6142D24C5569477CA63D9EB /* TextExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtractorTests.swift; sourceTree = "<group>"; };
+		A78EB49FFFDA28152F6B1671 /* GitHubUpdatesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUpdatesPanel.swift; sourceTree = "<group>"; };
+		AB94D96F2C210E4F74B82121 /* GitHubReleaseChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubReleaseChecker.swift; sourceTree = "<group>"; };
 		BA8F9A6777C0CB24F96A99F6 /* StorageReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageReading.swift; sourceTree = "<group>"; };
+		C1BE9B6A408C87B713EA6840 /* HomebrewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewManager.swift; sourceTree = "<group>"; };
 		C519A42C6F993DEB350AC65C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C9D38890654D3B3CB78FFA27 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CA2F4650979E280C5B16117D /* VolumeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeTests.swift; sourceTree = "<group>"; };
@@ -114,7 +122,11 @@
 				EAB02853D2A9CE3C893A0798 /* BatteryMenuPanel.swift */,
 				44F3BE07332F1B1E60748C15 /* BatteryMonitor.swift */,
 				94F974A056AA13210CC10A17 /* BatteryReading.swift */,
+				AB94D96F2C210E4F74B82121 /* GitHubReleaseChecker.swift */,
+				A78EB49FFFDA28152F6B1671 /* GitHubUpdatesPanel.swift */,
 				7AEE3ECDFCC03E47E67547D6 /* GlobalShortcut.swift */,
+				C1BE9B6A408C87B713EA6840 /* HomebrewManager.swift */,
+				92AF319A2FF136B17A7866C6 /* HomebrewMenuPanel.swift */,
 				3BD8FB012DF9E2F09F8DDF49 /* KeyboardBacklight.swift */,
 				20C307B8233A211C44204F09 /* MacGiverApp.swift */,
 				36C933D04077EDCE5A275C41 /* MenuBarView.swift */,
@@ -285,7 +297,11 @@
 				7BDF920C2206E68FE4C9A478 /* BatteryMenuPanel.swift in Sources */,
 				5BEA20C5574B84753B99B2E8 /* BatteryMonitor.swift in Sources */,
 				0418DA7541ECC068FD872FD8 /* BatteryReading.swift in Sources */,
+				276D216B292E6BBB98361588 /* GitHubReleaseChecker.swift in Sources */,
+				C2770E53962957063C9A7DFD /* GitHubUpdatesPanel.swift in Sources */,
 				937B2FDCE0CB71723E288A48 /* GlobalShortcut.swift in Sources */,
+				89A62612A1566AF3616F17DF /* HomebrewManager.swift in Sources */,
+				5D3DA5D500F7C7BBECEFA78D /* HomebrewMenuPanel.swift in Sources */,
 				FB62B27187BBF185AC84E821 /* KeyboardBacklight.swift in Sources */,
 				0B1662041AF7C1B4A1897ABC /* MacGiverApp.swift in Sources */,
 				43438D532FF4999EAC4951ED /* MenuBarView.swift in Sources */,

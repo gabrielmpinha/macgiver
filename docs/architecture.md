@@ -17,6 +17,11 @@ flowchart TD
     UI --> AudioMixer
     UI --> Panel[BatteryMenuPanel]
     UI --> StoragePanel[StorageMenuPanel]
+    UI --> BrewPanel[HomebrewMenuPanel]
+    BrewPanel --> BrewManager[HomebrewManager]
+    UI --> ReleasePanel[GitHubUpdatesPanel]
+    ReleasePanel --> ReleaseChecker[GitHubReleaseChecker]
+    ReleaseChecker --> ReleasesAPI[GitHub Releases API]
     Panel --> Monitor
     StoragePanel --> StorageMonitor
     State --> Sleep[IOKit sleep assertion]
@@ -26,6 +31,7 @@ flowchart TD
     Monitor --> Mac[BatteryHardware and BatteryHistory]
     StorageMonitor --> Storage[StorageHardware and StorageHistory]
     AudioMixer --> CoreAudio[CoreAudio process taps]
+    BrewManager --> Brew[Installed Homebrew command]
     Mac --> IOKit[IOKit power sources and IORegistry]
     Storage --> FileSystem[Startup volume file-system attributes]
     Extractor --> Capture[Core Graphics display capture]
@@ -49,6 +55,10 @@ flowchart TD
 | [StorageMonitor.swift](../Sources/MacGiver/StorageMonitor.swift) | Five-second storage sampling, wake notifications, and in-memory history. |
 | [StorageMenuPanel.swift](../Sources/MacGiver/StorageMenuPanel.swift) | Storage summary, capacity metrics, and usage chart. |
 | [VolumeMenuPanel.swift](../Sources/MacGiver/VolumeMenuPanel.swift) | Compact app-volume summary, per-application rows, mute controls, permission states, and refresh action. |
+| [HomebrewManager.swift](../Sources/MacGiver/HomebrewManager.swift) | Discovers Homebrew, reads installed formula and cask versions, identifies outdated packages, streams command output, and runs sequential upgrade batches or uninstall commands. |
+| [HomebrewMenuPanel.swift](../Sources/MacGiver/HomebrewMenuPanel.swift) | Homebrew package counts, search/filter, version rows, update selection, live operation log, Terminal retry, and uninstall confirmation. |
+| [GitHubReleaseChecker.swift](../Sources/MacGiver/GitHubReleaseChecker.swift) | Reads the latest public GitHub Release, compares semantic version components, and opens its DMG or release page. |
+| [GitHubUpdatesPanel.swift](../Sources/MacGiver/GitHubUpdatesPanel.swift) | Displays the installed/latest version, release notes, update status, and official download action. |
 | [Localizable.xcstrings](../Resources/Localizable.xcstrings) | English source strings, Portuguese and Spanish translations, plural forms, tooltips, and accessibility descriptions. |
 
 ## Localization
@@ -56,6 +66,10 @@ flowchart TD
 The app uses native bundle language selection with English as its development language. SwiftUI labels use `LocalizedStringKey`; model and error messages use `String(localized:)`. Battery state identifiers, storage labels, and hardware property names stay independent of translated display text. Numbers use Foundation's regional formatting, preserving the 0–100 percentage scale, signed battery power, and byte units.
 
 App volume control uses macOS 14.2+ Core Audio process taps. Each active process is tapped with muted-when-read behavior, then a private aggregate device feeds a realtime render callback that applies the per-app gain before sending the mixed stream to the current system output. The UI stores the desired level by application process ID while the process remains available; helper processes are attributed by bundle-ID prefix. The system output device is an engine clock source only and is not part of the user-facing mixer model.
+
+Homebrew integration invokes the user's installed `brew` executable with argument arrays rather than a shell. Inventory reads formula and cask lists plus `brew outdated --json=v2`; refresh disables Homebrew's automatic metadata update, while an explicit package upgrade retains Homebrew's default update behavior. Upgrades are serialized and stream combined stdout/stderr into the UI. A failed upgrade can be retried in Terminal for installers that require interactive authorization; MacGiver does not escalate privileges or collect credentials. Uninstall uses the package type flag and does not pass `--force`, `--ignore-dependencies`, or cask `--zap`.
+
+The update checker requests the repository's public `releases/latest` API endpoint. It shows the release notes and opens the release DMG URL for download; the user manually replaces the app from the mounted DMG. This deliberately avoids self-modifying an unsigned installation.
 
 To add or change text, build in Xcode to extract localizable strings, then update all three languages in the string catalog. Xcode compiles it into `.lproj` resources; regenerate the project with XcodeGen after adding resources. `LocalizationTests.swift` checks the compiled tables directly so English fallback cannot hide missing translations.
 

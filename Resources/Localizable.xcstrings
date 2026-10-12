@@ -2597,6 +2597,552 @@
         "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível reconhecer texto nessa área. Tente novamente com uma seleção mais nítida." } },
         "es": { "stringUnit": { "state": "translated", "value": "No se pudo reconocer texto en esa área. Vuelve a intentarlo con una selección más clara." } }
       }
+    },
+    "Homebrew": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Homebrew" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Homebrew" } }
+      }
+    },
+    "Manage Homebrew packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Manage Homebrew packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Gerenciar pacotes do Homebrew" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestionar paquetes de Homebrew" } }
+      }
+    },
+    "Homebrew, %@ packages, %@ updates. Manage packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew, %@ packages, %@ updates. Manage packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Homebrew, %1$@ pacotes, %2$@ atualizações. Gerenciar pacotes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Homebrew, %1$@ paquetes, %2$@ actualizaciones. Gestionar paquetes" } }
+      }
+    },
+    "Package manager unavailable": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Package manager unavailable" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Gerenciador de pacotes indisponível" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestor de paquetes no disponible" } }
+      }
+    },
+    "Open to load packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Open to load packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Abra para carregar os pacotes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abre para cargar los paquetes" } }
+      }
+    },
+    "Loading packages…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Loading packages…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Carregando pacotes…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando paquetes…" } }
+      }
+    },
+    "%@ installed · %@ updates": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "%@ installed · %@ updates" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "%1$@ instalados · %2$@ atualizações" } },
+        "es": { "stringUnit": { "state": "translated", "value": "%1$@ instalados · %2$@ actualizaciones" } }
+      }
+    },
+    "Uninstall %@?": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Uninstall %@?" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Desinstalar %@?" } },
+        "es": { "stringUnit": { "state": "translated", "value": "¿Desinstalar %@?" } }
+      }
+    },
+    "Uninstall": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Uninstall" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Desinstalar" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Desinstalar" } }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Cancel" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Cancelar" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cancelar" } }
+      }
+    },
+    "Homebrew will remove this package. Apps and settings outside Homebrew may remain.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew will remove this package. Apps and settings outside Homebrew may remain." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O Homebrew removerá este pacote. Apps e ajustes externos ao Homebrew podem permanecer." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Homebrew eliminará este paquete. Las apps y ajustes externos a Homebrew pueden permanecer." } }
+      }
+    },
+    "Homebrew packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Pacotes do Homebrew" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Paquetes de Homebrew" } }
+      }
+    },
+    "Installed formulas and apps": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Installed formulas and apps" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Fórmulas e apps instalados" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Fórmulas y apps instaladas" } }
+      }
+    },
+    "Refresh packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Refresh packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar lista de pacotes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar lista de paquetes" } }
+      }
+    },
+    "Installed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Installed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Instalados" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Instalados" } }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Updates" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizações" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizaciones" } }
+      }
+    },
+    "Formula": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Formula" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Fórmula" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Fórmula" } }
+      }
+    },
+    "App": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "App" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "App" } },
+        "es": { "stringUnit": { "state": "translated", "value": "App" } }
+      }
+    },
+    "Package filter": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Package filter" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Filtro de pacotes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Filtro de paquetes" } }
+      }
+    },
+    "All": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "All" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Todos" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Todos" } }
+      }
+    },
+    "Search packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Search packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Buscar pacotes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Buscar paquetes" } }
+      }
+    },
+    "Clear search": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Clear search" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Limpar busca" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Borrar búsqueda" } }
+      }
+    },
+    "Loading installed packages…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Loading installed packages…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Carregando pacotes instalados…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando paquetes instalados…" } }
+      }
+    },
+    "Everything is up to date": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Everything is up to date" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Tudo está atualizado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Todo está actualizado" } }
+      }
+    },
+    "There are no available package updates.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "There are no available package updates." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não há atualizações disponíveis para os pacotes." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay actualizaciones disponibles para los paquetes." } }
+      }
+    },
+    "No packages found": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No packages found" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum pacote encontrado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron paquetes" } }
+      }
+    },
+    "No matching packages": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No matching packages" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum pacote correspondente" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay paquetes coincidentes" } }
+      }
+    },
+    "No Homebrew packages are installed.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No Homebrew packages are installed." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Nenhum pacote do Homebrew está instalado." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay paquetes de Homebrew instalados." } }
+      }
+    },
+    "Try a different package name.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Try a different package name." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Tente outro nome de pacote." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Prueba con otro nombre de paquete." } }
+      }
+    },
+    "Update available": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update available" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualização disponível" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualización disponible" } }
+      }
+    },
+    "MacGiver updates": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "MacGiver updates" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizações do MacGiver" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizaciones de MacGiver" } }
+      }
+    },
+    "Current version: %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Current version: %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Versão atual: %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Versión actual: %@" } }
+      }
+    },
+    "Check for updates": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Check for updates" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Buscar atualizações" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Buscar actualizaciones" } }
+      }
+    },
+    "Check for the latest MacGiver release on GitHub": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Check for the latest MacGiver release on GitHub" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Buscar a versão mais recente do MacGiver no GitHub" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Buscar la versión más reciente de MacGiver en GitHub" } }
+      }
+    },
+    "Checking GitHub Releases…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Checking GitHub Releases…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Verificando releases do GitHub…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Comprobando releases de GitHub…" } }
+      }
+    },
+    "Could not check GitHub for updates. Check your internet connection and try again.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Could not check GitHub for updates. Check your internet connection and try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível buscar atualizações no GitHub. Verifique sua conexão e tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudieron buscar actualizaciones en GitHub. Comprueba tu conexión e inténtalo de nuevo." } }
+      }
+    },
+    "Update check failed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update check failed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Falha ao buscar atualizações" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Falló la búsqueda de actualizaciones" } }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Try again" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Tentar novamente" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Intentar de nuevo" } }
+      }
+    },
+    "Version %@ is available": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Version %@ is available" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "A versão %@ está disponível" } },
+        "es": { "stringUnit": { "state": "translated", "value": "La versión %@ está disponible" } }
+      }
+    },
+    "You’re up to date": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "You’re up to date" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Você está usando a versão mais recente" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Tienes la versión más reciente" } }
+      }
+    },
+    "Latest version: %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Latest version: %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Versão mais recente: %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Última versión: %@" } }
+      }
+    },
+    "Download update": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Download update" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Baixar atualização" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Descargar actualización" } }
+      }
+    },
+    "Download the DMG, open it, then drag MacGiver to Applications.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Download the DMG, open it, then drag MacGiver to Applications." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Baixe o DMG, abra-o e arraste o MacGiver para Aplicativos." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Descarga el DMG, ábrelo y arrastra MacGiver a Aplicaciones." } }
+      }
+    },
+    "No release notes were provided.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "No release notes were provided." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Esta release não tem notas." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esta versión no tiene notas." } }
+      }
+    },
+    "Release notes from GitHub": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Release notes from GitHub" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Notas da release no GitHub" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Notas de la versión en GitHub" } }
+      }
+    },
+    "View on GitHub": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "View on GitHub" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Ver no GitHub" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ver en GitHub" } }
+      }
+    },
+    "Update %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar %@" } }
+      }
+    },
+    "Uninstall %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Uninstall %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Desinstalar %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Desinstalar %@" } }
+      }
+    },
+    "Homebrew not found": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew not found" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Homebrew não encontrado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontró Homebrew" } }
+      }
+    },
+    "Install Homebrew, then reopen this panel to manage packages.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Install Homebrew, then reopen this panel to manage packages." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Instale o Homebrew e reabra este painel para gerenciar pacotes." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Instala Homebrew y vuelve a abrir este panel para gestionar paquetes." } }
+      }
+    },
+    "Packages refreshed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Packages refreshed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Lista de pacotes atualizada" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Lista de paquetes actualizada" } }
+      }
+    },
+    "Updating %@…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Updating %@…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizando %@…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizando %@…" } }
+      }
+    },
+    "Uninstalling %@…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Uninstalling %@…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Desinstalando %@…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Desinstalando %@…" } }
+      }
+    },
+    "Updated %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Updated %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "%@ atualizado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "%@ actualizado" } }
+      }
+    },
+    "Uninstalled %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Uninstalled %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "%@ desinstalado" } },
+        "es": { "stringUnit": { "state": "translated", "value": "%@ desinstalado" } }
+      }
+    },
+    "Version unavailable": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Version unavailable" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Versão indisponível" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Versión no disponible" } }
+      }
+    },
+    "Homebrew command failed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew command failed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O comando do Homebrew falhou" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Falló el comando de Homebrew" } }
+      }
+    },
+    "Homebrew was not found.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Homebrew was not found." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O Homebrew não foi encontrado." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontró Homebrew." } }
+      }
+    },
+    "Starting update of %@ packages…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Starting update of %@ packages…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Iniciando atualização de %@ pacotes…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Iniciando actualización de %@ paquetes…" } }
+      }
+    },
+    "Updating %@ of %@: %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Updating %@ of %@: %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizando %1$@ de %2$@: %3$@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizando %1$@ de %2$@: %3$@" } }
+      }
+    },
+    "Failed to update %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Failed to update %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Falha ao atualizar %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo actualizar %@" } }
+      }
+    },
+    "All selected updates completed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "All selected updates completed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Todas as atualizações selecionadas foram concluídas" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Se completaron todas las actualizaciones seleccionadas" } }
+      }
+    },
+    "Some updates failed": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Some updates failed" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Algumas atualizações falharam" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Algunas actualizaciones fallaron" } }
+      }
+    },
+    "Review the operation log for details.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Review the operation log for details." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Consulte o log da operação para ver os detalhes." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Consulta el registro de la operación para ver los detalles." } }
+      }
+    },
+    "Update all (%@)": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update all (%@)" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar tudo (%@)" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar todo (%@)" } }
+      }
+    },
+    "Update selected (%@)": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update selected (%@)" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Atualizar selecionados (%@)" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar seleccionados (%@)" } }
+      }
+    },
+    "Select visible updates": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Select visible updates" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Selecionar atualizações visíveis" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Seleccionar actualizaciones visibles" } }
+      }
+    },
+    "Clear selection": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Clear selection" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Limpar seleção" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Limpiar selección" } }
+      }
+    },
+    "Select package %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Select package %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Selecionar pacote %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Seleccionar paquete %@" } }
+      }
+    },
+    "Deselect package %@": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Deselect package %@" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Desmarcar pacote %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Deseleccionar paquete %@" } }
+      }
+    },
+    "Update log": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Update log" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Log da atualização" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Registro de actualización" } }
+      }
+    },
+    "Clear log": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Clear log" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Limpar log" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Borrar registro" } }
+      }
+    },
+    "Waiting for Homebrew output…": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Waiting for Homebrew output…" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Aguardando a saída do Homebrew…" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esperando la salida de Homebrew…" } }
+      }
+    },
+    "Some installers may need administrator interaction.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Some installers may need administrator interaction." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Alguns instaladores podem exigir interação de administrador." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Algunos instaladores pueden requerir interacción de administrador." } }
+      }
+    },
+    "Retry in Terminal": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Retry in Terminal" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Tentar novamente no Terminal" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Reintentar en Terminal" } }
+      }
+    },
+    "Retry update for %@ in Terminal": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Retry update for %@ in Terminal" } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Tentar atualizar %@ novamente no Terminal" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Reintentar actualización de %@ en Terminal" } }
+      }
+    },
+    "macOS could not open Terminal.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "macOS could not open Terminal." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "O macOS não conseguiu abrir o Terminal." } },
+        "es": { "stringUnit": { "state": "translated", "value": "macOS no pudo abrir Terminal." } }
+      }
+    },
+    "Opened Terminal to retry %@.": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Opened Terminal to retry %@." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Terminal aberto para tentar %@ novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Se abrió Terminal para reintentar %@." } }
+      }
     }
   },
   "version": "1.0"
