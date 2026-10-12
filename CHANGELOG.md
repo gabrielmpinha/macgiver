@@ -2,6 +2,16 @@
 
 This file records documented changes from its introduction onward; it does not reconstruct earlier release history.
 
+## 2026-10-11 — Homebrew package manager
+
+- Added a menu-bar panel for installed formulae and casks with package search, installed/latest versions, and an updates-only filter.
+- Added per-package, selected-package, and update-all actions. Batch upgrades run sequentially to avoid overlapping Homebrew operations.
+- Stream Homebrew output in a selectable log panel, and offer a Terminal retry after failures for installers that may need interactive administrator authorization (such as `.pkg` casks).
+- Added a GitHub Releases check that displays the latest version and release notes, with a direct download of the official DMG.
+- Kept confirmed uninstall behavior; Homebrew's normal dependency checks and cask uninstall behavior are preserved.
+- Added English, Portuguese, and Spanish strings and documented package discovery and command behavior.
+- Verification: XcodeGen project generation and Debug build; automated tests and live menu interaction were not run.
+
 ## 2026-09-23 — Text extractor permission recovery
 
 - Capture through ScreenCaptureKit instead of blocking on a Core Graphics permission preflight result, and show permission guidance only when capture actually reports access denied.

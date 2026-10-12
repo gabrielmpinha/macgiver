@@ -10,6 +10,20 @@ The panel opens with square battery and storage summaries side by side, an app-v
 
 The panel fits its content up to the available screen height. Scrolling is available when details, status messages, or a smaller display need more room.
 
+## Updating MacGiver
+
+Choose **Check for updates** in the menu-bar footer to compare this app with the latest GitHub Release. The panel displays the release notes and offers the official DMG download when a newer version is available. Open the downloaded DMG and drag MacGiver to Applications to replace the installed copy. This is a download-and-install flow, not a silent in-app replacement.
+
+## Homebrew packages
+
+Open **Homebrew** in the menu-bar panel to browse installed formulae and casks. Search by package name or switch to **Updates** to see packages for which Homebrew reports a newer version. Each row shows the installed version and, when available, the current version from Homebrew.
+
+Use the arrow button to update one package, select individual outdated rows and choose **Update selected**, or choose **Update all**. Batch updates run one at a time to avoid competing Homebrew operations. The live, selectable operation log stays above the package list; use **Clear log** to dismiss it. If an installer needs interactive administrator authorization, use **Retry in Terminal** on the failed package so macOS can present the required prompt. MacGiver never collects an administrator password.
+
+Use the minus button and confirm to run `brew uninstall`; Homebrew will keep its normal dependency checks, and cask uninstall does not request the more aggressive `--zap` cleanup. Updating a package may download files, run install scripts, and update Homebrew's local metadata as part of Homebrew's normal behavior. Refreshing the list does not run a package update.
+
+MacGiver finds Homebrew in `/opt/homebrew/bin`, `/usr/local/bin`, or the app's inherited `PATH`. If it is installed elsewhere, make its `bin` directory available on the app's `PATH` and reopen the panel. Package inventory and actions are handled locally by the installed Homebrew command.
+
 ## Text Extractor
 
 Click the small **Text Extractor** icon beside **Quick Controls** to begin. MacGiver captures the display under the pointer, dims it, and shows a selection overlay. Drag around the text you want, then release. A small floating window opens with the locally recognized text.

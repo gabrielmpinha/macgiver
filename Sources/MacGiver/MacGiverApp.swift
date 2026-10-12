@@ -6,6 +6,7 @@ struct MacGiverApp: App {
     @StateObject private var batteryMonitor = BatteryMonitor()
     @StateObject private var storageMonitor = StorageMonitor()
     @StateObject private var audioMixer = AudioMixer()
+    @StateObject private var homebrewManager = HomebrewManager()
 
     var body: some Scene {
         MenuBarExtra {
@@ -14,6 +15,7 @@ struct MacGiverApp: App {
                 .environmentObject(batteryMonitor)
                 .environmentObject(storageMonitor)
                 .environmentObject(audioMixer)
+                .environmentObject(homebrewManager)
         } label: {
             Image(systemName: appState.menuBarSymbolName)
                 .symbolRenderingMode(.hierarchical)

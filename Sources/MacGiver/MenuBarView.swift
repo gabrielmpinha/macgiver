@@ -12,6 +12,7 @@ struct MenuBarView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var audioMixer: AudioMixer
     @Environment(\.openSettings) private var openSettings
+    @StateObject private var releaseChecker = GitHubReleaseChecker()
     @State private var expandedPanel: ExpandedPanel?
     @State private var availableHeight: CGFloat = 700
     @State private var openingScreenID: NSNumber?
@@ -20,6 +21,8 @@ struct MenuBarView: View {
         case battery
         case storage
         case volume
+        case homebrew
+        case updates
     }
 
     private var activeUtilities: Int {
@@ -74,9 +77,10 @@ struct MenuBarView: View {
             header
             HStack(spacing: 12) {
                 BatteryCollapsedSummary(onExpand: { expandedPanel = .battery })
-                StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
+            StorageCollapsedSummary(onExpand: { expandedPanel = .storage })
             }
             VolumeCollapsedSummary(onExpand: { expandedPanel = .volume })
+            HomebrewCollapsedSummary(onExpand: { expandedPanel = .homebrew })
             controls
             messages
             footer
@@ -101,8 +105,12 @@ struct MenuBarView: View {
                 BatteryMenuPanel { expandedPanel = nil }
             case .storage:
                 StorageMenuPanel { expandedPanel = nil }
-            case .volume:
-                VolumeMenuPanel { expandedPanel = nil }
+        case .volume:
+            VolumeMenuPanel { expandedPanel = nil }
+            case .homebrew:
+                HomebrewMenuPanel { expandedPanel = nil }
+            case .updates:
+                GitHubUpdatesPanel(checker: releaseChecker) { expandedPanel = nil }
             case nil:
                 EmptyView()
             }
@@ -272,6 +280,16 @@ struct MenuBarView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
+                Button {
+                    expandedPanel = .updates
+                } label: {
+                    Label("Check for updates", systemImage: "arrow.down.circle")
+                        .labelStyle(.titleAndIcon)
+                }
+                .buttonStyle(.plain)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(releaseChecker.updateAvailable ? MacGiverPalette.warm : .secondary)
+                .help("Check for the latest MacGiver release on GitHub")
                 Button("Settings") {
                     openSettings()
                 }
