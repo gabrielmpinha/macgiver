@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSAudioCaptureUsageDescription</key>
 	<string>MacGiver needs access to app audio to apply independent volume levels.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>MacGiver captures the selected display to extract text locally.</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 </dict>

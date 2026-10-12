@@ -2521,11 +2521,11 @@
         "es": { "stringUnit": { "state": "translated", "value": "Permite la grabación de pantalla para MacGiver en Ajustes del Sistema > Privacidad y seguridad > Grabación de pantalla y vuelve a intentarlo." } }
       }
     },
-    "Could not capture the display. Check Screen Recording permission and try again.": {
+    "Could not capture the display. Try again.": {
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Could not capture the display. Check Screen Recording permission and try again." } },
-        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível capturar a tela. Verifique a permissão de Gravação de Tela e tente novamente." } },
-        "es": { "stringUnit": { "state": "translated", "value": "No se pudo capturar la pantalla. Comprueba el permiso de grabación de pantalla y vuelve a intentarlo." } }
+        "en": { "stringUnit": { "state": "translated", "value": "Could not capture the display. Try again." } },
+        "pt": { "stringUnit": { "state": "translated", "value": "Não foi possível capturar a tela. Tente novamente." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se pudo capturar la pantalla. Vuelve a intentarlo." } }
       }
     },
     "Select a larger area to extract text.": {

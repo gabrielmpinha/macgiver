@@ -1,4 +1,6 @@
 import AppKit
+import OSLog
+import ScreenCaptureKit
 import SwiftUI
 import Vision
 
@@ -7,10 +9,12 @@ final class TextExtractorController {
     private var selectionPanel: TextSelectionPanel?
     private var resultPanel: NSPanel?
     private var extractionTask: Task<Void, Never>?
+    private let captureRequest = ScreenCaptureRequest()
     private var capturedImage: CGImage?
     private var capturedScreenFrame = CGRect.zero
 
     func begin() {
+        captureRequest.cancel()
         extractionTask?.cancel()
         extractionTask = nil
         cancelSelection()
@@ -21,17 +25,19 @@ final class TextExtractorController {
             return
         }
 
-        guard CGPreflightScreenCaptureAccess() else {
-            _ = CGRequestScreenCaptureAccess()
-            showMessage(String(localized: "Allow Screen Recording access for MacGiver in System Settings > Privacy & Security > Screen Recording, then try again."))
-            return
-        }
+        captureRequest.start(operation: {
+            try await ScreenCapture.image(for: screen)
+        }, completion: { [weak self] result in
+            switch result {
+            case .success(let image):
+                self?.beginSelection(image: image, screen: screen)
+            case .failure(let error):
+                self?.showMessage(ScreenCapture.failure(for: error).localizedDescription)
+            }
+        })
+    }
 
-        guard let image = ScreenCapture.image(for: screen) else {
-            showMessage(String(localized: "Could not capture the display. Check Screen Recording permission and try again."))
-            return
-        }
-
+    private func beginSelection(image: CGImage, screen: NSScreen) {
         capturedImage = image
         capturedScreenFrame = screen.frame
 
@@ -365,13 +371,86 @@ private final class TextSelectionView: NSView {
     }
 }
 
+/// A superseded capture must never reopen a selection panel or display a stale error.
+@MainActor
+final class ScreenCaptureRequest {
+    private var task: Task<Void, Never>?
+
+    @discardableResult
+    func start(
+        operation: @escaping @MainActor () async throws -> CGImage,
+        completion: @escaping @MainActor (Result<CGImage, Error>) -> Void
+    ) -> Task<Void, Never> {
+        cancel()
+        let task = Task {
+            let result: Result<CGImage, Error>
+            do {
+                try Task.checkCancellation()
+                result = .success(try await operation())
+            } catch {
+                result = .failure(error)
+            }
+            guard !Task.isCancelled else { return }
+            completion(result)
+        }
+        self.task = task
+        return task
+    }
+
+    func cancel() {
+        task?.cancel()
+        task = nil
+    }
+}
+
 enum ScreenCapture {
-    static func image(for screen: NSScreen) -> CGImage? {
+    enum Failure: LocalizedError {
+        case permissionDenied
+        case unavailable
+
+        var errorDescription: String? {
+            switch self {
+            case .permissionDenied:
+                return String(localized: "Allow Screen Recording access for MacGiver in System Settings > Privacy & Security > Screen Recording, then try again.")
+            case .unavailable:
+                return String(localized: "Could not capture the display. Try again.")
+            }
+        }
+    }
+
+    static func failure(for error: Error) -> Failure {
+        let error = error as NSError
+        if error.domain == SCStreamErrorDomain, error.code == SCStreamError.userDeclined.rawValue {
+            return .permissionDenied
+        }
+        Logger(subsystem: "com.macgiver.app", category: "TextExtractor")
+            .error("Screen capture failed: \(error.domain, privacy: .public) (\(error.code))")
+        return .unavailable
+    }
+
+    @MainActor
+    static func image(for screen: NSScreen) async throws -> CGImage {
         let screenNumberKey = NSDeviceDescriptionKey("NSScreenNumber")
         guard let displayID = screen.deviceDescription[screenNumberKey] as? CGDirectDisplayID else {
-            return nil
+            throw Failure.unavailable
         }
-        return CGDisplayCreateImage(displayID)
+
+        // Let ScreenCaptureKit request/enforce access. A preflight result can be stale
+        // after authorization changes and must not prevent a real capture attempt.
+        let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
+        try Task.checkCancellation()
+        guard let display = content.displays.first(where: { $0.displayID == displayID }) else {
+            throw Failure.unavailable
+        }
+        let filter = SCContentFilter(display: display, excludingWindows: [])
+        let configuration = SCStreamConfiguration()
+        configuration.width = Int((filter.contentRect.width * CGFloat(filter.pointPixelScale)).rounded())
+        configuration.height = Int((filter.contentRect.height * CGFloat(filter.pointPixelScale)).rounded())
+        configuration.showsCursor = false
+        configuration.capturesAudio = false
+        let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: configuration)
+        try Task.checkCancellation()
+        return image
     }
 
     static func crop(image: CGImage, selection: CGRect, in screenFrame: CGRect) -> CGImage? {
